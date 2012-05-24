@@ -4,6 +4,7 @@
  * @package  	PyroCMS
  * @subpackage  Categories
  * @category  	Module
+ * @author		mrcoco@cempakaweb.com
  */
 
 class Yudisium extends Public_Controller {
