@@ -1,0 +1,67 @@
+#tool {
+		/* you must set it to relative, so that you can use absolute position for children elements */
+		position:relative; 
+		text-align:center; 
+		width:583px; 
+		height:40px;
+	}
+	
+	#tool ul {
+		/* remove the list style and spaces*/
+		margin:0; 
+		padding:0; 
+		list-style:none; 
+		display:inline;
+				
+		/* position absolute so that z-index can be defined */
+		position:absolute; 
+		
+		/* center the menu, depend on the width of you menu*/
+		left:110px; 
+		top:0; 
+		
+	}
+	
+	#tool ul li {
+		
+		/* give some spaces between the list items */
+		margin:0 5px; 
+		
+		/* display the list item in single row */
+		float:left;
+	}
+	
+	#tool #box {
+		
+		/* position absolute so that z-index can be defined and able to move this item using javascript */
+		position:absolute; 
+		left:0; 
+		top:0; 
+		z-index:200; 
+
+		/* image of the right rounded corner */
+		background:url(img/tail.gif) no-repeat right center; 
+		height:35px;
+
+
+		/* add padding 8px so that the tail would appear */
+		padding-right:8px;
+		
+		/* set the box position manually */
+		margin-left:5px;
+		
+	}
+	
+	#tool #box .head {
+		/* image of the left rounded corner */
+		background:url(img/head.gif) no-repeat 0 0;
+		height:35px;
+		color:#eee;
+		
+		/* force text display in one line */
+		white-space:nowrap;
+
+		/* set the text position manually */
+		padding-left:8px;
+		padding-top:12px;
+	}
