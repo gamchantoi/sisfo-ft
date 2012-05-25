@@ -4,6 +4,7 @@
  * @package  	PyroCMS
  * @subpackage  Yudisium
  * @category  	Module
+ * @author		mrcoco@cempakaweb.com
  */
 
 class Admin extends Admin_Controller {
@@ -254,7 +255,7 @@ class Admin extends Admin_Controller {
 			->title($this->module_details['name'], lang('yudisium_create_title'))
 			->append_metadata($this->load->view('fragments/wysiwyg', $this->data, TRUE))
 			->append_js('module::jquery.tagsinput.min.js')
-			//->append_js('module::blog_form.js')
+			->append_js('module::blog_form.js')
 			->append_css('module::jquery.tagsinput.css')
 			->set('data', $data)
 			->build('admin/form');
@@ -323,11 +324,17 @@ class Admin extends Admin_Controller {
 			}
 		}
 		$this->template
-			->title($this->module_details['name'], sprintf(lang('blog_edit_title'), $data->name))
+			->title($this->module_details['name'], sprintf(lang('yudisium_edit_title'), $data->name))
 			->append_metadata($this->load->view('fragments/wysiwyg', $this->data, TRUE))
-			->append_metadata(js('jquery/jquery.tagsinput.min.js'))
-			->append_metadata(js('blog_form.js', 'blog'))
-			->append_metadata(css('jquery/jquery.tagsinput.css'))
+			->append_metadata('<script type="text/javascript">
+					  $(function() {
+					  $( "#d_yudis" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
+					  $( "#d_start" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
+					  $( "#d_finish" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
+					  });</script>')
+			->append_js('module::jquery.tagsinput.min.js')
+			->append_js('module::blog_form.js')
+			->append_css('module::jquery.tagsinput.css')
 			->set('data', $data)
 			->build('admin/form');
     }
@@ -356,10 +363,10 @@ class Admin extends Admin_Controller {
 		    }
 		    </style>";
 	$table  = "<table style=\"font-size:14px;\">";
-	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
+	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
 	//$table .= "<tr><td width=\"80px\"><td  align=\"center\" width=\"435px\"><b>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td  width=\"80px\"></td></tr>";
-    $table .= "<tr><td colspan=3><hr></td></tr>";
     $table .= "<tr><td colspan=3 align=\"right\">FRM/TKF/21-00 <br>02 Juli 2007</td></tr>";
+    //$table .= "<tr><td colspan=3><hr></td></tr>";
 	$table .= "</table><table>";
 	$table .= "<tr><td>Nama</td><td colspan=2>: ".$item->name."</td></tr>";
 	$table .= "<tr><td>No. Mahasiswa</td><td colspan=2>: ".$item->nim."</td></tr>";
