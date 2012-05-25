@@ -46,7 +46,7 @@
 					</div>
 					<div>
 						<label for="merriage"><?php echo lang('yudisium_merriage')?></label>
-						<?php echo form_dropdown('merriage',array('0'=>'-Status-','Kawin'=>'Kawin','Belum Kawin'=>'Belum Kawin')); ?>
+						<?php echo form_dropdown('merriage',array('Kawin'=>'Kawin','Belum Kawin'=>'Belum Kawin')); ?>
 					</div>
 				</div>
 			</li>
