@@ -375,7 +375,7 @@ class Admin extends Admin_Controller {
 	$table .= "<tr><td>Tugas Akhir</td><td colspan=2>: ".$item->thesis."</td></tr>";
 	$table .= "<tr><td>judul</td><td colspan=2>: ".$item->thesis_title."</td></tr>";
 	$table .= "<tr><td>Dosen Pembimbing</td><td colspan=2>: ".$item->lecture."</td></tr>";
-	$table .= "<tr><td width=\"170px\">Lulus Tugas Akhir</td><td width=\"200px\">: ".tanggal($item->finish)."</td><td>IPK: ".$item->ipk." Total SKS: ".$item->sks."</td></tr>";
+	$table .= "<tr><td width=\"170px\">Lulus Tugas Akhir</td><td colspan=2 width=\"200px\">: ".tanggal($item->finish)." &nbsp;&nbsp; IPK: ".$item->ipk." &nbsp;&nbsp; Total SKS: ".$item->sks."</td></tr>";
 	$table .= "<tr><td>Lama Penulisan TA</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
 	$table .= "<tr><td>Cuti Kuliah</td><td colspan=2>: </td></tr>";
 	$table .= "<tr><td>Tanggal Yudisium</td><td colspan=2>: ".tanggal($item->yudisium_date)."</td></tr>";
