@@ -107,6 +107,18 @@
 		*/
 		?>
 			
+			
+		<?php if ($this->current_user->group == 'admin'): ?>
+			<li><a href="#">Layanan</a>
+				<ul>
+					<li><a href="admin/prakerin">Praktik Industri</a></li>
+					<li>Survei</li>
+					<li>penelitian</li>
+					<li>Bebas Teori</li>
+					<li>Yudisium</li>
+				</ul>
+			</li>
+		<?php endif; ?>
 		<li>
 			<a href="<?php echo current_url().'#'; ?>"><?php echo lang('global:profile'); ?></a>
 			<ul>

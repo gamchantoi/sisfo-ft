@@ -421,7 +421,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>KEMENTRIAN PENDIDIKAN DAN KEBUDAYAAN <br> UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "</tabel>";
 	    $table .= "<table style=\"font-size:15px;\">";
-	    $table .= "<tr><td colspan=3><hr style=\"border: 1px solid #000;\" /></td></tr>";
+	    $table .= "<tr><td colspan=3><hr style=\"border: 1px double #000;\" /></td></tr>";
 	    $table .= "<tr><td colspan=3 align=\"center\"><b>SURAT PERNYATAAN</b></td></tr>";
 	    $table .= "<tr><td colspan=3>Saya yang bertanda tangan dibawah ini: </td></tr>";
 	    $table .= "<tr><td>Nama </td><td>: ".$item->name."</td><td> </td></tr>";
@@ -441,7 +441,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>KEMENTRIAN PENDIDIKAN DAN KEBUDAYAAN <br> UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "</tabel>";
 	    $table .= "<table style=\"font-size:15px;\">";
-	    $table .= "<tr><td colspan=3><hr style=\"border: 1px solid #000;\" /></td></tr>";
+	    $table .= "<tr><td colspan=3><hr style=\"border: 1px double #000;\" /></td></tr>";
 	    $table .= "<tr><td colspan=3 align=\"center\"><b>SURAT PERNYATAAN</b></td></tr>";
 	    $table .= "<tr><td colspan=3>Saya yang bertanda tangan dibawah ini: </td></tr>";
 	    $table .= "<tr><td>Nama </td><td>: ".$item->name."</td><td> </td></tr>";
