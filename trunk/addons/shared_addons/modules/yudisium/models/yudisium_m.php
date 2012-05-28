@@ -15,6 +15,8 @@ class Yudisium_m extends MY_Model {
         $this->db->where('code','1')->order_by('date','ASC');
         return $this->db->get('printed')->result();
     }
+	
+	//function add_print($parrent)
     
     function get_religion($id)
     {

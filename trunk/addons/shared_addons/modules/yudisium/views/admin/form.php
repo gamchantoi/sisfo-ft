@@ -23,11 +23,21 @@
 		<fieldset>
 	
 		<ul>
+			<?php if($this->method == 'edit'): ?>
+			<li class="even">
+				<label for="name"><?php echo lang('yudisium_date_in'); ?></label>
+				<div class="input"><?php echo form_input('date',$data->date,'id="d_input"');  ?></div>			
+			</li>
 			<li class="even">
 				<label for="name"><?php echo lang('yudisium_name'); ?></label>
 				<div class="input"><?php echo form_input('name',htmlspecialchars_decode($data->name), 'maxlength="100" id="name"'); ?></div>			
 			</li>
-			
+			<?php else : ?>
+			<li class="even">
+				<label for="name"><?php echo lang('yudisium_name'); ?></label>
+				<div class="input"><?php echo form_input('name',htmlspecialchars_decode($data->name), 'maxlength="100" id="name"'); ?></div>			
+			</li>	
+			<?php endif; ?>
 			<li>
 				<label for="nim"><?php echo lang('yudisium_nim'); ?></label>
 				<div class="input"><?php echo form_input('nim',$data->nim, 'maxlength="100" class="width-20"'); ?></div>

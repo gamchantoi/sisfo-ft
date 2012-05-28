@@ -112,10 +112,10 @@
 			<li><a href="#">Layanan</a>
 				<ul>
 					<li><a href="admin/prakerin">Praktik Industri</a></li>
-					<li>Survei</li>
-					<li>penelitian</li>
-					<li>Bebas Teori</li>
-					<li>Yudisium</li>
+					<li><a href="admin/survei">Survei</a></li>
+					<li><a href="admin/penelitian">Penelitian</a></li>
+					<li><a href="admin/bt">Bebas Teori</a></li>
+					<li><a href="admin/yudisium">Yudisium</a></li>
 				</ul>
 			</li>
 		<?php endif; ?>
