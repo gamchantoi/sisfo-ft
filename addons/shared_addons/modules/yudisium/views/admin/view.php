@@ -60,12 +60,14 @@
 	text-align:center;
 	line-height:30px;
 }
+/**
 .accor_content li span.box1 {
 	width:42px;
 	background:#fff;
 }
+**/
 .accor_content li span.box2 {
-	width:351px;
+	width:531px;
 	padding-left:16px;
 	text-align:left;
 }
@@ -73,9 +75,11 @@
 	width:154px;
 	background:#fff;
 }
+/**
 .accor_content li span.box4 {
 	width:154px;
 }
+**/
 .accor_content .note {
 	width:691px;
 	float:left;
