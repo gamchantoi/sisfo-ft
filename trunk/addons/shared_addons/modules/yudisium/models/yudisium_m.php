@@ -16,7 +16,13 @@ class Yudisium_m extends MY_Model {
         return $this->db->get('printed')->result();
     }
 	
-	//function add_print($parrent)
+	function add_print($parrent,$code)
+	{
+		$this->db->set('id_parrent', $parrent);
+		$this->db->set('code',$code);
+		$this->db->set('date',date('Y-m-d H:i:s'));
+		$this->db->insert('default_printed');
+	}
     
     function get_religion($id)
     {

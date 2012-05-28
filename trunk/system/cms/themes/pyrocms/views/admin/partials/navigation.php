@@ -108,7 +108,7 @@
 		?>
 			
 			
-		<?php if ($this->current_user->group == 'admin'): ?>
+		<?php if ($this->current_user->group == 'admin' OR $this->current_user->group == 'petugas'): ?>
 			<li><a href="#">Layanan</a>
 				<ul>
 					<li><a href="admin/prakerin">Praktik Industri</a></li>

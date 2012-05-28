@@ -285,8 +285,8 @@ class Admin extends Admin_Controller {
                         'sex'               => $this->input->post('sex'),
                         'meriage'           => $this->input->post('meriage'),
                         'address'           => $this->input->post('address'),
-			'parrent'	    => $this->input->post('parrent'),
-			'parrent_address'   => $this->input->post('parrent_address'),
+						'parrent'	    => $this->input->post('parrent'),
+						'parrent_address'   => $this->input->post('parrent_address'),
                         'parrental'         => $this->input->post('parrental'),
                         'soo'               => $this->input->post('soo'),
                         'school_address'    => $this->input->post('school_address'),
@@ -383,7 +383,7 @@ class Admin extends Admin_Controller {
 	$table .= "<tr><td>Tugas Akhir</td><td colspan=2>: ".$item->thesis."</td></tr>";
 	$table .= "<tr><td>judul</td><td colspan=2>: ".$item->thesis_title."</td></tr>";
 	$table .= "<tr><td>Dosen Pembimbing</td><td colspan=2>: ".$item->lecture."</td></tr>";
-	$table .= "<tr><td width=\"170px\">Lulus Tugas Akhir</td><td colspan=2 width=\"200px\">: ".tanggal($item->finish)." &nbsp;&nbsp; IPK: ".$item->ipk." &nbsp;&nbsp; Total SKS: ".$item->sks."</td></tr>";
+	$table .= "<tr><td width=\"170px\">Lulus Tugas Akhir</td><td colspan=2>: ".tanggal($item->finish)." &nbsp; IPK: ".$item->ipk." &nbsp; Total SKS: ".$item->sks."</td></tr>";
 	$table .= "<tr><td>Lama Penulisan TA</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
 	$table .= "<tr><td>Cuti Kuliah</td><td colspan=2>: </td></tr>";
 	$table .= "<tr><td>Tanggal Yudisium</td><td colspan=2>: ".tanggal($item->yudisium_date)."</td></tr>";
@@ -402,6 +402,7 @@ class Admin extends Admin_Controller {
 	echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani PD I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES/OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
 	echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
 	$this->ym->update($id,array('printed' => '1'));
+	$this->ym->add_print($id,'4');
     }
     
     public function repo($id=0)
