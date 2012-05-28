@@ -49,7 +49,7 @@ $(document).ready(function()
 					}
 					?></td>
 					<td>
-						<a href="admin/yudisium/preview/<?php echo $item->id; ?>" rel="modal-large" target="_blank" title="Tampilkan Detai Peserta Yudisium"><img src="<?php echo base_url().$this->module_details['path'];?>/img/zoom.png"></a>
+						<a href="admin/yudisium/preview/<?php echo $item->id; ?>" rel="modal" target="_blank" title="Tampilkan Detai Peserta Yudisium"><img src="<?php echo base_url().$this->module_details['path'];?>/img/zoom.png"></a>
 						<a href="admin/yudisium/repo/<?php echo $item->id; ?>" class="cetak" title="cetak tanda terima Penyerahan CD"><img src="<?php echo base_url().$this->module_details['path'];?>/img/cd.png"></a>
 						<a href="admin/yudisium/cetak/<?php echo $item->id; ?>" class="cetak" title="cetak Isian Kelulusan"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a>
 						<a href="admin/yudisium/edit/<?php echo $item->id; ?>" title="Edit data Peserta Yudisium"><img src="<?php echo base_url().$this->module_details['path'];?>/img/edit.png"></a>

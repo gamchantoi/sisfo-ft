@@ -203,19 +203,19 @@ class Admin extends Admin_Controller {
 	{
 	    
 	    $id=$this->ym->insert(array(
-			'name'	            => $this->input->post('name'),
+						'name'	            => $this->input->post('name'),
                         'date'              => date('Y-m-d H:i:s'),
-			'nim'	            => $this->input->post('nim'),
-			'department'        => $this->input->post('department'),
-			'pa'	            => $this->input->post('pa'),
-			'place_of_birth'    => $this->input->post('pob'),
+						'nim'	            => $this->input->post('nim'),
+						'department'        => $this->input->post('department'),
+						'pa'	            => $this->input->post('pa'),
+						'place_of_birth'    => $this->input->post('pob'),
                         'date_of_birth'     => $this->input->post('dob'),
                         'religion'          => $this->input->post('religion'),
                         'sex'               => $this->input->post('sex'),
                         'meriage'           => $this->input->post('meriage'),
                         'address'           => $this->input->post('address'),
-			'parrent'   	    => $this->input->post('parrent'),
-			'parrent_address'   => $this->input->post('parrent_address'),
+						'parrent'   	    => $this->input->post('parrent'),
+						'parrent_address'   => $this->input->post('parrent_address'),
                         'parrental'         => $this->input->post('parrental'),
                         'soo'               => $this->input->post('soo'),
                         'school_address'    => $this->input->post('school_address'),
@@ -274,12 +274,12 @@ class Admin extends Admin_Controller {
 		)));
 	if($this->form_validation->run()){
 	    $result = $this->ym->update($id,array(
-			'name'	            => $this->input->post('name'),
-                        'date'              => date('Y-m-d H:i:s'),
-			'nim'	            => $this->input->post('nim'),
-			'department'        => $this->input->post('department'),
-			'pa'	            => $this->input->post('pa'),
-			'place_of_birth'    => $this->input->post('pob'),
+						'name'	            => $this->input->post('name'),
+                        'date'              => $this->input->post('date'),
+						'nim'	            => $this->input->post('nim'),
+						'department'        => $this->input->post('department'),
+						'pa'	            => $this->input->post('pa'),
+						'place_of_birth'    => $this->input->post('pob'),
                         'date_of_birth'     => $this->input->post('dob'),
                         'religion'          => $this->input->post('religion'),
                         'sex'               => $this->input->post('sex'),
@@ -328,6 +328,7 @@ class Admin extends Admin_Controller {
 			->append_metadata($this->load->view('fragments/wysiwyg', $this->data, TRUE))
 			->append_metadata('<script type="text/javascript">
 					  $(function() {
+					  $( "#d_input" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true});
 					  $( "#d_yudis" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
 					  $( "#d_start" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
 					  $( "#d_finish" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
@@ -365,8 +366,8 @@ class Admin extends Admin_Controller {
 	$table  = "<table style=\"font-size:14px;\">";
 	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
 	//$table .= "<tr><td width=\"80px\"><td  align=\"center\" width=\"435px\"><b>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td  width=\"80px\"></td></tr>";
-    $table .= "<tr><td colspan=3 align=\"right\">FRM/TKF/21-00 <br>02 Juli 2007</td></tr>";
-    //$table .= "<tr><td colspan=3><hr></td></tr>";
+    $table .= "<tr><td colspan=3 align=\"right\" ><font size=1.5>FRM/TKF/21-00 <br>02 Juli 2007</font></td></tr>";
+    $table .= "<tr><td colspan=3><hr></td></tr>";
 	$table .= "</table><table>";
 	$table .= "<tr><td>Nama</td><td colspan=2>: ".$item->name."</td></tr>";
 	$table .= "<tr><td>No. Mahasiswa</td><td colspan=2>: ".$item->nim."</td></tr>";
