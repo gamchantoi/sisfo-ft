@@ -184,14 +184,34 @@ class Yudisium extends Public_Controller {
                         ->build('index', $this->data);
     }
     
-    
+    public function prodi(){
+    	$nim	 = $this->input->post('nim');
+		$profile = $this->yudisium_m->get_prodies($nim);
+		$major   = $this->yudisium_m->get_major_by_name($profile->x);
+		$pa  	 = $this->get_pa($major);
+		$result  = "<div>";
+		$result .= "<label for=\"name\">".lang('yudisium_name')."</label>";
+		$result .= form_input('name',$profile->name);
+		$result .= "</div>";
+		$result .= "<div>";
+		$result .= "<label for=\"department\">".lang('yudisium_department')." </label>";
+		$result .= form_dropdown('department', $this->prodies_id($profile->x),'','class="department"'); 
+		$result .= "</div>";
+		$result .= "<div>";
+		$result .= "<label for=\"lecture\">".lang('yudisium_pa')."</label>";
+		//$result .= form_dropdown('pa',$this->lectures()); 
+		$result .= form_dropdown('pa',$pa); 
+		$result .= "</div>";
+		echo $result;
+    }
+	
+	
+	
     public function create() {
 	$this->load->library('form_validation');
 	$this->form_validation->set_rules($this->v_rules);
 	if($this->form_validation->run()){
 	    if($this->input->post('submit')=='Simpan'){
-	    	print_r($_POST);
-	
 		$id=$this->yudisium_m->insert(array(
 						    'name'	        => $this->input->post('name'),
                                                     'date'              => date('Y-m-d H:i:s'),
@@ -280,6 +300,17 @@ class Yudisium extends Public_Controller {
         return $result;
     }
     
+	public function prodies_id($name)
+	{
+		if($prodies = $this->yudisium_m->get_dept_id($name))
+	    {
+		foreach($prodies as $dpt)
+		{
+		    $result[$dpt->id] = $dpt->name;
+		}
+	    }
+        return $result;
+	}
     // tampil dosen
     public function lectures()
     {
@@ -293,6 +324,17 @@ class Yudisium extends Public_Controller {
         return $result;
     }
     
+	public function get_pa($major)
+	{
+		$result= array(0 => 'Pilih Dosen');
+	    if($lectures = $this->yudisium_m->get_pa($major))
+	    {
+		foreach($lectures as $lec){
+		    $result[$lec->id]= $lec->name;
+		}
+	    }
+        return $result;
+	}
     public function _check_nim($nim, $id = null)
 	{
 		$this->form_validation->set_message('_check_nim', sprintf(lang('yudisium_already_exist_error'), lang('yudisium_nim_label')));

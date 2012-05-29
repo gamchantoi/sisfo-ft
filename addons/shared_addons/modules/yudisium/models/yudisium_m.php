@@ -9,6 +9,11 @@
 class Yudisium_m extends MY_Model {
     protected $_table = 'yudisium';
     
+    function get_prodies($nim){
+    	return $get_major= $this->db->select('nim,name,x,department')->where('nim',$nim)->get('college')->row();
+        //return $get_major->x;
+    }
+	
     function get_print($id)
     {
         $this->db->select('id,date')->where('id_parrent',$id);
@@ -49,11 +54,19 @@ class Yudisium_m extends MY_Model {
     function get_dept(){
         return $this->db->get('department')->result();
     }
+	
+	function get_dept_id($name){
+        return $this->db->select('id,name')->where('name',$name)->get('department')->result();
+    }
     
     function get_lecture(){
         return $this->db->select('id,name,major')->order_by('name','ASC')->get('lecture')->result();
     }
     
+	function get_pa($key){
+        return $this->db->select('id,name,major')->where('major',$key)->order_by('name','ASC')->get('lecture')->result();
+    }
+	
     function search_pa($key)
     {
         $get_major= $this->db->select('major')->where('id',$key)->get('department')->row();
@@ -77,6 +90,12 @@ class Yudisium_m extends MY_Model {
     function get_major($id)
     {
         $get_major= $this->db->select('id,major')->where('id',$id)->get('department')->row();
+        return $get_major->major;
+    }
+	
+	function get_major_by_name($name)
+    {
+        $get_major= $this->db->select('id,major')->where('name',$name)->get('department')->row();
         return $get_major->major;
     }
     

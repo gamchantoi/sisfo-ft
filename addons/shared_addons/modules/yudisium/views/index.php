@@ -1,3 +1,31 @@
+<script>
+        $(document) .ready(function(){
+			$("#nim").change(function(){
+            var nim = $("#nim").val();
+            $.ajax({
+               type : "POST",
+               url  : "<?php echo base_url(); ?>yudisium/prodi",
+               data : "nim=" + nim,
+               success: function(data){
+                   $("#profile").html(data);
+               }
+            });
+			});
+			
+			$("#id_kab").change(function(){
+            var id_kab = $("#id_kab").val();
+            $.ajax({
+               type : "POST",
+               url  : "<?php echo base_url(); ?> siswa/sekolah",
+               data : "id_kab=" + id_kab,
+               success: function(data){
+                   $("#id_sekolah").html(data);
+               }
+            });
+			});
+			
+});
+</script>
 <h2 id="page_title" class="page-title">
 	<?php echo lang('yudisium_add') ?>
 </h2>
@@ -14,12 +42,14 @@
 		<legend><?php echo lang('yudisium_profile') ?></legend>
 		<ul>
 			<li class="float-left spacer-right">
-				<label for="name"><?php echo lang('yudisium_name') ?></label>
-				<?php echo form_input('name'); ?>
+				<label for="name"><?php echo lang('yudisium_nim') ?></label>
+				<?php echo form_input('nim','','id="nim"'); ?>
+				
 			</li>
 
 			<li class="multiple_fields">
-				<div class="fields2">
+				<div class="fields2" id="profile">
+					<!--
 					<div>
 						<label for="nim"><?php echo lang('yudisium_nim') ?></label>
 						<?php echo form_input('nim'); ?>
@@ -32,6 +62,7 @@
 						<label for="lecture"><?php echo lang('yudisium_pa')?></label>
 						<?php echo form_dropdown('pa',$lectures); ?>
 					</div>
+					-->
 				</div>
 			</li>
 			<li class="multiple_fields">
