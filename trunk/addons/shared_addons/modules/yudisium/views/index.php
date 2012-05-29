@@ -153,6 +153,10 @@
 				
 				</div>
 			</li>
+			<li>
+				<label for="vacation"><?php echo lang('yudisium_vacation')?></label>
+				<?php echo form_dropdown('vacation',$vacations); ?>
+			</li>
 		</ul>
 	</fieldset>
 	<fieldset>
