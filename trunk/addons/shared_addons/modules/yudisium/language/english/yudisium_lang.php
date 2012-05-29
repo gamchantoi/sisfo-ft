@@ -86,3 +86,5 @@ $lang['yudisium_edit_success']          = 'Edit Data Data Berhasil Disimpan';
 $lang['yudisium_edit_error']            = 'Edit Data Gagal Disimpan';
 $lang['yudisium_status_k_1']            = 'Kawin';
 $lang['yudisium_status_k_2']            = 'Belum Kawin';
+$lang['yudisium_sex_L']            		= 'Laki-laki';
+$lang['yudisium_sex_P']            		= 'Perempuan';
