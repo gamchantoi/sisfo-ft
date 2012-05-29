@@ -394,7 +394,7 @@ class Admin extends Admin_Controller {
 	$table .= "<tr><td>13.</td><td>Alamat Sekolah</td><td colspan=2>: ".$item->school_address."</td></tr>";
 	$table .= "<tr><td>14.</td><td>Tugas Akhir</td><td colspan=2>: ".$item->thesis."</td></tr>";
 	$table .= "<tr><td>15.</td><td>judul</td><td colspan=2>: ".$item->thesis_title."</td></tr>";
-	$table .= "<tr><td>16.</td><td>Dosen Pembimbing</td><td colspan=2>: ".$item->lecture."</td></tr>";
+	$table .= "<tr><td>16.</td><td>Dosen Pembimbing</td><td colspan=2>: ".$this->get_name($item->lecture)."</td></tr>";
 	$table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td colspan=2>: ".tanggal($item->finish)." &nbsp; IPK: ".$item->ipk." &nbsp; Total SKS: ".$item->sks."</td></tr>";
 	$table .= "<tr><td>18.</td><td>Lama Penulisan TA</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
 	$table .= "<tr><td>19.</td><td>Cuti Kuliah</td><td colspan=2>: </td></tr>";
