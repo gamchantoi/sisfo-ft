@@ -145,6 +145,13 @@ class Yudisium extends Public_Controller {
 		$this->load->model('yudisium_m');
 		$this->data->prodies  = $this->prodies();
                 $this->data->lectures = $this->lectures();
+		$this->data->vacations= array(
+						'-' => '-',
+						'1' => '1',
+						'2' => '2',
+						'3' => '3',
+						'4' => '4'
+		);
 		$this->data->religions= array(
 					      0 => '-Agama-',
 					      1 => 'Islam',
@@ -183,7 +190,8 @@ class Yudisium extends Public_Controller {
 	$this->form_validation->set_rules($this->v_rules);
 	if($this->form_validation->run()){
 	    if($this->input->post('submit')=='Simpan'){
-		
+	    	print_r($_POST);
+	
 		$id=$this->yudisium_m->insert(array(
 						    'name'	        => $this->input->post('name'),
                                                     'date'              => date('Y-m-d H:i:s'),
@@ -194,7 +202,7 @@ class Yudisium extends Public_Controller {
                                                     'date_of_birth'     => $this->input->post('dob'),
                                                     'religion'          => $this->input->post('religion'),
                                                     'sex'               => $this->input->post('gender'),
-                                                    'meriage'           => $this->input->post('meriage'),
+                                                    'meriage'           => $this->input->post('merriage'),
                                                     'address'           => $this->input->post('address'),
                                                     'parrent'           => $this->input->post('parrent'),
 						    						'parrent_address'   => $this->input->post('parrent_address'),
@@ -210,10 +218,11 @@ class Yudisium extends Public_Controller {
                                                     'lecture'           => $this->input->post('lecture'),
                                                     'start'             => $this->input->post('start'),
                                                     'finish'            => $this->input->post('finish'),
+                                                    'vacation'          => $this->input->post('vacation'),
                                                     'yudisium_date'     => $this->input->post('yudisium_date'),
                                                     'phone'             => $this->input->post('phone'),
                                                     'email'             => $this->input->post('email')
-						    ));
+						    ));	
 		if($id){
                     $this->pyrocache->delete_all('yudisium_m');
 		    $message='Data Berhasil disimpan';

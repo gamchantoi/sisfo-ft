@@ -27,6 +27,7 @@ $lang['yudisium_ipk']                   = 'IPK ';
 $lang['yudisium_sks']                   = 'Total SKS';
 $lang['yudisium_start']                 = 'Mulai TA';
 $lang['yudisium_finish']                = 'Selesai TA';
+$lang['yudisium_vacation']              = 'Cuti Kuliah';
 $lang['yudisium_date']                  = 'Tgl Yudisium';
 $lang['yudisium_pa']                    = 'Dosen PA';
 $lang['yudisium_phone']                 = 'No. Telp/HP';

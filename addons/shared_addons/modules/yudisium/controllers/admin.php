@@ -383,8 +383,8 @@ class Admin extends Admin_Controller {
 	$table .= "<tr><td>2.</td><td>No. Mahasiswa</td><td colspan=2>: ".$item->nim."</td></tr>";
 	$table .= "<tr><td>3.</td><td>Program Studi</td><td colspan=2>: ".lang('yudisium_dp_'.$item->department)."</td></tr>";
 	$table .= "<tr><td>4.</td><td width=\"160px\">Tempat, Tanggal Lahir</td><td colspan=2>: ".$item->place_of_birth.",  ".tanggal($item->date_of_birth)."</td></tr>";
-	$table .= "<tr><td>5.</td><td>Agama</td><td colspan=2>: ".lang('yudisium_sex_'.$item->sex)."</td></tr>";
-	$table .= "<tr><td>6.</td><td>Jenis Kelamin</td><td colspan=2>: ".$item->meriage."</td></tr>";
+	$table .= "<tr><td>5.</td><td>Agama</td><td colspan=2>: ".$this->get_religion($item->religion)."</td></tr>";
+	$table .= "<tr><td>6.</td><td>Jenis Kelamin</td><td colspan=2>: ".lang('yudisium_sex_'.$item->sex)."</td></tr>";
 	$table .= "<tr><td>7.</td><td>Status</td><td colspan=2>: ".$item->meriage."</td></tr>";
 	$table .= "<tr><td>8.</td><td>Alamat Sekarang</td><td colspan=2>: ".$item->address."</td></tr>";
 	$table .= "<tr><td>9.</td><td>Nama Orang Tua</td><td colspan=2>: ".$item->parrent."</td></tr>";
@@ -395,10 +395,10 @@ class Admin extends Admin_Controller {
 	$table .= "<tr><td>14.</td><td>Tugas Akhir</td><td colspan=2>: ".$item->thesis."</td></tr>";
 	$table .= "<tr><td>15.</td><td>judul</td><td colspan=2>: ".$item->thesis_title."</td></tr>";
 	$table .= "<tr><td>16.</td><td>Dosen Pembimbing</td><td colspan=2>: ".$this->get_name($item->lecture)."</td></tr>";
-	$table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td colspan=2>: ".tanggal($item->finish)." &nbsp; IPK: ".$item->ipk." &nbsp; Total SKS: ".$item->sks."</td></tr>";
+	$table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td colspan=2>: ".tanggal($item->finish)." &nbsp; <b>IPK:</b> ".$item->ipk." &nbsp; <b>Total SKS:</b> ".$item->sks."</td></tr>";
 	$table .= "<tr><td>18.</td><td>Lama Penulisan TA</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
-	$table .= "<tr><td>19.</td><td>Cuti Kuliah</td><td colspan=2>: </td></tr>";
-	$table .= "<tr><td>20.</td><td>Tanggal Yudisium</td><td colspan=2>: ".tanggal($item->yudisium_date)."</td></tr>";
+	$table .= "<tr><td>19.</td><td>Cuti Kuliah</td><td colspan=2>: ".$item->vacation." kali</td></tr>";
+	$table .= "<tr><td>20.</td><td>Tanggal Yudisium</td><td colspan=2>: <b>".tanggal($item->yudisium_date)."</b></td></tr>";
 	$table .= "<tr><td align=\"center\" colspan=2>Mengetahui</td><td colspan=2 align=\"right\">Yogyakarta ".tanggal(date('Y-m-d'))."</td></tr>";
 	$table .= "<tr><td align=\"center\" colspan=2>Dosen PA</td><td></td><td width=\"150px\" align=\"center\">Mahasiswa yang <br>Bersangkutan</td></tr>";
 	$table .= "<tr><td colspan=4><br /></td></tr>";
