@@ -354,6 +354,9 @@ class Admin extends Admin_Controller {
     {
 	$id OR redirect('admin/yudisium');
 	$item= $this->ym->get($id);
+	$d3= array('1','2','3','4','5','6','7','8');
+	$s1= array('9','10','11','12','13','14','15','16','17','18');
+	
 	$style  = "<title>Cetak Isian kelulusan</title>
 		    <style type=\"text/css\" >
 		    body {
@@ -364,37 +367,47 @@ class Admin extends Admin_Controller {
 		    }
 		    </style>";
 	$table  = "<table style=\"font-size:14px;\">";
-	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
+	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM ";
+	if(in_array($item->department,$d3)) :
+		$table .= "DIPLOMA III (DIII)";
+	else :
+		$table .= "STRATA 1 (S1)";
+	endif;
+		
+	$table .= "</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
 	//$table .= "<tr><td width=\"80px\"><td  align=\"center\" width=\"435px\"><b>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td  width=\"80px\"></td></tr>";
     $table .= "<tr><td colspan=3 align=\"right\" ><font size=1.5>FRM/TKF/21-00 <br>02 Juli 2007</font></td></tr>";
     $table .= "<tr><td colspan=3><hr></td></tr>";
 	$table .= "</table><table>";
-	$table .= "<tr><td>Nama</td><td colspan=2>: ".$item->name."</td></tr>";
-	$table .= "<tr><td>No. Mahasiswa</td><td colspan=2>: ".$item->nim."</td></tr>";
-	$table .= "<tr><td>Program Studi</td><td colspan=2>: ".lang('yudisium_dp_'.$item->department)."</td></tr>";
-	$table .= "<tr><td width=\"160px\">Tempat, Tanggal Lahir</td><td colspan=2>: ".$item->place_of_birth.",  ".tanggal($item->date_of_birth)."</td></tr>";
-	$table .= "<tr><td>Agama</td><td colspan=2>: ".$this->get_religion($item->religion)."</td></tr>";
-	$table .= "<tr><td>Status</td><td colspan=2>: ".$item->meriage."</td></tr>";
-	$table .= "<tr><td>Alamat Sekarang</td><td colspan=2>: ".$item->address."</td></tr>";
-	$table .= "<tr><td>Nama Orang Tua</td><td colspan=2>: ".$item->parrent."</td></tr>";
-	$table .= "<tr><td>Alamat Orang Tua</td><td colspan=2>: ".$item->parrent_address."</td></tr>";
-	$table .= "<tr><td>Sekolah Asal</td><td colspan=2>: ".$item->soo."</td></tr>";
-	$table .= "<tr><td>Alamat Sekolah</td><td colspan=2>: ".$item->school_address."</td></tr>";
-	$table .= "<tr><td>Tugas Akhir</td><td colspan=2>: ".$item->thesis."</td></tr>";
-	$table .= "<tr><td>judul</td><td colspan=2>: ".$item->thesis_title."</td></tr>";
-	$table .= "<tr><td>Dosen Pembimbing</td><td colspan=2>: ".$item->lecture."</td></tr>";
-	$table .= "<tr><td width=\"170px\">Lulus Tugas Akhir</td><td colspan=2>: ".tanggal($item->finish)." &nbsp; IPK: ".$item->ipk." &nbsp; Total SKS: ".$item->sks."</td></tr>";
-	$table .= "<tr><td>Lama Penulisan TA</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
-	$table .= "<tr><td>Cuti Kuliah</td><td colspan=2>: </td></tr>";
-	$table .= "<tr><td>Tanggal Yudisium</td><td colspan=2>: ".tanggal($item->yudisium_date)."</td></tr>";
-	$table .= "<tr><td align=\"center\">Mengetahui</td><td colspan=2 align=\"right\">Yogyakarta ".tanggal(date('Y-m-d'))."</td></tr>";
-	$table .= "<tr><td align=\"center\">Dosen PA</td><td></td><td width=\"150px\" align=\"center\">Mahasiswa yang <br>Bersangkutan</td></tr>";
-	$table .= "<tr><td colspan=3><br /><br /></td></tr>";
-	$table .= "<tr><td align=\"center\">".$this->get_name($item->pa)."</td><td></td><td align=\"center\">".$item->name."</td></tr>";
-	$table .= "<tr><td align=\"center\">".$this->get_nip($item->pa)."</td><td></td><td align=\"center\">".$item->nim."</td></tr>";
-	$table .= "<tr><td colspan=3 align=\"center\">Mengetahui, <br />Pembentu Dekan I</td></tr>";
-	$table .= "<tr><td colspan=3 align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/sunar-ttd.png\" width=\"100\"></td></tr>";
-	$table .= "<tr><td colspan=3 align=\"center\">Dr. Soenaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
+	$table .= "<tr><td>1.</td><td>Nama</td><td colspan=2>: ".$item->name."</td></tr>";
+	$table .= "<tr><td>2.</td><td>No. Mahasiswa</td><td colspan=2>: ".$item->nim."</td></tr>";
+	$table .= "<tr><td>3.</td><td>Program Studi</td><td colspan=2>: ".lang('yudisium_dp_'.$item->department)."</td></tr>";
+	$table .= "<tr><td>4.</td><td width=\"160px\">Tempat, Tanggal Lahir</td><td colspan=2>: ".$item->place_of_birth.",  ".tanggal($item->date_of_birth)."</td></tr>";
+	$table .= "<tr><td>5.</td><td>Agama</td><td colspan=2>: ".lang('yudisium_sex_'.$item->sex)."</td></tr>";
+	$table .= "<tr><td>6.</td><td>Jenis Kelamin</td><td colspan=2>: ".$item->meriage."</td></tr>";
+	$table .= "<tr><td>7.</td><td>Status</td><td colspan=2>: ".$item->meriage."</td></tr>";
+	$table .= "<tr><td>8.</td><td>Alamat Sekarang</td><td colspan=2>: ".$item->address."</td></tr>";
+	$table .= "<tr><td>9.</td><td>Nama Orang Tua</td><td colspan=2>: ".$item->parrent."</td></tr>";
+	$table .= "<tr><td>10.</td><td>Alamat Orang Tua</td><td colspan=2>: ".$item->parrent_address."</td></tr>";
+	$table .= "<tr><td>11.</td><td>Diterima di FT Melalui</td><td colspan=2>: ".$item->parrental."</td></tr>";
+	$table .= "<tr><td>12.</td><td>Sekolah Asal</td><td colspan=2>: ".$item->soo."</td></tr>";
+	$table .= "<tr><td>13.</td><td>Alamat Sekolah</td><td colspan=2>: ".$item->school_address."</td></tr>";
+	$table .= "<tr><td>14.</td><td>Tugas Akhir</td><td colspan=2>: ".$item->thesis."</td></tr>";
+	$table .= "<tr><td>15.</td><td>judul</td><td colspan=2>: ".$item->thesis_title."</td></tr>";
+	$table .= "<tr><td>16.</td><td>Dosen Pembimbing</td><td colspan=2>: ".$item->lecture."</td></tr>";
+	$table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td colspan=2>: ".tanggal($item->finish)." &nbsp; IPK: ".$item->ipk." &nbsp; Total SKS: ".$item->sks."</td></tr>";
+	$table .= "<tr><td>18.</td><td>Lama Penulisan TA</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
+	$table .= "<tr><td>19.</td><td>Cuti Kuliah</td><td colspan=2>: </td></tr>";
+	$table .= "<tr><td>20.</td><td>Tanggal Yudisium</td><td colspan=2>: ".tanggal($item->yudisium_date)."</td></tr>";
+	$table .= "<tr><td align=\"center\" colspan=2>Mengetahui</td><td colspan=2 align=\"right\">Yogyakarta ".tanggal(date('Y-m-d'))."</td></tr>";
+	$table .= "<tr><td align=\"center\" colspan=2>Dosen PA</td><td></td><td width=\"150px\" align=\"center\">Mahasiswa yang <br>Bersangkutan</td></tr>";
+	$table .= "<tr><td colspan=4><br /></td></tr>";
+	$table .= "<tr><td align=\"center\" colspan=2>".$this->get_name($item->pa)."</td><td></td><td align=\"center\">".$item->name."</td></tr>";
+	$table .= "<tr><td align=\"center\" colspan=2>".$this->get_nip($item->pa)."</td><td></td><td align=\"center\">".$item->nim."</td></tr>";
+	$table .= "<tr><td colspan=4 align=\"center\">Mengetahui, <br />Pembentu Dekan I</td></tr>";
+	//$table .= "<tr><td colspan=4 align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/sunar-ttd.png\" width=\"100\"></td></tr>";
+	$table .= "<tr><td colspan=4 align=\"center\"><br /></td></tr>";
+	$table .= "<tr><td colspan=4 align=\"center\">Dr. Soenaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
 	$table .= "</table>";
 	echo $style;
 	echo $table;
