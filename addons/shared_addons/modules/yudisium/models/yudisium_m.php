@@ -51,7 +51,7 @@ class Yudisium_m extends MY_Model {
     }
     
     function get_lecture(){
-        return $this->db->select('id,name,major')->order_by('major','ASC')->get('lecture')->result();
+        return $this->db->select('id,name,major')->order_by('name','ASC')->get('lecture')->result();
     }
     
     function search_pa($key)
