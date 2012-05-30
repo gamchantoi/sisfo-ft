@@ -24,12 +24,19 @@ class Module_Yudisium extends Module {
                             'yudisium' => array(
                                     'name'  => 'yudisium_list',
 				    'uri'   => 'admin/yudisium',  
-                            ),
+                            ),               
                             'new'  => array(
                                     'name'  => 'yudisium_add',
                                     'uri'   => 'admin/yudisium/create'
+                            ),
+                            'decree'  => array(
+                                    'name'  => 'yudisium_decree',
+                                    'uri'   => 'admin/yudisium/decree'
+                            ),
+                            'report'  => array(
+                                    'name'  => 'yudisium_report',
+                                    'uri'   => 'admin/yudisium/report'
                             )
-                            
                         ),                      
 		);
 	}

@@ -285,7 +285,7 @@ class Admin extends Admin_Controller {
                         'sex'               => $this->input->post('sex'),
                         'meriage'           => $this->input->post('meriage'),
                         'address'           => $this->input->post('address'),
-						'parrent'	    => $this->input->post('parrent'),
+						'parrent'	    	=> $this->input->post('parrent'),
 						'parrent_address'   => $this->input->post('parrent_address'),
                         'parrental'         => $this->input->post('parrental'),
                         'soo'               => $this->input->post('soo'),
@@ -404,8 +404,8 @@ class Admin extends Admin_Controller {
 	$table .= "<tr><td align=\"center\">Mengetahui</td><td width=\"350px\" align=\"right\">Yogyakarta ".tanggal(date('Y-m-d'))."</td></tr>";
 	$table .= "<tr><td align=\"center\">Dosen PA</td><td width=\"350px\" align=\"right\">Mahasiswa yang Bersangkutan</td></tr>";
 	$table .= "<tr><td colspan=2><br /></td></tr>";
-	$table .= "<tr><td align=\"center\">".$this->get_name($item->pa)."</td><td align=\"center\"  style=\"padding-left: 165px; \">".$item->name."</td></tr>";
-	$table .= "<tr><td align=\"center\">NIP ".$this->get_nip($item->pa)."</td><td align=\"center\"  style=\"padding-left: 165px; \">NIM ".$item->nim."</td></tr>";
+	$table .= "<tr><td align=\"center\">".$this->get_name($item->pa)."</td><td align=\"center\"  style=\"padding-left: 100px; \">".$item->name."</td></tr>";
+	$table .= "<tr><td align=\"center\">NIP ".$this->get_nip($item->pa)."</td><td align=\"center\"  style=\"padding-left: 100px; \">NIM ".$item->nim."</td></tr>";
 	$table .= "<tr><td colspan=2 align=\"center\">Mengetahui, <br />Pembentu Dekan I</td></tr>";
 	//$table .= "<tr><td colspan=4 align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/sunar-ttd.png\" width=\"100\"></td></tr>";
 	$table .= "<tr><td colspan=2 align=\"center\"><br /></td></tr>";
@@ -478,7 +478,36 @@ class Admin extends Admin_Controller {
 	    
     }
     
-
+	public function report(){
+		
+	}
+	
+	public function decree(){
+		$data= $this->ym->get_yudisium();
+		$this->template
+			->title($this->module_details['name'], lang('yudisium_decree'))
+			->append_js('module::jquery.printPage.js')
+			->set('data', $data)
+			->build('admin/decree');
+	}
+   public function cetak_sk($date){
+   	$style  = "
+		    <title>Surat Keputusan Dekan</title>
+		    <style type=\"text/css\" >
+		    body {
+		    height: 842px;
+		    width: 595px;
+		    margin-left: auto;
+		    margin-right: auto;
+		    }
+		    </style>";
+	$table  = "<table style=\"font-size:15px;\">";
+	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIKU <br>NIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	$table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR :    TAHUN  <br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
+	$table .= "</tabel>";
+	echo $style;
+	echo $table;			
+   }
    public function get_printed($id=0)
     {
 	$result=$this->ym->get_print($id);

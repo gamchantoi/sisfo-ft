@@ -29,6 +29,10 @@ class Yudisium_m extends MY_Model {
 		$this->db->insert('default_printed');
 	}
     
+	function get_yudisium()
+	{
+		return $this->db->select('DISTINCT(yudisium_date)')->get('yudisium')->result();
+	}
     function get_religion($id)
     {
         $result = $this->db->select('id,name')->where('id',$id)->get('religions')->row();
