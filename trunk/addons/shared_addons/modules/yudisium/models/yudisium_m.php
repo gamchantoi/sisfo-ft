@@ -17,7 +17,7 @@ class Yudisium_m extends MY_Model {
     function get_print($id)
     {
         $this->db->select('id,date')->where('id_parrent',$id);
-        $this->db->where('code','1')->order_by('date','ASC');
+        $this->db->where('code','4')->order_by('date','ASC');
         return $this->db->get('printed')->result();
     }
 	
