@@ -3,7 +3,7 @@
   $(document).ready(function() {
     $(".cetak").printPage();
   });
-  </script>
+</script>
 <section class="title">
 	<h4><?php echo lang('yudisium_title'); ?></h4>
 </section>
