@@ -524,7 +524,9 @@ class Admin extends Admin_Controller {
 	$table .= "<tr><td>Ketiga</td><td></td>:</td><td colspan=3>Keputusan ini berlaku sejak ditetapkan.</td></tr>";
 	$table .= "<tr><td>Keempat</td><td></td>:</td><td colspan=3>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
 	$table .= "<tr><td colspan=5 align='right'>Ditetapkan di :  Yogyakarta<br><u>Pada tanggal :  </u><br>Dekan,Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
-	
+	$table .= "<tr><td>Tembusan Yth. </td><td>:</td><td colspan=3></td></tr>";
+	$table .= "<tr><td><td></tr>";
+	$table .= "<tr><td>Dibuat Oleh:</td><td>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td>Diperiksa Oleh</td></tr>";
 	//$table .= "<table>";
 	$table .= "</table>";
 	echo $style;
