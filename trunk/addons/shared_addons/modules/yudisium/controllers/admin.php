@@ -518,6 +518,13 @@ class Admin extends Admin_Controller {
 	$table .= "<tr><td colspan=3 align='right'>7.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Nomor 01 Tahun 2011;</td></tr>";
 	$table .= "<tr><td colspan=3 align='right' valign=\"top\">8.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Universitas Negeri Yogyakarta : <br>a. Nomor 207 Tahun 2000; &nbsp;&nbsp;&nbsp;c. Nomor 297 Tahun 2006 <br>b. Nomor 303 Tahun 2000; &nbsp;&nbsp;&nbsp;d. Nomor: 1160/UN34/KP/2011</td></tr>";
 	$table .= "<tr><td colspan=5 align='center'><b>MEMUTUSKAN</b></td></tr>";
+	$table .= "<tr><td>Menetapkan</td><td></td>:</td><td colspan=3></td></tr>";
+	$table .= "<tr><td>Pertama</td><td></td>:</td><td colspan=3>Yudisium Mahasiswa Program Diploma-3 (D-3) dan Strata-1 (S-1) Fakultas Teknik Universitas Negeri Yogyakarta Periode yang nama-namanya seperti tersebut pada lampiran 1 dan lampiran 2 Keputusan ini.</td></tr>";
+	$table .= "<tr><td>Kedua</td><td></td>:</td><td colspan=3>Mahasiswa yang namanya seperti tersebut pada diktum Pertama tersebut di atas berhak mengikuti wisuda dalam Upacara Wisuda Universitas Negeri Yogyakarta sesuai dengan ketentuan yang berlaku.</td></tr>";
+	$table .= "<tr><td>Ketiga</td><td></td>:</td><td colspan=3>Keputusan ini berlaku sejak ditetapkan.</td></tr>";
+	$table .= "<tr><td>Keempat</td><td></td>:</td><td colspan=3>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
+	$table .= "<tr><td colspan=5 align='right'>Ditetapkan di :  Yogyakarta<br><u>Pada tanggal :  </u><br>Dekan,Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
+	
 	//$table .= "<table>";
 	$table .= "</table>";
 	echo $style;
