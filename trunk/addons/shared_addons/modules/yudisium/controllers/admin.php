@@ -500,33 +500,43 @@ class Admin extends Admin_Controller {
 		    margin-left: auto;
 		    margin-right: auto;
 		    }
+		    tr.yellow td {
+			border: 1px solid #FB7A31;
+			font-size:70%;
+			}
+			tr.smaller td{
+				font-size:80%;
+				font-weight: bold;
+			}
 		    </style>";
 	$table  = "<table style=\"font-size:15px;\">";
-	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIKU <br>NIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIK <br>NIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	$table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR :    TAHUN  <br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
 	$table .= "PERIODE <br><br> DEKAN FAKULTAS TEKNIK <br> UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
 	$table .= "</tabel>";
 	$table .= "<table>";
-	$table .= "<tr><td valign=\"top\">Menimbang</td><td valign=\"top\">:</td><td valign=\"top\">a.</td><td style=\"padding-left: 10px; \">bahwa sehubungan dengan telah selesainya studi beberapa mahasiswa Fakultas Teknik Universitas Negeri Yogyakarta Program Diploma-3 (D-3) dan Strata-1 (S-1) dipandang perlu untuk diyudisiumkan.</td></tr>";
-	$table .= "<tr><td></td><td></td><td valign=\"top\">b.</td><td style=\"padding-left: 10px; \">bahwa untuk keperluan seperti tersebut di atas perlu ditetapkan dengan keputusan Dekan</td></tr>";
-	$table .= "<tr><td valign=\"top\">Mengingat</td><td>:</td><td valign=\"top\">1.</td><td style=\"padding-left: 10px; \">Undang-undang RI Nomor 20 Tahun 2003;</td></tr>";
-	$table .= "<tr><td colspan=3 align='right'>2.</td><td style=\"padding-left: 10px; \">Peraturan Pemerintah RI Nomor 60 Tahun 1999;</td></tr>";
-	$table .= "<tr><td colspan=3 align='right'>3.</td><td style=\"padding-left: 10px; \">Keputusan Presiden RI : <br>a. Nomor 93 Tahun 1999<br>b. Nomor 240/M Tahun 2003;</td></tr>";
-	$table .= "<tr><td colspan=3 align='right'>4.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 23 Tahun 2011;</td></tr>";
-	$table .= "<tr><td colspan=3 align='right'>5.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 34 Tahun 2011;</td></tr>";
-	$table .= "<tr><td colspan=3 align='right'>6.</td><td style=\"padding-left: 10px; \">Keputusan Rektor IKIP YOGYAKARTA Nomor 024 Tahun 1998;</td></tr>";
-	$table .= "<tr><td colspan=3 align='right'>7.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Nomor 01 Tahun 2011;</td></tr>";
-	$table .= "<tr><td colspan=3 align='right' valign=\"top\">8.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Universitas Negeri Yogyakarta : <br>a. Nomor 207 Tahun 2000; &nbsp;&nbsp;&nbsp;c. Nomor 297 Tahun 2006 <br>b. Nomor 303 Tahun 2000; &nbsp;&nbsp;&nbsp;d. Nomor: 1160/UN34/KP/2011</td></tr>";
-	$table .= "<tr><td colspan=5 align='center'><b>MEMUTUSKAN</b></td></tr>";
-	$table .= "<tr><td>Menetapkan</td><td></td>:</td><td colspan=3></td></tr>";
-	$table .= "<tr><td>Pertama</td><td></td>:</td><td colspan=3>Yudisium Mahasiswa Program Diploma-3 (D-3) dan Strata-1 (S-1) Fakultas Teknik Universitas Negeri Yogyakarta Periode yang nama-namanya seperti tersebut pada lampiran 1 dan lampiran 2 Keputusan ini.</td></tr>";
-	$table .= "<tr><td>Kedua</td><td></td>:</td><td colspan=3>Mahasiswa yang namanya seperti tersebut pada diktum Pertama tersebut di atas berhak mengikuti wisuda dalam Upacara Wisuda Universitas Negeri Yogyakarta sesuai dengan ketentuan yang berlaku.</td></tr>";
-	$table .= "<tr><td>Ketiga</td><td></td>:</td><td colspan=3>Keputusan ini berlaku sejak ditetapkan.</td></tr>";
-	$table .= "<tr><td>Keempat</td><td></td>:</td><td colspan=3>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
-	$table .= "<tr><td colspan=5 align='right'>Ditetapkan di :  Yogyakarta<br><u>Pada tanggal :  </u><br>Dekan,Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
-	$table .= "<tr><td>Tembusan Yth. </td><td>:</td><td colspan=3></td></tr>";
-	$table .= "<tr><td><td></tr>";
-	$table .= "<tr><td>Dibuat Oleh:</td><td>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td>Diperiksa Oleh</td></tr>";
+	$table .= "<tr class='smaller'><td valign=\"top\">Menimbang</td><td valign=\"top\">:</td><td valign=\"top\">a.</td><td style=\"padding-left: 10px; \">bahwa sehubungan dengan telah selesainya studi beberapa mahasiswa Fakultas Teknik Universitas Negeri Yogyakarta Program Diploma-3 (D-3) dan Strata-1 (S-1) dipandang perlu untuk diyudisiumkan.</td></tr>";
+	$table .= "<tr class='smaller'><td></td><td></td><td valign=\"top\">b.</td><td style=\"padding-left: 10px; \">bahwa untuk keperluan seperti tersebut di atas perlu ditetapkan dengan keputusan Dekan</td></tr>";
+	$table .= "<tr class='smaller'><td valign=\"top\">Mengingat</td><td>:</td><td valign=\"top\">1.</td><td style=\"padding-left: 10px; \">Undang-undang RI Nomor 20 Tahun 2003;</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=3 align='right'>2.</td><td style=\"padding-left: 10px; \">Peraturan Pemerintah RI Nomor 60 Tahun 1999;</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=3 align='right'>3.</td><td style=\"padding-left: 10px; \">Keputusan Presiden RI : <br>a. Nomor 93 Tahun 1999<br>b. Nomor 240/M Tahun 2003;</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=3 align='right'>4.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 23 Tahun 2011;</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=3 align='right'>5.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 34 Tahun 2011;</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=3 align='right'>6.</td><td style=\"padding-left: 10px; \">Keputusan Rektor IKIP YOGYAKARTA Nomor 024 Tahun 1998;</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=3 align='right'>7.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Nomor 01 Tahun 2011;</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=3 align='right' valign=\"top\">8.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Universitas Negeri Yogyakarta : <br>a. Nomor 207 Tahun 2000; &nbsp;&nbsp;&nbsp;c. Nomor 297 Tahun 2006 <br>b. Nomor 303 Tahun 2000; &nbsp;&nbsp;&nbsp;d. Nomor: 1160/UN34/KP/2011</td></tr>";
+	$table .= "</table>";
+	$table .= "<table>";
+	$table .= "<tr><td colspan=4 align='center'><b>MEMUTUSKAN</b></td></tr>";
+	$table .= "<tr class='smaller'><td>Menetapkan</td><td>:</td><td colspan=4></td></tr>";
+	$table .= "<tr class='smaller'><td valign='top'>Pertama</td><td valign='top'>:</td><td></td><td colspan=2>Yudisium Mahasiswa Program Diploma-3 (D-3) dan Strata-1 (S-1) Fakultas Teknik Universitas Negeri Yogyakarta Periode yang nama-namanya seperti tersebut pada lampiran 1 dan lampiran 2 Keputusan ini.</td></tr>";
+	$table .= "<tr class='smaller'><td valign='top'>Kedua</td><td valign='top'>:</td><td></td><td colspan=2>Mahasiswa yang namanya seperti tersebut pada diktum Pertama tersebut di atas berhak mengikuti wisuda dalam Upacara Wisuda Universitas Negeri Yogyakarta sesuai dengan ketentuan yang berlaku.</td></tr>";
+	$table .= "<tr class='smaller'><td valign='top'>Ketiga</td><td valign='top'>:</td><td></td><td colspan=2>Keputusan ini berlaku sejak ditetapkan.</td></tr>";
+	$table .= "<tr class='smaller'><td valign='top'>Keempat</td><td valign='top'>:</td><td></td><td colspan=2>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=5 align='right'>Ditetapkan di :  Yogyakarta<br><u>Pada tanggal :  </u><br>Dekan,Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=3>Tembusan Yth. </td><td colspan=2>:</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=5>1. Rektor <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td></tr>";
+	$table .= "<tr class='yellow'><td valign='top'>Dibuat Oleh </td><td valign='top'>:</td><td></td><td align='center'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh</td></tr>";
 	//$table .= "<table>";
 	$table .= "</table>";
 	echo $style;
@@ -539,7 +549,7 @@ class Admin extends Admin_Controller {
     }
    public function get_religion($id)
    {
-	$result = $this->ym->get_religion($id);
+	$result = $this->ym>get_religion($id);
 	return $result;
    }
 
