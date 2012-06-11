@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Your description goes here." />
+	<title>Frontium</title>
+	<link rel="shortcut icon" href="img/favicon.ico" />
+	<link rel="stylesheet" href="css/screen.css" />
+	<link rel="stylesheet" href="css/jquery.fancybox-1.3.4.css" />
+	
+	<!-- Styleswitcher CSS -->
+	<link rel="stylesheet" href="css/theme-1.css" title="1" />
+	<link rel="alternate stylesheet" href="css/theme-2.css" title="2" />
+	<link rel="alternate stylesheet" href="css/theme-3.css" title="3" />
+	<link rel="alternate stylesheet" href="css/theme-4.css" title="4" />
+	<link rel="alternate stylesheet" href="css/theme-5.css" title="5" />
+	
+	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+<body id="home">
+	<header>
+		<div id="header-inner">
+			<!-- The name of your website -->
+			<a href="index-2.html" class="logo">Frontium</a>
+
+			<!-- Main navigation -->
+			<nav>
+				<ul>
+					<li><a href="index-2.html">Home</a></li>
+					<li><a href="pricing.html">Pricing</a></li>
+					<li><a href="styling.html">Drops</a>
+						<ul>
+							<li><a href="styling.html"><img src="img/navi-01.png" alt="" /> Styling demos <span>You can also use icons here</span></a></li>
+							<li><a href="styling.html"><img src="img/navi-02.png" alt="" /> Placerat eleifend <span>Optional description of this link</span></a></li>
+						</ul>
+					</li>
+					<li><a href="#">Style</a>
+						<ul>
+							<li><a href="#" onclick="setActiveStyleSheet('1'); return false;">Linen</a></li>
+							<li><a href="#" onclick="setActiveStyleSheet('2'); return false;">Wood</a></li>
+							<li><a href="#" onclick="setActiveStyleSheet('3'); return false;">Noise</a></li>
+							<li><a href="#" onclick="setActiveStyleSheet('4'); return false;">Carbon</a></li>
+							<li><a href="#" onclick="setActiveStyleSheet('5'); return false;">Solid</a></li>
+						</ul>
+					</li>
+					<li><a href="blog.html">Blog</a></li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</nav>
+			
+			<!-- Secondary navigation -->
+			<ul id="sec-navi">
+				<li><a href="#" class="register">Register</a></li>
+				<li><a href="#login" class="fancybox signin"><span>Sign in</span></a></li>
+			</ul>
+			
+			<!-- Search -->
+			<form action="#" method="post" id="search">
+				<input type="text" name="s" placeholder="Search..." />
+				<button type="submit" name="submit">Go</button>
+			</form>
+		</div><!-- /header-inner -->
+	</header>
+	
+	<div class="wrapper">
+		<div id="slides">
+			<div class="slides_container">
+				<div class="slide">
+					<img src="img/slider-01.png" alt="" class="slide-image" />
+				</div><!-- /slide -->
+
+				<div class="slide">
+					<img src="img/slider-02.png" alt="" class="slide-image" />
+					
+					<div class="one-third">
+						<h2>Donec eu libero sit amet egestas semper quam <strong>Frontium</strong></h2>
+						
+						<p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+						
+						<p><a href="#"><img src="img/app-store.png" alt="" class="right" /></a></p>
+					</div>
+				</div><!-- /slide -->
+				
+				<div class="slide">
+					<img src="img/slider-03.png" alt="" class="slide-image" />
+					
+					<div class="one-third">
+						<h2><strong>Frontium</strong> donec eu libero sit amet quam egestas semper</h2>
+						
+						<p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Habitant morbi tristique senectus et netus egestas semper.</p>
+					</div>
+					
+					<div class="one-third right">	
+						<h2><strong>Mobile App</strong> pellentesque habitant morbi tristique?</h2>
+						
+						<p>Libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend.</p>
+						
+						<p><a href="pricing.html" class="button">Plans and Pricing</a></p>
+					</div>
+				</div><!-- /slide -->
+			</div><!-- /slides_container -->
+			
+			<!-- slider arrows -->
+			<a href="#" class="prev">&#8249;</a>
+			<a href="#" class="next">&#8250;</a>
+		</div><!-- /slides -->
+	</div><!-- /wrapper -->
+		
+	<div class="features">
+		<div class="wrapper">
+			<div class="one-fourth">
+				<h3><img src="img/features-01.png" alt="" /> Apple OSX</h3>
+				
+				<p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat.</p>
+			</div>
+			
+			<div class="one-fourth">
+				<h3><img src="img/features-02.png" alt="" /> Windows 7</h3>
+				
+				<p>Libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+			</div>
+
+			<div class="one-fourth">
+				<h3><img src="img/features-03.png" alt="" /> HTML5 and CSS3</h3>
+				
+				<p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat.</p>
+			</div>
+			
+			<div class="one-fourth last">				
+				<h3><img src="img/features-04.png" alt="" /> Android</h3>
+				
+				<p>Aenean ultricies mi vitae est. Mauris placerat eleifend leo. <a href="http://www.youtube.com/watch?v=UIKmSQqp8wY&amp;autoplay=1&amp;hd=1" class="fancybox video">View screencast!</a></p>
+			</div>
+		</div>
+	</div><!-- /features -->
+
+	<div class="wrapper">
+		<div class="one-third">
+			<h2>Pellentesque habitant</h2>
+			
+			<p><img src="img/01.png" alt="" class="right" /> Aenean ultricies mi vitae est. Mauris placerat eleifend leo. <a href="#">Vestibulum tortor</a> quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper quam.</p>
+			
+			<p><a href="styling.html" class="button">Styling Demos</a></p>
+		</div>
+		
+		<div class="one-third">
+			<h2>Powerful and intuitive</h2>
+			
+			<p><img src="img/02.png" alt="" class="right" /> Habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
+			
+			<p><a href="http://themeforest.net/item/frontium-premium-software-and-app/2372185?ref=myTheme" class="button">Purchase Now <span>Only $15</span></a></p>
+		</div>
+		
+		<div class="one-third last">
+			<h2>New in version 1.3</h2>
+			
+			<p><img src="img/03.png" alt="" class="right" /> Netus et malesuada fames ac turpis egestas. Morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, <strong>tempor sit amet</strong>, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</p>
+		</div><div class="clear"></div>
+		
+		<h2>Screenshots</h2>
+		
+		<div class="one-fourth">
+			<a href="img/placeholder.jpg" title="Donec eu libero sit amet quam egestas." rel="tag" class="fancybox"><img src="img/placeholder.jpg" alt="" /></a>
+			
+			<p>Donec eu libero sit amet quam egestas vitae est.</p>
+		</div>
+		
+		<div class="one-fourth">
+			<a href="img/placeholder.jpg" title="Aenean ultricies mi vitae est placerat." rel="tag" class="fancybox"><img src="img/placeholder.jpg" alt="" /></a>
+			
+			<p>Aenean ultricies mi vitae est placerat ultricies.</p>
+		</div>
+
+		<div class="one-fourth">
+			<a href="img/placeholder.jpg" title="Eu libero sit amet quam egestas semper." rel="tag" class="fancybox"><img src="img/placeholder.jpg" alt="" /></a>
+			
+			<p>Eu libero sit amet quam egestas semper amet.</p>
+		</div>
+		
+		<div class="one-fourth last">
+			<a href="img/placeholder.jpg" title="Semper aenean ultricies mi vitae est." rel="tag" class="fancybox"><img src="img/placeholder.jpg" alt="" /></a>
+			
+			<p>Semper aenean ultricies mi vitae est aenean libero sit amet.</p>
+		</div><div class="clear"></div>
+	</div><!-- /wrapper -->
+	
+	<footer>
+		<div class="wrapper">
+			<div class="one-third">
+				<h3>About</h3>
+				
+				<p>Semper aenean tempor sit amet, ante. Aenean consectetur mi vitae est. Mauris placerat eleifend leo. Ultricies eget, tempor sit amet, ante.</p>
+				
+				<ul>
+					<li>76 Trinity Place, New York</li>
+					<li>212.610.8900</li>
+					<li><a href="mailto:">support@frontium.com</a></li>
+				</ul>
+
+				<ul id="social">
+					<li><a href="#" id="dribbble">Dribbble</a></li>
+					<li><a href="#" id="facebook">Facebook</a></li>
+					<li><a href="#" id="flickr">Flickr</a></li>
+					<li><a href="#" id="twitter">Twitter</a></li>
+					<li><a href="#" id="rss">RSS</a></li>
+				</ul>
+			</div>
+			
+			<div class="one-third">
+				<h3>Latest from Twitter</h3>
+				
+				<div id="tweet"><p><img src="img/spinner.gif" alt="" /> Please wait while the latest tweets load&hellip;</p></div>
+			</div>
+			
+			<div class="one-third last">
+				<h3>Newsletter</h3>
+			
+				<p>Subscribe to our newsletter and get latest news and exclusive offers straight to your inbox. No spam, we promise. You can unsubscribe anytime.</p>
+				
+				<form action="http://live.bobosh.com/frontium/newsletter.php" method="post" id="newsletter">
+					<input type="text" name="email" size="30" placeholder="Your email here..." class="required email" />
+					<button type="submit" name="subscribe">Sign up</button>
+				</form>
+			</div>
+				
+			<div id="copyright">
+				<p>Copyright &copy; 2012 Frontium</p>
+				
+				<a href="#header-inner" class="top">Scroll to top</a>
+			</div><!-- /copyright -->
+		</div><!-- /wrapper -->
+	</footer>
+	
+	<!-- Content for the login modal window -->
+	<div style="display:none">
+		<div id="login">
+			<form method="post" id="login-form" action="#">
+				<label>Username or email</label>
+				<input name="username" type="text" value="username" />
+
+				<label>Password <a href="#">Forgot?</a></label>
+				<input name="password" type="password" value="12345678" />
+				
+				<button id="login_submit" value="Login" type="submit">Login</button>
+			</form>
+		</div><!-- /login -->
+	</div>
+
+	<!-- JavaScript -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script src="js/superfish.js"></script>
+	<script src="js/twitter.min.js"></script>
+	<script src="js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script src="js/jquery.validate.min.js"></script>
+	<script src="js/slides.min.jquery.js"></script>
+	<script src="js/jquery.scrollTo-1.4.2-min.js"></script>
+	<script src="js/styleswitcher.js"></script>
+	<script src="js/onload.js"></script>
+	
+</body>
+
+</html>

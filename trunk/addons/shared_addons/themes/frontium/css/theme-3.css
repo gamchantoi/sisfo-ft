@@ -1,0 +1,37 @@
+/* Overall background color and image */
+html, #login {background-color:#f5f5f5;}
+body {background-image:url(../img/bg/body-3.jpg);}
+
+/* Background and border color for drop-down navigation */
+nav ul ul {background-color:#181C1F;border-color:#0078ff;}
+
+/* Footer background color */
+footer, footer h3 span {background-color:#181C1F;}
+
+/* Primary navigation color */
+nav>ul>li>a {color:#ddd;}
+
+/* Header colors */
+h1, h1 a {color:#181C1F;}
+h2, h2 a, h3, h4, .pricing thead th {color:#212528;}
+
+/* Color for the links */
+p a, .wrapper ul li a {color:#0078ff;}
+
+/* Navigation arrows in the slider */
+#slides .next, #slides .prev {color:#0078ff;}
+
+/* Default link buttons */
+.button {background-color:#0078ff;border-color:#0078ff;}
+
+/* Search input and button */
+#search input, #search button {background-color:#212528;}
+
+/* Darker text, footer links, slider etc. */
+#slides h2, #slides, footer, footer h3, footer .wrapper p a, footer .wrapper ul li a, #newsletter input {color:#ddd;}
+footer p a, footer ul li a {border-color:#575A5C;}
+footer p span, nav ul ul li a span, #sec-navi a, #search input, #copyright, #copyright a {color:#878A8C;}
+
+/* Selection colors */
+::-moz-selection {color:#fff;background:#0078ff;}
+::selection {color:#fff;background:#0078ff;}
