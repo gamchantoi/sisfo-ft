@@ -203,19 +203,19 @@ class Admin extends Admin_Controller {
 	{
 	    
 	    $id=$this->ym->insert(array(
-						'name'	            => $this->input->post('name'),
+			'name'	            => $this->input->post('name'),
                         'date'              => date('Y-m-d H:i:s'),
-						'nim'	            => $this->input->post('nim'),
-						'department'        => $this->input->post('department'),
-						'pa'	            => $this->input->post('pa'),
-						'place_of_birth'    => $this->input->post('pob'),
+			'nim'	            => $this->input->post('nim'),
+			'department'        => $this->input->post('department'),
+			'pa'	            => $this->input->post('pa'),
+			'place_of_birth'    => $this->input->post('pob'),
                         'date_of_birth'     => $this->input->post('dob'),
                         'religion'          => $this->input->post('religion'),
                         'sex'               => $this->input->post('sex'),
                         'meriage'           => $this->input->post('meriage'),
                         'address'           => $this->input->post('address'),
-						'parrent'   	    => $this->input->post('parrent'),
-						'parrent_address'   => $this->input->post('parrent_address'),
+			'parrent'   	    => $this->input->post('parrent'),
+			'parrent_address'   => $this->input->post('parrent_address'),
                         'parrental'         => $this->input->post('parrental'),
                         'soo'               => $this->input->post('soo'),
                         'school_address'    => $this->input->post('school_address'),
@@ -274,19 +274,19 @@ class Admin extends Admin_Controller {
 		)));
 	if($this->form_validation->run()){
 	    $result = $this->ym->update($id,array(
-						'name'	            => $this->input->post('name'),
+			'name'	            => $this->input->post('name'),
                         'date'              => $this->input->post('date'),
-						'nim'	            => $this->input->post('nim'),
-						'department'        => $this->input->post('department'),
-						'pa'	            => $this->input->post('pa'),
-						'place_of_birth'    => $this->input->post('pob'),
+			'nim'	            => $this->input->post('nim'),
+			'department'        => $this->input->post('department'),
+			'pa'	            => $this->input->post('pa'),
+			'place_of_birth'    => $this->input->post('pob'),
                         'date_of_birth'     => $this->input->post('dob'),
                         'religion'          => $this->input->post('religion'),
                         'sex'               => $this->input->post('sex'),
                         'meriage'           => $this->input->post('meriage'),
                         'address'           => $this->input->post('address'),
-						'parrent'	    	=> $this->input->post('parrent'),
-						'parrent_address'   => $this->input->post('parrent_address'),
+			'parrent'	    => $this->input->post('parrent'),
+			'parrent_address'   => $this->input->post('parrent_address'),
                         'parrental'         => $this->input->post('parrental'),
                         'soo'               => $this->input->post('soo'),
                         'school_address'    => $this->input->post('school_address'),
@@ -535,7 +535,7 @@ class Admin extends Admin_Controller {
 	$table .= "<tr class='smaller'><td valign='top'>Keempat</td><td valign='top'>:</td><td></td><td colspan=2>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
 	$table .= "<tr class='smaller'><td colspan=5 align='right'>Ditetapkan di :  Yogyakarta<br><u>Pada tanggal :  </u><br>Dekan,Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
 	$table .= "<tr class='smaller'><td colspan=3>Tembusan Yth. </td><td colspan=2>:</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=5>1. Rektor <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td></tr>";
+	$table .= "<tr class='smaller'><td colspan=5>1. Rektor  7.Kasubag Registrasi dan Statistik<br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td></tr>";
 	$table .= "<tr class='yellow'><td valign='top'>Dibuat Oleh </td><td valign='top'>:</td><td></td><td align='center'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh</td></tr>";
 	//$table .= "<table>";
 	$table .= "</table>";
