@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Your description goes here." />
+	<title>Styling | Frontium</title>
+	<link rel="shortcut icon" href="img/favicon.ico" />
+	<link rel="stylesheet" href="css/screen.css" />
+	<link rel="stylesheet" href="css/jquery.fancybox-1.3.4.css" />
+	
+	<!-- Styleswitcher CSS -->
+	<link rel="stylesheet" href="css/theme-1.css" title="1" />
+	<link rel="alternate stylesheet" href="css/theme-2.css" title="2" />
+	<link rel="alternate stylesheet" href="css/theme-3.css" title="3" />
+	<link rel="alternate stylesheet" href="css/theme-4.css" title="4" />
+	<link rel="alternate stylesheet" href="css/theme-5.css" title="5" />
+	
+	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+<body>
+	<header>
+		<div id="header-inner">
+			<!-- The name of your website -->
+			<a href="index-2.html" class="logo">Frontium</a>
+
+			<!-- Main navigation -->
+			<nav>
+				<ul>
+					<li><a href="index-2.html">Home</a></li>
+					<li><a href="pricing.html">Pricing</a></li>
+					<li><a href="styling.html">Drops</a>
+						<ul>
+							<li><a href="styling.html"><img src="img/navi-01.png" alt="" /> Styling demos <span>You can also use icons here</span></a></li>
+							<li><a href="styling.html"><img src="img/navi-02.png" alt="" /> Placerat eleifend <span>Optional description of this link</span></a></li>
+						</ul>
+					</li>
+					<li><a href="#">Style</a>
+						<ul>
+							<li><a href="#" onclick="setActiveStyleSheet('1'); return false;">Linen</a></li>
+							<li><a href="#" onclick="setActiveStyleSheet('2'); return false;">Wood</a></li>
+							<li><a href="#" onclick="setActiveStyleSheet('3'); return false;">Noise</a></li>
+							<li><a href="#" onclick="setActiveStyleSheet('4'); return false;">Carbon</a></li>
+							<li><a href="#" onclick="setActiveStyleSheet('5'); return false;">Solid</a></li>
+						</ul>
+					</li>
+					<li><a href="blog.html">Blog</a></li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</nav>
+			
+			<!-- Secondary navigation -->
+			<ul id="sec-navi">
+				<li><a href="#" class="register">Register</a></li>
+				<li><a href="#login" class="fancybox signin"><span>Sign in</span></a></li>
+			</ul>
+			
+			<!-- Search -->
+			<form action="#" method="post" id="search">
+				<input type="text" name="s" placeholder="Search..." />
+				<button type="submit" name="submit">Go</button>
+			</form>
+		</div><!-- /header-inner -->
+	</header>
+	
+	<div id="pageHeader">
+		<div class="wrapper">
+			<p id="breadcrumbs"><a href="index-2.html">Home</a> <a href="#">Styling demos</a></p>
+			
+			<p>Click the button to see the login window <a href="#login" class="button fancybox">Sign in</a></p>
+		</div><!-- /wrapper -->
+	</div><!-- /pageHeader -->
+		
+	<div class="wrapper">		
+		<div id="main">
+			<h1>Styling demos</h1>
+
+			<p class="ingress">Here are some styling examples you can use with this theme. There are buttons in different colors and a few other elements. By the way this first paragraph is an ingress, which is defined with a CSS class called ingress.</p>
+
+			<h2>Buttons and code</h2>
+			
+			<p><a href="#" class="button blue">Button</a>	<a href="#" class="button red">Button</a> <a href="#" class="button green">Button</a> <a href="#" class="button pink">Button</a> <a href="#" class="button yellow">Button</a> <a href="#" class="button gray">Button</a> <a href="#" class="button black">Button</a></p>
+			
+<pre><code>&lt;a href="#" class="button blue"&gt;Button&lt;/a&gt;</code></pre>
+
+			<h2>Basic grid system</h2>
+
+			<div class="one-half">
+				<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			</div>
+			
+			<div class="one-half last">
+				<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+
+			</div><div class="clear"></div>
+			
+			<div class="one-third">
+				<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			</div>
+			
+			<div class="one-third">
+				<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			</div>
+			
+			<div class="one-third last">
+				<p>Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			</div><div class="clear"></div>
+			
+			<div class="one-fourth">
+				<p>Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			</div>
+			
+			<div class="one-fourth">
+				<p>Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			</div>
+			
+			<div class="one-fourth">
+				<p>Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			</div>
+			
+			<div class="one-fourth last">
+				<p>Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			</div><div class="clear"></div>
+			
+			<h2>Quote, notifications, table</h2>
+
+			<blockquote><p>Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+			
+			<p class="box yellow">Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
+			
+			<p class="box red">&lt;p class="box red"&gt; &hellip; &lt;/p&gt;</p>
+			
+			<p class="box green">&lt;p class="box green"&gt; &hellip; &lt;/p&gt;</p>
+			
+			<p class="box">Tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
+			
+			<table>
+				<thead>
+					<tr>
+						<th></th>
+						<th>One</th>
+						<th>Two</th>
+						<th>Three</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Feature One</td>
+						<td>Lorem</td>
+						<td>Ipsum</td>
+						<td>Dolor</td>
+					</tr> 
+					<tr>
+						<td>Feature Two</td>
+						<td>Lorem</td>
+						<td>Ipsum</td>
+						<td>Dolor</td>
+					</tr>    
+					<tr>
+						<td>Feature Three</td>
+						<td>Lorem</td>
+						<td>Ipsum</td>
+						<td>Dolor</td>
+					</tr>
+
+					<tr>
+						<td>Feature Four</td>
+						<td>Lorem</td>
+						<td>Ipsum</td>
+						<td>Dolor</td>
+					</tr>
+				</tbody>
+			</table>
+		</div><!-- /main -->
+			
+		<aside>
+			<p><img src="img/placeholder.jpg" alt="" width="300" /></p>
+			
+			<h3>Take a look at pricing template</h3>
+
+			<p>This theme also includes template for <a href="pricing.html">plans and pricing page</a>. It can be modified easily to match your needs.</p>
+
+			<p><img src="img/placeholder.jpg" alt="" class="right" width="120" /> Malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Mauris placerat eleifend leo.</p>
+			
+			<p>Pellentesque habitant morbi <strong>tristique senectus et netus</strong> et malesuada fames ac turpis egestas.</p>
+			
+			<p><a href="pricing.html" class="button blue">Plans and Pricing</a></p>
+		</aside>
+	</div><!-- /wrapper -->
+	
+	<footer>
+		<div class="wrapper">
+			<div class="one-third">
+				<h3>About</h3>
+				
+				<p>Semper aenean tempor sit amet, ante. Aenean consectetur mi vitae est. Mauris placerat eleifend leo. Ultricies eget, tempor sit amet, ante.</p>
+				
+				<ul>
+					<li>76 Trinity Place, New York</li>
+					<li>212.610.8900</li>
+					<li><a href="mailto:">support@frontium.com</a></li>
+				</ul>
+
+				<ul id="social">
+					<li><a href="#" id="dribbble">Dribbble</a></li>
+					<li><a href="#" id="facebook">Facebook</a></li>
+					<li><a href="#" id="flickr">Flickr</a></li>
+					<li><a href="#" id="twitter">Twitter</a></li>
+					<li><a href="#" id="rss">RSS</a></li>
+				</ul>
+			</div>
+			
+			<div class="one-third">
+				<h3>Latest from Twitter</h3>
+				
+				<div id="tweet"><p><img src="img/spinner.gif" alt="" /> Please wait while the latest tweets load&hellip;</p></div>
+			</div>
+			
+			<div class="one-third last">
+				<h3>Newsletter</h3>
+			
+				<p>Subscribe to our newsletter and get latest news and exclusive offers straight to your inbox. No spam, we promise. You can unsubscribe anytime.</p>
+				
+				<form action="http://live.bobosh.com/frontium/newsletter.php" method="post" id="newsletter">
+					<input type="text" name="email" size="30" placeholder="Your email here..." class="required email" />
+					<button type="submit" name="subscribe">Sign up</button>
+				</form>
+			</div>
+				
+			<div id="copyright">
+				<p>Copyright &copy; 2012 Frontium</p>
+				
+				<a href="#header-inner" class="top">Scroll to top</a>
+			</div><!-- /copyright -->
+		</div><!-- /wrapper -->
+	</footer>
+	
+	<!-- Content for the login modal window -->
+	<div style="display:none">
+		<div id="login">
+			<form method="post" id="login-form" action="#">
+				<label>Username or email</label>
+				<input name="username" type="text" value="username" />
+
+				<label>Password <a href="#">Forgot?</a></label>
+				<input name="password" type="password" value="12345678" />
+				
+				<button id="login_submit" value="Login" type="submit">Login</button>
+			</form>
+		</div><!-- /login -->
+	</div>
+
+	<!-- JavaScript -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script src="js/superfish.js"></script>
+	<script src="js/twitter.min.js"></script>
+	<script src="js/jquery.fancybox-1.3.4.pack.js"></script>
+	<script src="js/jquery.validate.min.js"></script>
+	<script src="js/slides.min.jquery.js"></script>
+	<script src="js/jquery.scrollTo-1.4.2-min.js"></script>
+	<script src="js/styleswitcher.js"></script>
+	<script src="js/onload.js"></script>
+	
+
+</body>
+
+</html>
