@@ -478,21 +478,62 @@ class Admin extends Admin_Controller {
 	    
     }
     
+	//fungsi rekap data peserta yudisium
     public function report(){
-		
+	    $data= $this->ym->get_yudisium();
+	    $this->template
+			->title($this->module_details['name'], lang('yudisium_decree'))
+			->append_js('module::jquery.printPage.js')
+			->set('data', $data)
+			->build('admin/report');
 	}
 	
+	//
     public function decree(){
-		$data= $this->ym->get_yudisium();
-		$this->template
+	    $data= $this->ym->get_yudisium();
+	    $this->template
 			->title($this->module_details['name'], lang('yudisium_decree'))
 			->append_js('module::jquery.printPage.js')
 			->set('data', $data)
 			->build('admin/decree');
 	}
-   public function cetak_sk($date){
+	
+	//fungsi cetak rekap peserta yudisium D3
+    public function report_d3($date)
+    {
+	$_tanggal 		= tanggal($date);
+	list($tgl,$bln,$thn) 	= explode(" ",$_tanggal);
+	$style  		= "
+				    <title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
+				    <style type=\"text/css\" >
+				    body {
+				    width: 842px;
+				    height: 595px;
+				    margin-left: auto;
+				    margin-right: auto;
+				    }
+				    tr.yellow td {
+					border: 1px solid #FB7A31;
+					font-size:60%;
+					}
+					tr.smaller td{
+						font-size:70%;
+						font-weight: bold;
+					}
+				    </style>";
+	$table	 = "<table>";
+	$table	.= "<tr></tr>";
+	$table	.= "</table>";
+	echo $style;
+	echo $table;
+    }
+    
+	//fungsi cetak surat keputusan dekan
+    public function cetak_sk($date){
+	$_tanggal 		= tanggal($date);
+	list($tgl,$bln,$thn)	= explode(" ",$_tanggal);
    	$style  = "
-		    <title>Surat Keputusan Dekan</title>
+		    <title>Surat Keputusan Dekan Yudisium ".$bln." ".$thn."</title>
 		    <style type=\"text/css\" >
 		    body {
 		    height: 842px;
@@ -511,8 +552,8 @@ class Admin extends Admin_Controller {
 		    </style>";
 	$table  = "<table style=\"font-size:15px;\">";
 	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	$table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR :    TAHUN  <br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
-	$table .= "PERIODE <br><br> DEKAN FAKULTAS TEKNIK <br> UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
+	$table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAHUN  ".$thn."<br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
+	$table .= "PERIODE ".strtoupper($bln)." ".$thn."<br><br> DEKAN FAKULTAS TEKNIK <br> UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
 	$table .= "</tabel>";
 	$table .= "<table>";
 	$table .= "<tr class='smaller'><td valign=\"top\">Menimbang</td><td valign=\"top\">:</td><td valign=\"top\">a.</td><td style=\"padding-left: 10px; \">bahwa sehubungan dengan telah selesainya studi beberapa mahasiswa Fakultas Teknik Universitas Negeri Yogyakarta Program Diploma-3 (D-3) dan Strata-1 (S-1) dipandang perlu untuk diyudisiumkan.</td></tr>";
@@ -539,7 +580,7 @@ class Admin extends Admin_Controller {
 	$table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><u>Pada tanggal : ".tanggal($date)." </u></td></tr>";
 	$table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><img src=\"".base_url().$this->module_details['path']."/img/brur.gif\" height=\"50px\"><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
 	$table .= "<tr class='smaller'><td colspan=2>Tembusan Yth. :</td></tr>";
-	$table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td><td style=\"padding-left: 190px; \">7.Kasubag Registrasi dan Statistik<br>8. Para Pembantu Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
+	$table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td><td style=\"padding-left: 190px; \">7. Kasubag Registrasi dan Statistik<br>8. Para Pembantu Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
 	$table .= "</table>";
 	$table .= "<table>";
 	$table .= "<tr class='yellow'><td width='70px' valign='top'>Dibuat Oleh :<br><br> &nbsp;</td><td align='center' valign='top'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh<br><br>&nbsp;</td></tr>";
@@ -547,17 +588,17 @@ class Admin extends Admin_Controller {
 	$table .= "</table>";
 	echo $style;
 	echo $table;			
-   }
-   public function get_printed($id=0)
+    }
+    public function get_printed($id=0)
     {
 	$result=$this->ym->get_print($id);
 	return $result;
     }
-   public function get_religion($id)
-   {
+    public function get_religion($id)
+    {
 	$result = $this->ym>get_religion($id);
 	return $result;
-   }
+    }
 
    public function get_major($id=0)
    {
