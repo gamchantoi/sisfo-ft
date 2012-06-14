@@ -512,18 +512,23 @@ class Admin extends Admin_Controller {
 				    margin-left: auto;
 				    margin-right: auto;
 				    }
-				    tr.yellow td {
-					border: 1px solid #FB7A31;
-					font-size:60%;
-					}
-					tr.smaller td{
-						font-size:70%;
-						font-weight: bold;
-					}
+				    .smaller{
+					border: 1px solid;
+				    }
+				    .smaller td{
+					border: 1px solid;
+				    }
 				    </style>";
-	$table	 = "<table>";
-	$table	.= "<tr></tr>";
-	$table	.= "</table>";
+	$table  = "<table style=\"font-size:15px;\"  width=\"842px\">";
+	$table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	$table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".$bln."  ".$thn."</td></tr>";
+	$table .= "<tr><td colspan=3><br></td></tr>";
+	$table .= "</tabel>";
+	$table .= "<table  class='smaller'>";
+	$table .= "<tr><td rowspan=\"2\">No Urut</td><td rowspan=\"2\">NIM</td><td rowspan=\"2\">Nama</td><td  rowspan=\"2\">Prodi</td><td rowspan=\"2\">SKS</td><td rowspan=\"2\">IPK</td><td rowspan=\"2\">Predikat</td><td rowspan=\"2\">Mulai</td><td rowspan=\"2\">Yudisium</td><td rowspan=\"2\">Cuti</td><td colspan=\"2\">Masa Studi</td><td  rowspan=\"2\">Lama TA</td><td rowspan=\"2\">Melalui</td><td rowspan=\"2\">Askol</td><td rowspan=\"2\">Tgl lahir</td><td rowspan=\"2\">Umur</td></tr>";
+	$table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	$table .= "<tr><td></td></tr>";
+	$table .= "</table>";
 	echo $style;
 	echo $table;
     }
