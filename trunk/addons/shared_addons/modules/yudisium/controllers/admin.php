@@ -503,6 +503,8 @@ class Admin extends Admin_Controller {
     {
 	$_tanggal 		= tanggal($date);
 	list($tgl,$bln,$thn) 	= explode(" ",$_tanggal);
+	$basewhere		= array('thesis' => 'D3','yudisium_date'=>$date);
+	$data			= $this->ym->get_many_by($basewhere);
 	$style  		= "
 				    <title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
 				    <style type=\"text/css\" >
@@ -531,6 +533,9 @@ class Admin extends Admin_Controller {
 	$table .= "</table>";
 	echo $style;
 	echo $table;
+	echo "<pre>";
+	print_r($data);
+	echo "</pre>";
     }
     
 	//fungsi cetak surat keputusan dekan
