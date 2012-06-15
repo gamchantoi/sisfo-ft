@@ -505,6 +505,7 @@ class Admin extends Admin_Controller {
 	list($tgl,$bln,$thn) 	= explode(" ",$_tanggal);
 	$basewhere		= array('thesis' => 'D3','yudisium_date'=>$date);
 	$data			= $this->ym->get_many_by($basewhere);
+	$i			= 1;
 	$style  		= "
 				    <title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
 				    <style type=\"text/css\" >
@@ -529,7 +530,12 @@ class Admin extends Admin_Controller {
 	$table .= "<table  class='smaller'>";
 	$table .= "<tr><td rowspan=\"2\">No Urut</td><td rowspan=\"2\">NIM</td><td rowspan=\"2\">Nama</td><td  rowspan=\"2\">Prodi</td><td rowspan=\"2\">SKS</td><td rowspan=\"2\">IPK</td><td rowspan=\"2\">Predikat</td><td rowspan=\"2\">Mulai</td><td rowspan=\"2\">Yudisium</td><td rowspan=\"2\">Cuti</td><td colspan=\"2\">Masa Studi</td><td  rowspan=\"2\">Lama TA</td><td rowspan=\"2\">Melalui</td><td rowspan=\"2\">Askol</td><td rowspan=\"2\">Tgl lahir</td><td rowspan=\"2\">Umur</td></tr>";
 	$table .= "<tr><td>Sm</td><td>Th</td></tr>";
-	$table .= "<tr><td></td></tr>";
+	foreach ($data as $d)
+	{
+	    $table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>predikat</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>sm</td><td>th</td><td>lama</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->get_age($d->date_of_birth)."</td></tr>";
+	    $i++;
+	}
+	
 	$table .= "</table>";
 	echo $style;
 	echo $table;
@@ -693,6 +699,18 @@ class Admin extends Admin_Controller {
 	{
 		$this->form_validation->set_message('_check_nim', sprintf(lang('yudisium_already_exist_error'), lang('yudisium_nim_label')));
 		return $this->ym->check_exists('nim', $nim, $id);			
+	}
+	
+    public function get_age($umur){
+	list($hari,$bulan, $tahun) = explode('-', $umur);
+	$thn = date('y') - $tahun;
+	$bln = date('m') - $bulan;
+	$hri = date('d') - $hari;
+	
+	if($hri < 0 || $bln < 0){
+	$thn–;
+	}
+	return $thn;
 	}
     
 }
