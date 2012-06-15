@@ -163,7 +163,8 @@ class Admin extends Admin_Controller {
 		$this->data->religions= $this->ym->get_religions();
 	}
     
-    public function index() {
+    public function index()
+	{
 		$base_where = array('printed' => 'all');
 
 		//add post values to base_where if f_module is posted
@@ -195,288 +196,289 @@ class Admin extends Admin_Controller {
 			->set('data', $data);
 
 		$this->input->is_ajax_request() ? $this->template->build('admin/tables/yudis', $this->data) : $this->template->build('admin/index', $this->data);
-    }
-    
-    public function create() {
-	$this->form_validation->set_rules($this->v_rules);
-	if($this->form_validation->run())
-	{
-	    
-	    $id=$this->ym->insert(array(
-			'name'	            => $this->input->post('name'),
-                        'date'              => date('Y-m-d H:i:s'),
-			'nim'	            => $this->input->post('nim'),
-			'department'        => $this->input->post('department'),
-			'pa'	            => $this->input->post('pa'),
-			'place_of_birth'    => $this->input->post('pob'),
-                        'date_of_birth'     => $this->input->post('dob'),
-                        'religion'          => $this->input->post('religion'),
-                        'sex'               => $this->input->post('sex'),
-                        'meriage'           => $this->input->post('meriage'),
-                        'address'           => $this->input->post('address'),
-			'parrent'   	    => $this->input->post('parrent'),
-			'parrent_address'   => $this->input->post('parrent_address'),
-                        'parrental'         => $this->input->post('parrental'),
-                        'soo'               => $this->input->post('soo'),
-                        'school_address'    => $this->input->post('school_address'),
-                        'sma'               => $this->input->post('sma'),
-                        'graduation'        => $this->input->post('graduation'),
-                        'ipk'               => $this->input->post('ipk'),
-                        'sks'               => $this->input->post('sks'),
-                        'thesis'            => $this->input->post('thesis'),
-                        'thesis_title'      => $this->input->post('thesis_title'),
-                        'lecture'           => $this->input->post('lecture'),
-                        'start'             => $this->input->post('start'),
-                        'finish'            => $this->input->post('finish'),
-                        'yudisium_date'     => $this->input->post('yudisium_date'),
-                        'phone'             => $this->input->post('phone'),
-                        'email'             => $this->input->post('email')
-						    ));
-                                                    
-	    if ($id)
-	    {
-		$this->pyrocache->delete_all('ym');
-		$this->session->set_flashdata(array('success' => sprintf(lang('yudisium_add_success'), $this->input->post('title'))));
-			
-	    }
-	    else
-	    {
-		$this->session->set_flashdata('error', $this->lang->line('yudisium_add_error'));
-	    }
-	    
-	    $this->input->post('btnAction') == 'save_exit' ? redirect('admin/yudisium') : redirect('admin/yudisium/edit/' . $id);
-	}else{
-	    foreach ($this->v_rules as $key => $field)
-			{
-				$data->$field['field'] = set_value($field['field']);
-			}
 	}
-    	$this->template
-			->title($this->module_details['name'], lang('yudisium_create_title'))
-			->append_metadata($this->load->view('fragments/wysiwyg', $this->data, TRUE))
-			->append_js('module::jquery.tagsinput.min.js')
-			->append_js('module::blog_form.js')
-			->append_css('module::jquery.tagsinput.css')
-			->set('data', $data)
-			->build('admin/form');
-    }
-
-    public function edit($id=0)
-    {
-	$id OR redirect('admin/yudisium');
-	$data= $this->ym->get($id);
-	$this->form_validation->set_rules(array_merge($this->v_rules, array(
-			'title' => array(
-				'field' => 'nim',
-				'label' => 'lang:yudisium_nim_label',
-				'rules' => 'trim|htmlspecialchars|required|max_length[100]|callback__check_nim['.$id.']'
-			),
-		)));
-	if($this->form_validation->run()){
-	    $result = $this->ym->update($id,array(
-			'name'	            => $this->input->post('name'),
-                        'date'              => $this->input->post('date'),
-			'nim'	            => $this->input->post('nim'),
-			'department'        => $this->input->post('department'),
-			'pa'	            => $this->input->post('pa'),
-			'place_of_birth'    => $this->input->post('pob'),
-                        'date_of_birth'     => $this->input->post('dob'),
-                        'religion'          => $this->input->post('religion'),
-                        'sex'               => $this->input->post('sex'),
-                        'meriage'           => $this->input->post('meriage'),
-                        'address'           => $this->input->post('address'),
-			'parrent'	    => $this->input->post('parrent'),
-			'parrent_address'   => $this->input->post('parrent_address'),
-                        'parrental'         => $this->input->post('parrental'),
-                        'soo'               => $this->input->post('soo'),
-                        'school_address'    => $this->input->post('school_address'),
-                        'sma'               => $this->input->post('sma'),
-                        'graduation'        => $this->input->post('graduation'),
-                        'ipk'               => $this->input->post('ipk'),
-                        'sks'               => $this->input->post('sks'),
-                        'thesis'            => $this->input->post('thesis'),
-                        'thesis_title'      => $this->input->post('thesis_title'),
-                        'lecture'           => $this->input->post('lecture'),
-                        'start'             => $this->input->post('start'),
-                        'finish'            => $this->input->post('finish'),
-                        'yudisium_date'     => $this->input->post('yudisium_date'),
-                        'phone'             => $this->input->post('phone'),
-                        'email'             => $this->input->post('email')
-						    ));
-	    if ($result)
+    
+    public function create()
+	{
+	    $this->form_validation->set_rules($this->v_rules);
+	    if($this->form_validation->run())
+	    {
+		
+		$id=$this->ym->insert(array(
+			    'name'	            => $this->input->post('name'),
+			    'date'              => date('Y-m-d H:i:s'),
+			    'nim'	            => $this->input->post('nim'),
+			    'department'        => $this->input->post('department'),
+			    'pa'	            => $this->input->post('pa'),
+			    'place_of_birth'    => $this->input->post('pob'),
+			    'date_of_birth'     => $this->input->post('dob'),
+			    'religion'          => $this->input->post('religion'),
+			    'sex'               => $this->input->post('sex'),
+			    'meriage'           => $this->input->post('meriage'),
+			    'address'           => $this->input->post('address'),
+			    'parrent'   	    => $this->input->post('parrent'),
+			    'parrent_address'   => $this->input->post('parrent_address'),
+			    'parrental'         => $this->input->post('parrental'),
+			    'soo'               => $this->input->post('soo'),
+			    'school_address'    => $this->input->post('school_address'),
+			    'sma'               => $this->input->post('sma'),
+			    'graduation'        => $this->input->post('graduation'),
+			    'ipk'               => $this->input->post('ipk'),
+			    'sks'               => $this->input->post('sks'),
+			    'thesis'            => $this->input->post('thesis'),
+			    'thesis_title'      => $this->input->post('thesis_title'),
+			    'lecture'           => $this->input->post('lecture'),
+			    'start'             => $this->input->post('start'),
+			    'finish'            => $this->input->post('finish'),
+			    'yudisium_date'     => $this->input->post('yudisium_date'),
+			    'phone'             => $this->input->post('phone'),
+			    'email'             => $this->input->post('email')
+							));
+							
+		if ($id)
 		{
-		    $this->session->set_flashdata(array('success' => sprintf(lang('yudisium_edit_success'), $this->input->post('name'))));
+		    $this->pyrocache->delete_all('ym');
+		    $this->session->set_flashdata(array('success' => sprintf(lang('yudisium_add_success'), $this->input->post('title'))));
+			    
 		}
 		else
-		    {
-			$this->session->set_flashdata('error', $this->lang->line('yudisium_edit_error'));
-		    }
-
-			// Redirect back to the form or main page
-			$this->input->post('btnAction') == 'save_exit' ? redirect('admin/yudisium') : redirect('admin/yudisium/edit/' . $id);
-	}
-	// Go through all the known fields and get the post values
-		foreach ($this->v_rules as $key => $field)
 		{
-			if (isset($_POST[$field['field']]))
-			{
-				$data->$field['field'] = set_value($field['field']);
-			}
+		    $this->session->set_flashdata('error', $this->lang->line('yudisium_add_error'));
 		}
-		$this->template
-			->title($this->module_details['name'], sprintf(lang('yudisium_edit_title'), $data->name))
-			->append_metadata($this->load->view('fragments/wysiwyg', $this->data, TRUE))
-			->append_metadata('<script type="text/javascript">
-					  $(function() {
-					  $( "#d_input" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true});
-					  $( "#d_yudis" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
-					  $( "#d_start" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
-					  $( "#d_finish" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
-					  });</script>')
-			->append_js('module::jquery.tagsinput.min.js')
-			->append_js('module::blog_form.js')
-			->append_css('module::jquery.tagsinput.css')
-			->set('data', $data)
-			->build('admin/form');
-    }
+		
+		$this->input->post('btnAction') == 'save_exit' ? redirect('admin/yudisium') : redirect('admin/yudisium/edit/' . $id);
+	    }else{
+		foreach ($this->v_rules as $key => $field)
+			    {
+				    $data->$field['field'] = set_value($field['field']);
+			    }
+	    }
+	    $this->template
+			    ->title($this->module_details['name'], lang('yudisium_create_title'))
+			    ->append_metadata($this->load->view('fragments/wysiwyg', $this->data, TRUE))
+			    ->append_js('module::jquery.tagsinput.min.js')
+			    ->append_js('module::blog_form.js')
+			    ->append_css('module::jquery.tagsinput.css')
+			    ->set('data', $data)
+			    ->build('admin/form');
+	}
+
+    public function edit($id=0)
+	{
+	    $id OR redirect('admin/yudisium');
+	    $data= $this->ym->get($id);
+	    $this->form_validation->set_rules(array_merge($this->v_rules, array(
+			    'title' => array(
+				    'field' => 'nim',
+				    'label' => 'lang:yudisium_nim_label',
+				    'rules' => 'trim|htmlspecialchars|required|max_length[100]|callback__check_nim['.$id.']'
+			    ),
+		    )));
+	    if($this->form_validation->run()){
+		$result = $this->ym->update($id,array(
+			    'name'	            => $this->input->post('name'),
+			    'date'              => $this->input->post('date'),
+			    'nim'	            => $this->input->post('nim'),
+			    'department'        => $this->input->post('department'),
+			    'pa'	            => $this->input->post('pa'),
+			    'place_of_birth'    => $this->input->post('pob'),
+			    'date_of_birth'     => $this->input->post('dob'),
+			    'religion'          => $this->input->post('religion'),
+			    'sex'               => $this->input->post('sex'),
+			    'meriage'           => $this->input->post('meriage'),
+			    'address'           => $this->input->post('address'),
+			    'parrent'	    => $this->input->post('parrent'),
+			    'parrent_address'   => $this->input->post('parrent_address'),
+			    'parrental'         => $this->input->post('parrental'),
+			    'soo'               => $this->input->post('soo'),
+			    'school_address'    => $this->input->post('school_address'),
+			    'sma'               => $this->input->post('sma'),
+			    'graduation'        => $this->input->post('graduation'),
+			    'ipk'               => $this->input->post('ipk'),
+			    'sks'               => $this->input->post('sks'),
+			    'thesis'            => $this->input->post('thesis'),
+			    'thesis_title'      => $this->input->post('thesis_title'),
+			    'lecture'           => $this->input->post('lecture'),
+			    'start'             => $this->input->post('start'),
+			    'finish'            => $this->input->post('finish'),
+			    'yudisium_date'     => $this->input->post('yudisium_date'),
+			    'phone'             => $this->input->post('phone'),
+			    'email'             => $this->input->post('email')
+							));
+		if ($result)
+		    {
+			$this->session->set_flashdata(array('success' => sprintf(lang('yudisium_edit_success'), $this->input->post('name'))));
+		    }
+		    else
+			{
+			    $this->session->set_flashdata('error', $this->lang->line('yudisium_edit_error'));
+			}
+    
+			    // Redirect back to the form or main page
+			    $this->input->post('btnAction') == 'save_exit' ? redirect('admin/yudisium') : redirect('admin/yudisium/edit/' . $id);
+	    }
+	    // Go through all the known fields and get the post values
+		    foreach ($this->v_rules as $key => $field)
+		    {
+			    if (isset($_POST[$field['field']]))
+			    {
+				    $data->$field['field'] = set_value($field['field']);
+			    }
+		    }
+		    $this->template
+			    ->title($this->module_details['name'], sprintf(lang('yudisium_edit_title'), $data->name))
+			    ->append_metadata($this->load->view('fragments/wysiwyg', $this->data, TRUE))
+			    ->append_metadata('<script type="text/javascript">
+					      $(function() {
+					      $( "#d_input" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true});
+					      $( "#d_yudis" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
+					      $( "#d_start" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
+					      $( "#d_finish" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
+					      });</script>')
+			    ->append_js('module::jquery.tagsinput.min.js')
+			    ->append_js('module::blog_form.js')
+			    ->append_css('module::jquery.tagsinput.css')
+			    ->set('data', $data)
+			    ->build('admin/form');
+	}
 
     public function preview($id=0)
-    {
-	$this->data->item	= $this->ym->get($id);
-	$this->data->printed	= $this->get_printed($id);
-	$this->data->lecture    = $this->get_name($this->data->item->lecture);
-	$this->data->religion	= $this->get_religion($this->data->item->religion);
-	$this->data->printed 	= $this->get_printed($id);
-	$this->load->view('admin/view',$this->data);
-    }
+	{
+	    $this->data->item	= $this->ym->get($id);
+	    $this->data->printed	= $this->get_printed($id);
+	    $this->data->lecture    = $this->get_name($this->data->item->lecture);
+	    $this->data->religion	= $this->get_religion($this->data->item->religion);
+	    $this->data->printed 	= $this->get_printed($id);
+	    $this->load->view('admin/view',$this->data);
+	}
     
     public function cetak($id=0)
-    {
-	$id OR redirect('admin/yudisium');
-	$item= $this->ym->get($id);
-	$d3= array('1','2','3','4','5','6','7','8');
-	$s1= array('9','10','11','12','13','14','15','16','17','18');
-	
-	$style  = "<title>Cetak Isian kelulusan</title>
-		    <style type=\"text/css\" >
-		    body {
-		    height: 842px;
-		    width: 595px;
-		    margin-left: auto;
-		    margin-right: auto;
-		    }
-		    </style>";
-	$table  = "<table style=\"font-size:14px;\">";
-	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM ";
-	if(in_array($item->department,$d3)) :
-		$table .= "DIPLOMA III (DIII)";
-	else :
-		$table .= "STRATA 1 (S1)";
-	endif;
-		
-	$table .= "</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
-	//$table .= "<tr><td width=\"80px\"><td  align=\"center\" width=\"435px\"><b>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td  width=\"80px\"></td></tr>";
-	$table .= "<tr><td colspan=3 align=\"right\" ><font size=1.5>FRM/TKF/21-00 <br>02 Juli 2007</font></td></tr>";
-	$table .= "<tr><td colspan=3><hr></td></tr>";
-	$table .= "</table><table>";
-	$table .= "<tr><td>1.</td><td>Nama</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->name."</td></tr>";
-	$table .= "<tr><td>2.</td><td>No. Mahasiswa</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->nim."</td></tr>";
-	$table .= "<tr><td>3.</td><td>Program Studi</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".lang('yudisium_dp_'.$item->department)."</td></tr>";
-	$table .= "<tr><td>4.</td><td width=\"160px\">Tempat, Tanggal Lahir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->place_of_birth.",  ".tanggal($item->date_of_birth)."</td></tr>";
-	$table .= "<tr><td>5.</td><td>Agama</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$this->get_religion($item->religion)."</td></tr>";
-	$table .= "<tr><td>6.</td><td>Jenis Kelamin</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".lang('yudisium_sex_'.$item->sex)."</td></tr>";
-	$table .= "<tr><td>7.</td><td>Status</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->meriage."</td></tr>";
-	$table .= "<tr><td>8.</td><td>Alamat Sekarang</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->address."</td></tr>";
-	$table .= "<tr><td>9.</td><td>Nama Orang Tua</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrent."</td></tr>";
-	$table .= "<tr><td>10.</td><td>Alamat Orang Tua</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrent_address."</td></tr>";
-	$table .= "<tr><td>11.</td><td>Diterima di FT Melalui</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrental."</td></tr>";
-	$table .= "<tr><td>12.</td><td>Sekolah Asal</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->soo."</td></tr>";
-	$table .= "<tr><td>13.</td><td>Alamat Sekolah</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->school_address."</td></tr>";
-	$table .= "<tr><td>14.</td><td>Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->thesis."</td></tr>";
-	$table .= "<tr><td valign=\"top\">15.</td><td valign=\"top\">Judul</td><td valign=\"top\">:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->thesis_title."</td></tr>";
-	$table .= "<tr><td>16.</td><td>Dosen Pembimbing</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$this->get_name($item->lecture)."</td></tr>";
-	$table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".tanggal($item->finish)." &nbsp; <b>IPK:</b> ".$item->ipk." &nbsp; <b>Total SKS:</b> ".$item->sks."</td></tr>";
-	$table .= "<tr><td>18.</td><td>Lama Penulisan TA</td><td>:</td><td>&nbsp;&nbsp;</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
-	$table .= "<tr><td>19.</td><td>Cuti Kuliah</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->vacation." kali</td></tr>";
-	$table .= "<tr><td>20.</td><td>Tanggal Yudisium</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> <b>".tanggal($item->yudisium_date)."</b></td></tr>";
-	$table .= "</table>";
-	$table .= "<table>";
-	$table .= "<tr><td align=\"center\">Mengetahui</td><td width=\"350px\" align=\"right\">Yogyakarta ".tanggal(date('Y-m-d'))."</td></tr>";
-	$table .= "<tr><td align=\"center\">Dosen PA</td><td width=\"350px\" align=\"right\">Mahasiswa yang Bersangkutan</td></tr>";
-	$table .= "<tr><td colspan=2><br /></td></tr>";
-	$table .= "<tr><td align=\"center\">".$this->get_name($item->pa)."</td><td align=\"center\"  style=\"padding-left: 100px; \">".$item->name."</td></tr>";
-	$table .= "<tr><td align=\"center\">NIP ".$this->get_nip($item->pa)."</td><td align=\"center\"  style=\"padding-left: 100px; \">NIM ".$item->nim."</td></tr>";
-	$table .= "<tr><td colspan=2 align=\"center\">Mengetahui, <br />Pembentu Dekan I</td></tr>";
-	//$table .= "<tr><td colspan=4 align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/sunar-ttd.png\" width=\"100\"></td></tr>";
-	$table .= "<tr><td colspan=2 align=\"center\"><br /></td></tr>";
-	$table .= "<tr><td colspan=2 align=\"center\">Dr. Soenaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
-	$table .= "</table>";
-	echo $style;
-	echo $table;
-	echo "<hr>";
-	echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani PD I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES/OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
-	echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
-	$this->ym->update($id,array('printed' => '1'));
-	$this->ym->add_print($id,'4');
-    }
-    
-    public function repo($id=0)
-    {
-	$id OR redirect('admin/yudisium');
-	$item= $this->ym->get($id);
-	    $style  = "
-		    <title>Penyerahan CD</title>
-		    <style type=\"text/css\" >
-		    body {
-		    height: 842px;
-		    width: 595px;
-		    margin-left: auto;
-		    margin-right: auto;
-		    }
-		    </style>";
-	    $table  = "<table style=\"font-size:15px;\">";
-	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>KEMENTRIAN PENDIDIKAN DAN KEBUDAYAAN <br> UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "</tabel>";
-	    $table .= "<table style=\"font-size:15px;\">";
-	    $table .= "<tr><td colspan=3><hr style=\"border: 1px double #000;\" /></td></tr>";
-	    $table .= "<tr><td colspan=3 align=\"center\"><b>SURAT PERNYATAAN</b></td></tr>";
-	    $table .= "<tr><td colspan=3>Saya yang bertanda tangan dibawah ini: </td></tr>";
-	    $table .= "<tr><td>Nama </td><td>: ".$item->name."</td><td> </td></tr>";
-	    $table .= "<tr><td>NIM  </td><td>: ".$item->nim."</td><td> </td></tr>";
-	    $table .= "<tr><td>Jurusan </td><td colspan=2>: ".$this->get_major($item->department)."</td></tr>";
-	    $table .= "<tr><td>No.Telp </td><td>: ".$item->phone."</td><td> </td></tr>";
-	    $table .= "<tr><td valign=\"top\">Judul   </td><td colspan=2 valign=\"top\">: ".$item->thesis_title."</td></tr>";
-	    $table .= "<tr><td colspan=3>Dengan ini menyatakan dengan sesungguhnya, bahwa saya bersedia menyerahkan hasil skripsi /
-	    tugas akhir saya dan memberikan wewenang sepenuhnya kepada pihak fakultas dalam penggunaan hasil karya saya</td></tr>";
-	    $table .= "<tr><td colspan=3 align=\"right\">Yogyakarta ". tanggal(date('Y-m-d'))."<td></tr>";
-	    $table .= "<tr><td align=\"center\">Mengetahui,<br /> KaSubbag Pendidikan</td><td align=\"center\">Yang Menyerahkan</td><td align=\"center\">Yang Menerima</td><tr>";
-	    $table .= "<tr><td align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/eko.jpg\" height=\"30px\"><td><td></td><td></td></tr>";
-	    $table .= "<tr><td align=\"center\" width=\"190px\">Drs.Eka Purwana<br /> Nip. 19600905 198812 1 001</td><td align=\"center\" >".$item->name."</td><td align=\"center\" width=\"190px\">Haryo Aji Pambudi, S.Pd</td><tr>";
+	{
+	    $id OR redirect('admin/yudisium');
+	    $item= $this->ym->get($id);
+	    $d3= array('1','2','3','4','5','6','7','8');
+	    $s1= array('9','10','11','12','13','14','15','16','17','18');
+	    
+	    $style  = "<title>Cetak Isian kelulusan</title>
+			<style type=\"text/css\" >
+			body {
+			height: 842px;
+			width: 595px;
+			margin-left: auto;
+			margin-right: auto;
+			}
+			</style>";
+	    $table  = "<table style=\"font-size:14px;\">";
+	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM ";
+	    if(in_array($item->department,$d3)) :
+		    $table .= "DIPLOMA III (DIII)";
+	    else :
+		    $table .= "STRATA 1 (S1)";
+	    endif;
+		    
+	    $table .= "</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
+	    //$table .= "<tr><td width=\"80px\"><td  align=\"center\" width=\"435px\"><b>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td  width=\"80px\"></td></tr>";
+	    $table .= "<tr><td colspan=3 align=\"right\" ><font size=1.5>FRM/TKF/21-00 <br>02 Juli 2007</font></td></tr>";
+	    $table .= "<tr><td colspan=3><hr></td></tr>";
+	    $table .= "</table><table>";
+	    $table .= "<tr><td>1.</td><td>Nama</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->name."</td></tr>";
+	    $table .= "<tr><td>2.</td><td>No. Mahasiswa</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->nim."</td></tr>";
+	    $table .= "<tr><td>3.</td><td>Program Studi</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".lang('yudisium_dp_'.$item->department)."</td></tr>";
+	    $table .= "<tr><td>4.</td><td width=\"160px\">Tempat, Tanggal Lahir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->place_of_birth.",  ".tanggal($item->date_of_birth)."</td></tr>";
+	    $table .= "<tr><td>5.</td><td>Agama</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$this->get_religion($item->religion)."</td></tr>";
+	    $table .= "<tr><td>6.</td><td>Jenis Kelamin</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".lang('yudisium_sex_'.$item->sex)."</td></tr>";
+	    $table .= "<tr><td>7.</td><td>Status</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->meriage."</td></tr>";
+	    $table .= "<tr><td>8.</td><td>Alamat Sekarang</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->address."</td></tr>";
+	    $table .= "<tr><td>9.</td><td>Nama Orang Tua</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrent."</td></tr>";
+	    $table .= "<tr><td>10.</td><td>Alamat Orang Tua</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrent_address."</td></tr>";
+	    $table .= "<tr><td>11.</td><td>Diterima di FT Melalui</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrental."</td></tr>";
+	    $table .= "<tr><td>12.</td><td>Sekolah Asal</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->soo."</td></tr>";
+	    $table .= "<tr><td>13.</td><td>Alamat Sekolah</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->school_address."</td></tr>";
+	    $table .= "<tr><td>14.</td><td>Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->thesis."</td></tr>";
+	    $table .= "<tr><td valign=\"top\">15.</td><td valign=\"top\">Judul</td><td valign=\"top\">:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->thesis_title."</td></tr>";
+	    $table .= "<tr><td>16.</td><td>Dosen Pembimbing</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$this->get_name($item->lecture)."</td></tr>";
+	    $table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".tanggal($item->finish)." &nbsp; <b>IPK:</b> ".$item->ipk." &nbsp; <b>Total SKS:</b> ".$item->sks."</td></tr>";
+	    $table .= "<tr><td>18.</td><td>Lama Penulisan TA</td><td>:</td><td>&nbsp;&nbsp;</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
+	    $table .= "<tr><td>19.</td><td>Cuti Kuliah</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->vacation." kali</td></tr>";
+	    $table .= "<tr><td>20.</td><td>Tanggal Yudisium</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> <b>".tanggal($item->yudisium_date)."</b></td></tr>";
 	    $table .= "</table>";
-	    $table .= "<tr><td colspan=3><hr style=\"border: 1px dashed #000;\" /></td></tr>";
-	    $table .= "<table style=\"font-size:15px;\">";
-	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>KEMENTRIAN PENDIDIKAN DAN KEBUDAYAAN <br> UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "</tabel>";
-	    $table .= "<table style=\"font-size:15px;\">";
-	    $table .= "<tr><td colspan=3><hr style=\"border: 1px double #000;\" /></td></tr>";
-	    $table .= "<tr><td colspan=3 align=\"center\"><b>SURAT PERNYATAAN</b></td></tr>";
-	    $table .= "<tr><td colspan=3>Saya yang bertanda tangan dibawah ini: </td></tr>";
-	    $table .= "<tr><td>Nama </td><td>: ".$item->name."</td><td> </td></tr>";
-	    $table .= "<tr><td>NIM  </td><td>: ".$item->nim."</td><td> </td></tr>";
-	    $table .= "<tr><td>Jurusan </td><td colspan=2>: ".$this->get_major($item->department)."</td></tr>";
-	    $table .= "<tr><td>No.Telp </td><td>: ".$item->phone."</td><td> </td></tr>";
-	    $table .= "<tr><td>Judul   </td><td colspan=2>: ".$item->thesis_title."</td></tr>";
-	    $table .= "<tr><td colspan=3>Dengan ini menyatakan dengan sesungguhnya, bahwa saya bersedia menyerahkan hasil skripsi /
-	    tugas akhir saya dan memberikan wewenang sepenuhnya kepada pihak fakultas dalam penggunaan hasil karya saya</td></tr>";
-	    $table .= "<tr><td colspan=3 align=\"right\">Yogyakarta ". tanggal(date('Y-m-d'))."<td></tr>";
-	    $table .= "<tr><td align=\"center\">Mengetahui,<br /> KaSubbag Pendidikan</td><td align=\"center\">Yang Menyerahkan</td><td align=\"center\">Yang Menerima</td><tr>";
-	    $table .= "<tr><td align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/eko.jpg\" height=\"30px\"><td><td></td><td></td></tr>";
-	    $table .= "<tr><td align=\"center\" width=\"190px\">Drs.Eka Purwana<br /> Nip. 19600905 198812 1 001</td><td align=\"center\" >".$item->name."</td><td align=\"center\" width=\"190px\">Haryo Aji Pambudi, S.Pd</td><tr>";
+	    $table .= "<table>";
+	    $table .= "<tr><td align=\"center\">Mengetahui</td><td width=\"350px\" align=\"right\">Yogyakarta ".tanggal(date('Y-m-d'))."</td></tr>";
+	    $table .= "<tr><td align=\"center\">Dosen PA</td><td width=\"350px\" align=\"right\">Mahasiswa yang Bersangkutan</td></tr>";
+	    $table .= "<tr><td colspan=2><br /></td></tr>";
+	    $table .= "<tr><td align=\"center\">".$this->get_name($item->pa)."</td><td align=\"center\"  style=\"padding-left: 100px; \">".$item->name."</td></tr>";
+	    $table .= "<tr><td align=\"center\">NIP ".$this->get_nip($item->pa)."</td><td align=\"center\"  style=\"padding-left: 100px; \">NIM ".$item->nim."</td></tr>";
+	    $table .= "<tr><td colspan=2 align=\"center\">Mengetahui, <br />Pembentu Dekan I</td></tr>";
+	    //$table .= "<tr><td colspan=4 align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/sunar-ttd.png\" width=\"100\"></td></tr>";
+	    $table .= "<tr><td colspan=2 align=\"center\"><br /></td></tr>";
+	    $table .= "<tr><td colspan=2 align=\"center\">Dr. Soenaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
 	    $table .= "</table>";
 	    echo $style;
 	    echo $table;
-	    
-    }
+	    echo "<hr>";
+	    echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani PD I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES/OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
+	    echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
+	    $this->ym->update($id,array('printed' => '1'));
+	    $this->ym->add_print($id,'4');
+	}
+    
+    public function repo($id=0)
+	{
+	    $id OR redirect('admin/yudisium');
+	    $item= $this->ym->get($id);
+		$style  = "
+			<title>Penyerahan CD</title>
+			<style type=\"text/css\" >
+			body {
+			height: 842px;
+			width: 595px;
+			margin-left: auto;
+			margin-right: auto;
+			}
+			</style>";
+		$table  = "<table style=\"font-size:15px;\">";
+		$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>KEMENTRIAN PENDIDIKAN DAN KEBUDAYAAN <br> UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+		$table .= "</tabel>";
+		$table .= "<table style=\"font-size:15px;\">";
+		$table .= "<tr><td colspan=3><hr style=\"border: 1px double #000;\" /></td></tr>";
+		$table .= "<tr><td colspan=3 align=\"center\"><b>SURAT PERNYATAAN</b></td></tr>";
+		$table .= "<tr><td colspan=3>Saya yang bertanda tangan dibawah ini: </td></tr>";
+		$table .= "<tr><td>Nama </td><td>: ".$item->name."</td><td> </td></tr>";
+		$table .= "<tr><td>NIM  </td><td>: ".$item->nim."</td><td> </td></tr>";
+		$table .= "<tr><td>Jurusan </td><td colspan=2>: ".$this->get_major($item->department)."</td></tr>";
+		$table .= "<tr><td>No.Telp </td><td>: ".$item->phone."</td><td> </td></tr>";
+		$table .= "<tr><td valign=\"top\">Judul   </td><td colspan=2 valign=\"top\">: ".$item->thesis_title."</td></tr>";
+		$table .= "<tr><td colspan=3>Dengan ini menyatakan dengan sesungguhnya, bahwa saya bersedia menyerahkan hasil skripsi /
+		tugas akhir saya dan memberikan wewenang sepenuhnya kepada pihak fakultas dalam penggunaan hasil karya saya</td></tr>";
+		$table .= "<tr><td colspan=3 align=\"right\">Yogyakarta ". tanggal(date('Y-m-d'))."<td></tr>";
+		$table .= "<tr><td align=\"center\">Mengetahui,<br /> KaSubbag Pendidikan</td><td align=\"center\">Yang Menyerahkan</td><td align=\"center\">Yang Menerima</td><tr>";
+		$table .= "<tr><td align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/eko.jpg\" height=\"30px\"><td><td></td><td></td></tr>";
+		$table .= "<tr><td align=\"center\" width=\"190px\">Drs.Eka Purwana<br /> Nip. 19600905 198812 1 001</td><td align=\"center\" >".$item->name."</td><td align=\"center\" width=\"190px\">Haryo Aji Pambudi, S.Pd</td><tr>";
+		$table .= "</table>";
+		$table .= "<tr><td colspan=3><hr style=\"border: 1px dashed #000;\" /></td></tr>";
+		$table .= "<table style=\"font-size:15px;\">";
+		$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>KEMENTRIAN PENDIDIKAN DAN KEBUDAYAAN <br> UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+		$table .= "</tabel>";
+		$table .= "<table style=\"font-size:15px;\">";
+		$table .= "<tr><td colspan=3><hr style=\"border: 1px double #000;\" /></td></tr>";
+		$table .= "<tr><td colspan=3 align=\"center\"><b>SURAT PERNYATAAN</b></td></tr>";
+		$table .= "<tr><td colspan=3>Saya yang bertanda tangan dibawah ini: </td></tr>";
+		$table .= "<tr><td>Nama </td><td>: ".$item->name."</td><td> </td></tr>";
+		$table .= "<tr><td>NIM  </td><td>: ".$item->nim."</td><td> </td></tr>";
+		$table .= "<tr><td>Jurusan </td><td colspan=2>: ".$this->get_major($item->department)."</td></tr>";
+		$table .= "<tr><td>No.Telp </td><td>: ".$item->phone."</td><td> </td></tr>";
+		$table .= "<tr><td>Judul   </td><td colspan=2>: ".$item->thesis_title."</td></tr>";
+		$table .= "<tr><td colspan=3>Dengan ini menyatakan dengan sesungguhnya, bahwa saya bersedia menyerahkan hasil skripsi /
+		tugas akhir saya dan memberikan wewenang sepenuhnya kepada pihak fakultas dalam penggunaan hasil karya saya</td></tr>";
+		$table .= "<tr><td colspan=3 align=\"right\">Yogyakarta ". tanggal(date('Y-m-d'))."<td></tr>";
+		$table .= "<tr><td align=\"center\">Mengetahui,<br /> KaSubbag Pendidikan</td><td align=\"center\">Yang Menyerahkan</td><td align=\"center\">Yang Menerima</td><tr>";
+		$table .= "<tr><td align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/eko.jpg\" height=\"30px\"><td><td></td><td></td></tr>";
+		$table .= "<tr><td align=\"center\" width=\"190px\">Drs.Eka Purwana<br /> Nip. 19600905 198812 1 001</td><td align=\"center\" >".$item->name."</td><td align=\"center\" width=\"190px\">Haryo Aji Pambudi, S.Pd</td><tr>";
+		$table .= "</table>";
+		echo $style;
+		echo $table;
+		
+	}
     
 	//fungsi rekap data peserta yudisium
     public function report(){
@@ -489,7 +491,8 @@ class Admin extends Admin_Controller {
 	}
 	
 	//
-    public function decree(){
+    public function decree()
+	{
 	    $data= $this->ym->get_yudisium();
 	    $this->template
 			->title($this->module_details['name'], lang('yudisium_decree'))
@@ -500,166 +503,164 @@ class Admin extends Admin_Controller {
 	
 	//fungsi cetak rekap peserta yudisium D3
     public function report_d3($date)
-    {
-	$_tanggal 		= tanggal($date);
-	list($tgl,$bln,$thn) 	= explode(" ",$_tanggal);
-	$basewhere		= array('thesis' => 'D3','yudisium_date'=>$date);
-	$data			= $this->ym->get_many_by($basewhere);
-	$i			= 1;
-	$style  		= "
-				    <title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
-				    <style type=\"text/css\" >
-				    body {
-				    width: 842px;
-				    height: 595px;
-				    margin-left: auto;
-				    margin-right: auto;
-				    }
-				    .smaller{
-					border: 1px solid;
-				    }
-				    .smaller td{
-					border: 1px solid;
-				    }
-				    </style>";
-	$table  = "<table style=\"font-size:15px;\"  width=\"842px\">";
-	$table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	$table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".$bln."  ".$thn."</td></tr>";
-	$table .= "<tr><td colspan=3><br></td></tr>";
-	$table .= "</tabel>";
-	$table .= "<table  class='smaller'>";
-	$table .= "<tr><td rowspan=\"2\">No Urut</td><td rowspan=\"2\">NIM</td><td rowspan=\"2\">Nama</td><td  rowspan=\"2\">Prodi</td><td rowspan=\"2\">SKS</td><td rowspan=\"2\">IPK</td><td rowspan=\"2\">Predikat</td><td rowspan=\"2\">Mulai</td><td rowspan=\"2\">Yudisium</td><td rowspan=\"2\">Cuti</td><td colspan=\"2\">Masa Studi</td><td  rowspan=\"2\">Lama TA</td><td rowspan=\"2\">Melalui</td><td rowspan=\"2\">Askol</td><td rowspan=\"2\">Tgl lahir</td><td rowspan=\"2\">Umur</td></tr>";
-	$table .= "<tr><td>Sm</td><td>Th</td></tr>";
-	foreach ($data as $d)
 	{
-	    $table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>predikat</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>sm</td><td>th</td><td>lama</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->get_age($d->date_of_birth)."</td></tr>";
-	    $i++;
+	    $_tanggal 		= tanggal($date);
+	    list($tgl,$bln,$thn) 	= explode(" ",$_tanggal);
+	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date);
+	    $data			= $this->ym->get_many_by($basewhere);
+	    $i			= 1;
+	    $style  		= "
+					<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
+					<style type=\"text/css\" >
+					body {
+					width: 842px;
+					height: 595px;
+					margin-left: auto;
+					margin-right: auto;
+					}
+					.smaller{
+					    border: 1px solid;
+					}
+					.smaller td{
+					    border: 1px solid;
+					}
+					</style>";
+	    $table  = "<table style=\"font-size:15px;\"  width=\"842px\">";
+	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".$bln."  ".$thn."</td></tr>";
+	    $table .= "<tr><td colspan=3><br></td></tr>";
+	    $table .= "</tabel>";
+	    $table .= "<table  class='smaller' width=\"842px\">";
+	    $table .= "<tr><td rowspan=\"2\">No Urut</td><td rowspan=\"2\">NIM</td><td rowspan=\"2\">Nama</td><td  rowspan=\"2\">Prodi</td><td rowspan=\"2\">SKS</td><td rowspan=\"2\">IPK</td><td rowspan=\"2\">Predikat</td><td rowspan=\"2\">Mulai</td><td rowspan=\"2\">Yudisium</td><td rowspan=\"2\">Cuti</td><td colspan=\"2\">Masa Studi</td><td  rowspan=\"2\">Lama TA</td><td rowspan=\"2\">Melalui</td><td rowspan=\"2\">Askol</td><td rowspan=\"2\">Tgl lahir</td><td rowspan=\"2\">Umur</td></tr>";
+	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    foreach ($data as $d)
+	    {
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>predikat</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_year($d->nim)."</td><td>lama</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->get_age($d->date_of_birth)."</td></tr>";
+		$i++;
+	    }
+	    
+	    $table .= "</table>";
+	    echo $style;
+	    echo $table;
 	}
-	
-	$table .= "</table>";
-	echo $style;
-	echo $table;
-	echo "<pre>";
-	print_r($data);
-	echo "</pre>";
-    }
     
 	//fungsi cetak surat keputusan dekan
-    public function cetak_sk($date){
-	$_tanggal 		= tanggal($date);
-	list($tgl,$bln,$thn)	= explode(" ",$_tanggal);
-   	$style  = "
-		    <title>Surat Keputusan Dekan Yudisium ".$bln." ".$thn."</title>
-		    <style type=\"text/css\" >
-		    body {
-		    height: 842px;
-		    width: 595px;
-		    margin-left: auto;
-		    margin-right: auto;
-		    }
-		    tr.yellow td {
-			border: 1px solid #FB7A31;
-			font-size:60%;
+    public function cetak_sk($date)
+	{
+	    $_tanggal 		= tanggal($date);
+	    list($tgl,$bln,$thn)	= explode(" ",$_tanggal);
+	    $style  = "
+			<title>Surat Keputusan Dekan Yudisium ".$bln." ".$thn."</title>
+			<style type=\"text/css\" >
+			body {
+			height: 842px;
+			width: 595px;
+			margin-left: auto;
+			margin-right: auto;
 			}
-			tr.smaller td{
-				font-size:70%;
-				font-weight: bold;
-			}
-		    </style>";
-	$table  = "<table style=\"font-size:15px;\">";
-	$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	$table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAHUN  ".$thn."<br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
-	$table .= "PERIODE ".strtoupper($bln)." ".$thn."<br><br> DEKAN FAKULTAS TEKNIK <br> UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
-	$table .= "</tabel>";
-	$table .= "<table>";
-	$table .= "<tr class='smaller'><td valign=\"top\">Menimbang</td><td valign=\"top\">:</td><td valign=\"top\">a.</td><td style=\"padding-left: 10px; \">bahwa sehubungan dengan telah selesainya studi beberapa mahasiswa Fakultas Teknik Universitas Negeri Yogyakarta Program Diploma-3 (D-3) dan Strata-1 (S-1) dipandang perlu untuk diyudisiumkan.</td></tr>";
-	$table .= "<tr class='smaller'><td></td><td></td><td valign=\"top\">b.</td><td style=\"padding-left: 10px; \">bahwa untuk keperluan seperti tersebut di atas perlu ditetapkan dengan keputusan Dekan</td></tr>";
-	$table .= "<tr class='smaller'><td valign=\"top\">Mengingat</td><td>:</td><td valign=\"top\">1.</td><td style=\"padding-left: 10px; \">Undang-undang RI Nomor 20 Tahun 2003;</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=3 align='right'>2.</td><td style=\"padding-left: 10px; \">Peraturan Pemerintah RI Nomor 60 Tahun 1999;</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=3 align='right'>3.</td><td style=\"padding-left: 10px; \">Keputusan Presiden RI : <br>a. Nomor 93 Tahun 1999<br>b. Nomor 240/M Tahun 2003;</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=3 align='right'>4.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 23 Tahun 2011;</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=3 align='right'>5.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 34 Tahun 2011;</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=3 align='right'>6.</td><td style=\"padding-left: 10px; \">Keputusan Rektor IKIP YOGYAKARTA Nomor 024 Tahun 1998;</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=3 align='right'>7.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Nomor 01 Tahun 2011;</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=3 align='right' valign=\"top\">8.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Universitas Negeri Yogyakarta : <br>a. Nomor 207 Tahun 2000; &nbsp;&nbsp;&nbsp;c. Nomor 297 Tahun 2006 <br>b. Nomor 303 Tahun 2000; &nbsp;&nbsp;&nbsp;d. Nomor: 1160/UN34/KP/2011</td></tr>";
-	$table .= "</table>";
-	$table .= "<table>";
-	$table .= "<tr><td colspan=4 align='center'><b>MEMUTUSKAN</b></td></tr>";
-	$table .= "<tr class='smaller'><td>Menetapkan</td><td>:</td><td colspan=4></td></tr>";
-	$table .= "<tr class='smaller'><td valign='top'>Pertama</td><td valign='top'>:</td><td></td><td colspan=2>Yudisium Mahasiswa Program Diploma-3 (D-3) dan Strata-1 (S-1) Fakultas Teknik Universitas Negeri Yogyakarta Periode yang nama-namanya seperti tersebut pada lampiran 1 dan lampiran 2 Keputusan ini.</td></tr>";
-	$table .= "<tr class='smaller'><td valign='top'>Kedua</td><td valign='top'>:</td><td></td><td colspan=2>Mahasiswa yang namanya seperti tersebut pada diktum Pertama tersebut di atas berhak mengikuti wisuda dalam Upacara Wisuda Universitas Negeri Yogyakarta sesuai dengan ketentuan yang berlaku.</td></tr>";
-	$table .= "<tr class='smaller'><td valign='top'>Ketiga</td><td valign='top'>:</td><td></td><td colspan=2>Keputusan ini berlaku sejak ditetapkan.</td></tr>";
-	$table .= "<tr class='smaller'><td valign='top'>Keempat</td><td valign='top'>:</td><td></td><td colspan=2>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
-	$table .= "</table>";
-	$table .= "<table>";
-	$table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \">Ditetapkan di :  Yogyakarta</td></tr>";
-	$table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><u>Pada tanggal : ".tanggal($date)." </u></td></tr>";
-	$table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><img src=\"".base_url().$this->module_details['path']."/img/brur.gif\" height=\"50px\"><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
-	$table .= "<tr class='smaller'><td colspan=2>Tembusan Yth. :</td></tr>";
-	$table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td><td style=\"padding-left: 190px; \">7. Kasubag Registrasi dan Statistik<br>8. Para Pembantu Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
-	$table .= "</table>";
-	$table .= "<table>";
-	$table .= "<tr class='yellow'><td width='70px' valign='top'>Dibuat Oleh :<br><br> &nbsp;</td><td align='center' valign='top'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh<br><br>&nbsp;</td></tr>";
-	//$table .= "<table>";
-	$table .= "</table>";
-	echo $style;
-	echo $table;			
-    }
+			tr.yellow td {
+			    border: 1px solid #FB7A31;
+			    font-size:60%;
+			    }
+			    tr.smaller td{
+				    font-size:70%;
+				    font-weight: bold;
+			    }
+			</style>";
+	    $table  = "<table style=\"font-size:15px;\">";
+	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAHUN  ".$thn."<br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
+	    $table .= "PERIODE ".strtoupper($bln)." ".$thn."<br><br> DEKAN FAKULTAS TEKNIK <br> UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
+	    $table .= "</tabel>";
+	    $table .= "<table>";
+	    $table .= "<tr class='smaller'><td valign=\"top\">Menimbang</td><td valign=\"top\">:</td><td valign=\"top\">a.</td><td style=\"padding-left: 10px; \">bahwa sehubungan dengan telah selesainya studi beberapa mahasiswa Fakultas Teknik Universitas Negeri Yogyakarta Program Diploma-3 (D-3) dan Strata-1 (S-1) dipandang perlu untuk diyudisiumkan.</td></tr>";
+	    $table .= "<tr class='smaller'><td></td><td></td><td valign=\"top\">b.</td><td style=\"padding-left: 10px; \">bahwa untuk keperluan seperti tersebut di atas perlu ditetapkan dengan keputusan Dekan</td></tr>";
+	    $table .= "<tr class='smaller'><td valign=\"top\">Mengingat</td><td>:</td><td valign=\"top\">1.</td><td style=\"padding-left: 10px; \">Undang-undang RI Nomor 20 Tahun 2003;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>2.</td><td style=\"padding-left: 10px; \">Peraturan Pemerintah RI Nomor 60 Tahun 1999;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>3.</td><td style=\"padding-left: 10px; \">Keputusan Presiden RI : <br>a. Nomor 93 Tahun 1999<br>b. Nomor 240/M Tahun 2003;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>4.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 23 Tahun 2011;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>5.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 34 Tahun 2011;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>6.</td><td style=\"padding-left: 10px; \">Keputusan Rektor IKIP YOGYAKARTA Nomor 024 Tahun 1998;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>7.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Nomor 01 Tahun 2011;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right' valign=\"top\">8.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Universitas Negeri Yogyakarta : <br>a. Nomor 207 Tahun 2000; &nbsp;&nbsp;&nbsp;c. Nomor 297 Tahun 2006 <br>b. Nomor 303 Tahun 2000; &nbsp;&nbsp;&nbsp;d. Nomor: 1160/UN34/KP/2011</td></tr>";
+	    $table .= "</table>";
+	    $table .= "<table>";
+	    $table .= "<tr><td colspan=4 align='center'><b>MEMUTUSKAN</b></td></tr>";
+	    $table .= "<tr class='smaller'><td>Menetapkan</td><td>:</td><td colspan=4></td></tr>";
+	    $table .= "<tr class='smaller'><td valign='top'>Pertama</td><td valign='top'>:</td><td></td><td colspan=2>Yudisium Mahasiswa Program Diploma-3 (D-3) dan Strata-1 (S-1) Fakultas Teknik Universitas Negeri Yogyakarta Periode yang nama-namanya seperti tersebut pada lampiran 1 dan lampiran 2 Keputusan ini.</td></tr>";
+	    $table .= "<tr class='smaller'><td valign='top'>Kedua</td><td valign='top'>:</td><td></td><td colspan=2>Mahasiswa yang namanya seperti tersebut pada diktum Pertama tersebut di atas berhak mengikuti wisuda dalam Upacara Wisuda Universitas Negeri Yogyakarta sesuai dengan ketentuan yang berlaku.</td></tr>";
+	    $table .= "<tr class='smaller'><td valign='top'>Ketiga</td><td valign='top'>:</td><td></td><td colspan=2>Keputusan ini berlaku sejak ditetapkan.</td></tr>";
+	    $table .= "<tr class='smaller'><td valign='top'>Keempat</td><td valign='top'>:</td><td></td><td colspan=2>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
+	    $table .= "</table>";
+	    $table .= "<table>";
+	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \">Ditetapkan di :  Yogyakarta</td></tr>";
+	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><u>Pada tanggal : ".tanggal($date)." </u></td></tr>";
+	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><img src=\"".base_url().$this->module_details['path']."/img/brur.gif\" height=\"50px\"><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=2>Tembusan Yth. :</td></tr>";
+	    $table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td><td style=\"padding-left: 190px; \">7. Kasubag Registrasi dan Statistik<br>8. Para Pembantu Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
+	    $table .= "</table>";
+	    $table .= "<table>";
+	    $table .= "<tr class='yellow'><td width='70px' valign='top'>Dibuat Oleh :<br><br> &nbsp;</td><td align='center' valign='top'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh<br><br>&nbsp;</td></tr>";
+	    //$table .= "<table>";
+	    $table .= "</table>";
+	    echo $style;
+	    echo $table;			
+	}
     public function get_printed($id=0)
-    {
-	$result=$this->ym->get_print($id);
-	return $result;
-    }
+	{
+	    $result=$this->ym->get_print($id);
+	    return $result;
+	}
     public function get_religion($id)
-    {
-	$result = $this->ym>get_religion($id);
-	return $result;
-    }
+	{
+	    $result = $this->ym>get_religion($id);
+	    return $result;
+	}
 
    public function get_major($id=0)
-   {
-     $result=$this->ym->get_major($id);
-     return $result;
-   }
+	{
+	  $result=$this->ym->get_major($id);
+	  return $result;
+	}
    
    public function get_name($id=0)
-   {
-	$result=$this->ym->get_lecture_by('id',$id);
-	return $result->name;
-   }
+	{
+	     $result=$this->ym->get_lecture_by('id',$id);
+	     return $result->name;
+	}
    
   
    public function get_nip($id=0)
-   {
-     $result=$this->ym->get_lecture_by('id',$id);
-     return $result->nip;
-   }
+	{
+	  $result=$this->ym->get_lecture_by('id',$id);
+	  return $result->nip;
+	}
     //tampil program studi
     public function prodies()
-    {
-        $result= array(0 => 'Pilih Program Studi');
-	    if($prodies = $this->ym->get_dept())
-	    {
-		foreach($prodies as $dpt)
+	{
+	    $result= array(0 => 'Pilih Program Studi');
+		if($prodies = $this->ym->get_dept())
 		{
-		    $result[$dpt->id] = $dpt->name;
+		    foreach($prodies as $dpt)
+		    {
+			$result[$dpt->id] = $dpt->name;
+		    }
 		}
-	    }
-        return $result;
-    }
+	    return $result;
+	}
     
     // tampil dosen
     public function lectures()
-    {
-        $result= array(0 => 'Pilih Dosen');
-	    if($lectures = $this->ym->get_lecture())
-	    {
-		foreach($lectures as $lec){
-		    $result[$lec->id]= $lec->name;
+	{
+	    $result= array(0 => 'Pilih Dosen');
+		if($lectures = $this->ym->get_lecture())
+		{
+		    foreach($lectures as $lec){
+			$result[$lec->id]= $lec->name;
+		    }
 		}
-	    }
-        return $result;
-    }
+	    return $result;
+	}
     
     public function ajax_filter()
 	{
@@ -697,20 +698,37 @@ class Admin extends Admin_Controller {
 	
     public function _check_nim($nim, $id = null)
 	{
-		$this->form_validation->set_message('_check_nim', sprintf(lang('yudisium_already_exist_error'), lang('yudisium_nim_label')));
-		return $this->ym->check_exists('nim', $nim, $id);			
+	    $this->form_validation->set_message('_check_nim', sprintf(lang('yudisium_already_exist_error'), lang('yudisium_nim_label')));
+	    return $this->ym->check_exists('nim', $nim, $id);			
 	}
 	
-    public function get_age($umur){
-	list($hari,$bulan, $tahun) = explode('-', $umur);
-	$thn = date('y') - $tahun;
-	$bln = date('m') - $bulan;
-	$hri = date('d') - $hari;
+    public function get_age($umur)
+	{
+	    list($hari,$bulan, $tahun) = explode('-', $umur);
+	    $thn = date('y') - $tahun;
+	    $bln = date('m') - $bulan;
+	    $hri = date('d') - $hari;
+	    
+	    if($hri < 0 || $bln < 0){
+	    $thn–;
+	    }
+	    return $thn;
+	}
 	
-	if($hri < 0 || $bln < 0){
-	$thn–;
+    public function get_year($nim)
+	{
+	    $first	= substr($nim,0,1);
+	    $year 	= substr($nim,0 ,2);
+	    $res	= '20'.$year;
+	    return $res;
 	}
-	return $thn;
+    public function get_semester($nim,$date)
+	{
+	    $year 	= substr($nim,0,2);
+	    $start	= '20'.$year;
+	    $finish	= substr($date,0,4);
+	    $diff	= intval($finish) - intval($start);
+	    $result 	= $diff * 2;
+	    return $result;
 	}
-    
 }
