@@ -29,10 +29,19 @@ class Yudisium_m extends MY_Model {
 		$this->db->insert('default_printed');
 	}
     
-	function get_yudisium()
+    function get_yudisium()
 	{
 		return $this->db->select('DISTINCT(yudisium_date)')->get('yudisium')->result();
 	}
+    
+    function get_reportd()
+	{
+	    
+	}
+    function get_yudis_by($key,$value)
+    {
+	
+    }
     function get_religion($id)
     {
         $result = $this->db->select('id,name')->where('id',$id)->get('religions')->row();
@@ -154,7 +163,15 @@ class Yudisium_m extends MY_Model {
 	{
 		$this->load->helper('date');
                 
-                // Is a status set?
+                if(!empty($params['thesis']))
+		{
+		    $this->db->where('thesis',$params['thesis']);
+		}
+		if(!empty($params['yudisium_date']))
+		{
+		    $this->db->where('yudisium_date',$params['yudisium_date']);
+		}
+		// Is a status set?
 		if (!empty($params['printed']))
 		{
 			// If it's all, then show whatever the status
@@ -175,7 +192,6 @@ class Yudisium_m extends MY_Model {
                     $this->db->where('date_format("date","%Y-%m-%d")',$params['date']);
                 }
                 **/
-                
                 
                 // Limit the results based on 1 number or 2 (2nd is offset)
 		if (isset($params['limit']) && is_array($params['limit']))
