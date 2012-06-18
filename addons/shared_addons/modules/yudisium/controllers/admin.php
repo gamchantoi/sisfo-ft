@@ -535,7 +535,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
 	    foreach ($data as $d)
 	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>predikat</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_year($d->nim)."</td><td>lama</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->get_age($d->date_of_birth)."</td></tr>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)." ".$this->get_dpt($d->nim)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
 	    
@@ -722,6 +722,17 @@ class Admin extends Admin_Controller {
 	    $res	= '20'.$year;
 	    return $res;
 	}
+    public function cal_age($dob)
+	{
+	    $dob = date("Y-m-d",strtotime($dob));
+	    $dobObject = new DateTime($dob);
+	    $nowObject = new DateTime();
+	
+	    $diff = $dobObject->diff($nowObject);
+	
+	    return $diff->y;
+	}
+    
     public function get_semester($nim,$date)
 	{
 	    $year 	= substr($nim,0,2);
@@ -730,5 +741,70 @@ class Admin extends Admin_Controller {
 	    $diff	= intval($finish) - intval($start);
 	    $result 	= $diff * 2;
 	    return $result;
+	}
+    public function get_datediff($d1,$d2)
+	{
+	    $date1 = new DateTime($d1); 
+	    $date2 = new DateTime($d2); 
+	    $interval = $date1->diff($date2); 
+	    $diff = $interval->format('%y th %m bl %d hr'); 
+	    return $diff;
+	}
+	
+    public function get_dpt($nim)
+	{
+	    $prodies = $this->ym->get_prodies($nim);
+	    list($name,$stage) = explode ('-',$prodies->x);
+	    return $stage;
+	}
+    public function predicate($nim,$date,$ipk)
+	{
+	    $stage 	= trim($this->get_dpt($nim));
+	    $smster	= trim($this->get_semester($nim,$date));
+	    if($stage == "D3")
+	    {
+		if($smster <= 8)
+		{
+		    if($ipk <= 4.0 && $ipk >= 3.51)
+		    {
+			$predicate = 'Cumlaude';
+		    }
+		}else{
+		    if($ipk <= 4.0 && $ipk >= 3.51)
+		    {
+			$predicate = 'Sangat Memuaskan';
+		    }
+		    if($ipk >= 2.76  && $ipk <= 3.50)
+		    {
+			$predicate = 'Sangat Memuaskan';
+		    }
+		    if($ipk >= 2.00 && $ipk <= 2.75)
+		    {
+			$predicate = 'Memuaskan';
+		    }
+		}
+	    }else{
+		if($smster <= 10)
+		{
+		    if($ipk <= 4.0 && $ipk >= 3.51)
+		    {
+			$predicate = 'Cumlaude';
+		    }
+		}else{
+		    if($ipk <= 4.0 && $ipk >= 3.51)
+		    {
+			$predicate = 'Sangat Memuaskan';
+		    }
+		    if($ipk >= 2.76  && $ipk <= 3.50)
+		    {
+			$predicate = 'Sangat Memuaskan';
+		    }
+		    if($ipk >= 2.00 && $ipk <= 2.75)
+		    {
+			$predicate = 'Memuaskan';
+		    }
+		}
+	    }
+	    return $predicate;
 	}
 }
