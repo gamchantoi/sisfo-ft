@@ -31,7 +31,7 @@ class Yudisium_m extends MY_Model {
     
     function get_yudisium()
 	{
-		return $this->db->select('DISTINCT(yudisium_date)')->get('yudisium')->result();
+		return $this->db->select('DISTINCT(yudisium_date)')->order_by('yudisium_date','DESC')->get('yudisium')->result();
 	}
     
     function get_reportd()
@@ -170,6 +170,10 @@ class Yudisium_m extends MY_Model {
 		if(!empty($params['yudisium_date']))
 		{
 		    $this->db->where('yudisium_date',$params['yudisium_date']);
+		}
+		if(!empty($params['order']))
+		{
+		    $this->db->order_by($params['order'],'DESC');
 		}
 		// Is a status set?
 		if (!empty($params['printed']))

@@ -13,7 +13,9 @@
 			<thead>
 			<tr>
 				<th class="collapse"><?php echo lang('yudisium_date'); ?></th>
-				<th class="collapse"><?php echo lang('yudisium_print'); ?></th>
+				<th class="collapse"><?php echo lang('yudisium_print_sk'); ?></th>
+				<th class="collapse"><?php echo lang('yudisium_print_d3'); ?></th>
+				<th class="collapse"><?php echo lang('yudisium_print_s1'); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -27,8 +29,10 @@
 		</tbody>
 		<?php foreach ($data as $item) : ?>
 				<tr>
-					<td><?php echo $item->yudisium_date; ?></td>
+					<td><?php echo tanggal($item->yudisium_date); ?></td>
 					<td><a href="admin/yudisium/cetak_sk/<?php echo $item->yudisium_date; ?>" class="cetak" title="cetak Surat Keputusan Dekan"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a></td>
+					<td><a href="admin/yudisium/report_d3/<?php echo $item->yudisium_date; ?>" class="cetak" title="cetak Urutan Yudisium Mahasiswa D3"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a></td>
+					<td><a href="admin/yudisium/report_s1/<?php echo $item->yudisium_date; ?>" class="cetak" title="cetak Urutan Yudisium Mahasiswa S1"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a></td>
 				</tr>
 		<?php endforeach ; ?>
 		</table>

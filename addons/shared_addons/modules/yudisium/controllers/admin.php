@@ -509,33 +509,50 @@ class Admin extends Admin_Controller {
 	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date);
 	    $data			= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
-	    $style  		= "
-					<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
-					<style type=\"text/css\" >
+	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
+				<style type=\"text/css\" >
 					body {
 					width: 842px;
 					height: 595px;
 					margin-left: auto;
 					margin-right: auto;
 					}
-					.smaller{
-					    border: 1px solid;
+					table.gridtable {
+						font-family: verdana,arial,sans-serif;
+						font-size:7px;
+						color:#333333;
+						border-width: 1px;
+						border-color: #666666;
+						border-collapse: collapse;
+						width: 842px;
+						
 					}
-					.smaller td{
-					    border: 1px solid;
+					table.gridtable th {
+						border-width: 1px;
+						padding: 6px;
+						border-style: solid;
+						border-color: #666666;
+						background-color: #dedede;
 					}
-					</style>";
-	    $table  = "<table style=\"font-size:15px;\"  width=\"842px\">";
+					table.gridtable td {
+						border-width: 1px;
+						padding: 5px;
+						border-style: solid;
+						border-color: #666666;
+						background-color: #ffffff;
+					}
+				</style>";
+	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".$bln."  ".$thn."</td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
 	    $table .= "<tr><td colspan=3><br></td></tr>";
 	    $table .= "</tabel>";
-	    $table .= "<table  class='smaller' width=\"842px\">";
-	    $table .= "<tr><td rowspan=\"2\">No Urut</td><td rowspan=\"2\">NIM</td><td rowspan=\"2\">Nama</td><td  rowspan=\"2\">Prodi</td><td rowspan=\"2\">SKS</td><td rowspan=\"2\">IPK</td><td rowspan=\"2\">Predikat</td><td rowspan=\"2\">Mulai</td><td rowspan=\"2\">Yudisium</td><td rowspan=\"2\">Cuti</td><td colspan=\"2\">Masa Studi</td><td  rowspan=\"2\">Lama TA</td><td rowspan=\"2\">Melalui</td><td rowspan=\"2\">Askol</td><td rowspan=\"2\">Tgl lahir</td><td rowspan=\"2\">Umur</td></tr>";
+	    $table .= "<table  class='gridtable' >";
+	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
 	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
 	    foreach ($data as $d)
 	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)." ".$this->get_dpt($d->nim)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
 	    
@@ -549,7 +566,7 @@ class Admin extends Admin_Controller {
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'order' =>'ipk');
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
@@ -560,24 +577,42 @@ class Admin extends Admin_Controller {
 					margin-left: auto;
 					margin-right: auto;
 					}
-					.smaller{
-					    border: 1px solid;
+					table.gridtable {
+						font-family: verdana,arial,sans-serif;
+						font-size:7px;
+						color:#333333;
+						border-width: 1px;
+						border-color: #666666;
+						border-collapse: collapse;
+						width: 842px;
+						
 					}
-					.smaller td{
-					    border: 1px solid;
+					table.gridtable th {
+						border-width: 1px;
+						padding: 6px;
+						border-style: solid;
+						border-color: #666666;
+						background-color: #dedede;
+					}
+					table.gridtable td {
+						border-width: 1px;
+						padding: 5px;
+						border-style: solid;
+						border-color: #666666;
+						background-color: #ffffff;
 					}
 				</style>";
-	    $table  = "<table style=\"font-size:15px;\"  width=\"842px\">";
+	    $table  = "<table style=\"font-size:15px;\" align=\"center\" cellpadding=4>";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA S1<br>YUDISIUM PERIODE ".$bln."  ".$thn."</td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA S1<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
 	    $table .= "<tr><td colspan=3><br></td></tr>";
 	    $table .= "</tabel>";
-	    $table .= "<table  class='smaller' width=\"842px\">";
-	    $table .= "<tr><td rowspan=\"2\">No Urut</td><td rowspan=\"2\">NIM</td><td rowspan=\"2\">Nama</td><td  rowspan=\"2\">Prodi</td><td rowspan=\"2\">SKS</td><td rowspan=\"2\">IPK</td><td rowspan=\"2\">Predikat</td><td rowspan=\"2\">Mulai</td><td rowspan=\"2\">Yudisium</td><td rowspan=\"2\">Cuti</td><td colspan=\"2\">Masa Studi</td><td  rowspan=\"2\">Lama TA</td><td rowspan=\"2\">Melalui</td><td rowspan=\"2\">Askol</td><td rowspan=\"2\">Tgl lahir</td><td rowspan=\"2\">Umur</td></tr>";
+	    $table .= "<table  class='gridtable' >";
+	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
 	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
 	    foreach ($data as $d)
 	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)." ".$this->get_dpt($d->nim)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
 	    
@@ -655,7 +690,7 @@ class Admin extends Admin_Controller {
 	}
     public function get_religion($id)
 	{
-	    $result = $this->ym>get_religion($id);
+	    $result = $this->ym->get_religion($id);
 	    return $result;
 	}
 
@@ -789,7 +824,7 @@ class Admin extends Admin_Controller {
 	    $date1 = new DateTime($d1); 
 	    $date2 = new DateTime($d2); 
 	    $interval = $date1->diff($date2); 
-	    $diff = $interval->format('%y th %m bl %d hr'); 
+	    $diff = $interval->format('%y/%m/%d'); 
 	    return $diff;
 	}
 	
@@ -799,7 +834,7 @@ class Admin extends Admin_Controller {
 	    list($name,$stage) = explode ('-',$prodies->x);
 	    return $stage;
 	}
-    public function predicate($nim,$date,$ipk)
+    public function predicate($nim,$date,$ipk,$parrental)
 	{
 	    $stage 	= trim($this->get_dpt($nim));
 	    $smster	= trim($this->get_semester($nim,$date));
@@ -830,7 +865,12 @@ class Admin extends Admin_Controller {
 		{
 		    if($ipk <= 4.0 && $ipk >= 3.51)
 		    {
-			$predicate = 'Cumlaude';
+			if($parrental == 'PKS')
+			{
+			    $predicate = 'Sangat Memuaskan';
+			}else{
+			    $predicate = 'Cumlaude';   
+			}
 		    }
 		}else{
 		    if($ipk <= 4.0 && $ipk >= 3.51)
