@@ -12,9 +12,8 @@
 		<table>
 			<thead>
 			<tr>
-				
 				<th class="collapse"><?php echo lang('yudisium_date'); ?></th>
-				<th class="collapse"></th>
+				<th class="collapse"><?php echo lang('yudisium_print'); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
