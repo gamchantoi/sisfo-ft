@@ -53,6 +53,7 @@ $lang['yudisium_new_entri']             = 'Entri Data Yudisium';
 $lang['yudisium_new_button']            = 'Tambah data';
 $lang['yudisium_already_exist_error']   = 'Post dengan NIM ini sudah ada.';
 $lang['yudisium_currently_no_posts']    = 'Tidak ada data Yudisium';
+$lang['yudisium_print']                 = 'Cetak';
 $lang['yudisium_printed_label']         = 'Telah Dicetak';
 $lang['yudisium_all_label']             = 'Tampil Semua';
 $lang['yudisium_no_printed_label']      = 'Belum Dicetak';

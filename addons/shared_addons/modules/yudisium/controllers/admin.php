@@ -543,6 +543,48 @@ class Admin extends Admin_Controller {
 	    echo $style;
 	    echo $table;
 	}
+	
+	//fungsi cetak rekap peserta yudisium S1
+    public function report_s1($date)
+	{
+	    $_tanggal 		= tanggal($date);
+	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
+	    $data		= $this->ym->get_many_by($basewhere);
+	    $i			= 1;
+	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
+				<style type=\"text/css\" >
+					body {
+					width: 842px;
+					height: 595px;
+					margin-left: auto;
+					margin-right: auto;
+					}
+					.smaller{
+					    border: 1px solid;
+					}
+					.smaller td{
+					    border: 1px solid;
+					}
+				</style>";
+	    $table  = "<table style=\"font-size:15px;\"  width=\"842px\">";
+	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA S1<br>YUDISIUM PERIODE ".$bln."  ".$thn."</td></tr>";
+	    $table .= "<tr><td colspan=3><br></td></tr>";
+	    $table .= "</tabel>";
+	    $table .= "<table  class='smaller' width=\"842px\">";
+	    $table .= "<tr><td rowspan=\"2\">No Urut</td><td rowspan=\"2\">NIM</td><td rowspan=\"2\">Nama</td><td  rowspan=\"2\">Prodi</td><td rowspan=\"2\">SKS</td><td rowspan=\"2\">IPK</td><td rowspan=\"2\">Predikat</td><td rowspan=\"2\">Mulai</td><td rowspan=\"2\">Yudisium</td><td rowspan=\"2\">Cuti</td><td colspan=\"2\">Masa Studi</td><td  rowspan=\"2\">Lama TA</td><td rowspan=\"2\">Melalui</td><td rowspan=\"2\">Askol</td><td rowspan=\"2\">Tgl lahir</td><td rowspan=\"2\">Umur</td></tr>";
+	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    foreach ($data as $d)
+	    {
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)." ".$this->get_dpt($d->nim)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
+		$i++;
+	    }
+	    
+	    $table .= "</table>";
+	    echo $style;
+	    echo $table;
+	}
     
 	//fungsi cetak surat keputusan dekan
     public function cetak_sk($date)
