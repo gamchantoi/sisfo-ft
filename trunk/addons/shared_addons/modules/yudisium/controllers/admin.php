@@ -276,18 +276,18 @@ class Admin extends Admin_Controller {
 		    )));
 	    if($this->form_validation->run()){
 		$result = $this->ym->update($id,array(
-			    'name'	            => $this->input->post('name'),
+			    'name'	        => $this->input->post('name'),
 			    'date'              => $this->input->post('date'),
-			    'nim'	            => $this->input->post('nim'),
+			    'nim'	        => $this->input->post('nim'),
 			    'department'        => $this->input->post('department'),
-			    'pa'	            => $this->input->post('pa'),
+			    'pa'	        => $this->input->post('pa'),
 			    'place_of_birth'    => $this->input->post('pob'),
 			    'date_of_birth'     => $this->input->post('dob'),
 			    'religion'          => $this->input->post('religion'),
 			    'sex'               => $this->input->post('sex'),
 			    'meriage'           => $this->input->post('meriage'),
 			    'address'           => $this->input->post('address'),
-			    'parrent'	    => $this->input->post('parrent'),
+			    'parrent'	    	=> $this->input->post('parrent'),
 			    'parrent_address'   => $this->input->post('parrent_address'),
 			    'parrental'         => $this->input->post('parrental'),
 			    'soo'               => $this->input->post('soo'),
@@ -344,9 +344,9 @@ class Admin extends Admin_Controller {
 
     public function preview($id=0)
 	{
-	    $this->data->item	= $this->ym->get($id);
+	    $this->data->item		= $this->ym->get($id);
 	    $this->data->printed	= $this->get_printed($id);
-	    $this->data->lecture    = $this->get_name($this->data->item->lecture);
+	    $this->data->lecture    	= $this->get_name($this->data->item->lecture);
 	    $this->data->religion	= $this->get_religion($this->data->item->religion);
 	    $this->data->printed 	= $this->get_printed($id);
 	    $this->load->view('admin/view',$this->data);
@@ -505,43 +505,42 @@ class Admin extends Admin_Controller {
     public function report_d3($date)
 	{
 	    $_tanggal 		= tanggal($date);
-	    list($tgl,$bln,$thn) 	= explode(" ",$_tanggal);
+	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
 	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date);
-	    $data			= $this->ym->get_many_by($basewhere);
+	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
-				<style type=\"text/css\" >
-					body {
-					width: 842px;
-					height: 595px;
-					margin-left: auto;
-					margin-right: auto;
+		<style type=\"text/css\" >
+		    body {
+			width: 842px;
+			height: 595px;
+			margin-left: auto;
+			margin-right: auto;
+			}
+		    table.gridtable {
+			font-family: verdana,arial,sans-serif;
+			font-size:7px;
+			color:#333333;
+			border-width: 1px;
+			border-color: #666666;
+			border-collapse: collapse;
+			width: 842px;			
+			}
+		    table.gridtable th {
+			border-width: 1px;
+			padding: 6px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #dedede;
+			}
+		    table.gridtable td {
+			border-width: 1px;
+			padding: 5px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #ffffff;
 					}
-					table.gridtable {
-						font-family: verdana,arial,sans-serif;
-						font-size:7px;
-						color:#333333;
-						border-width: 1px;
-						border-color: #666666;
-						border-collapse: collapse;
-						width: 842px;
-						
-					}
-					table.gridtable th {
-						border-width: 1px;
-						padding: 6px;
-						border-style: solid;
-						border-color: #666666;
-						background-color: #dedede;
-					}
-					table.gridtable td {
-						border-width: 1px;
-						padding: 5px;
-						border-style: solid;
-						border-color: #666666;
-						background-color: #ffffff;
-					}
-				</style>";
+		</style>";
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
@@ -570,38 +569,37 @@ class Admin extends Admin_Controller {
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
-				<style type=\"text/css\" >
-					body {
-					width: 842px;
-					height: 595px;
-					margin-left: auto;
-					margin-right: auto;
-					}
-					table.gridtable {
-						font-family: verdana,arial,sans-serif;
-						font-size:7px;
-						color:#333333;
-						border-width: 1px;
-						border-color: #666666;
-						border-collapse: collapse;
-						width: 842px;
-						
-					}
-					table.gridtable th {
-						border-width: 1px;
-						padding: 6px;
-						border-style: solid;
-						border-color: #666666;
-						background-color: #dedede;
-					}
-					table.gridtable td {
-						border-width: 1px;
-						padding: 5px;
-						border-style: solid;
-						border-color: #666666;
-						background-color: #ffffff;
-					}
-				</style>";
+		<style type=\"text/css\" >
+		    body {
+			width: 842px;
+			height: 595px;
+			margin-left: auto;
+			margin-right: auto;
+			}
+		    table.gridtable {
+			font-family: verdana,arial,sans-serif;
+			font-size:7px;
+			color:#333333;
+			border-width: 1px;
+			border-color: #666666;
+			border-collapse: collapse;
+			width: 842px;			
+			}
+		    table.gridtable th {
+			border-width: 1px;
+			padding: 6px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #dedede;
+			}
+		    table.gridtable td {
+			border-width: 1px;
+			padding: 5px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #ffffff;
+			}
+		</style>";
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\" cellpadding=4>";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA S1<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
@@ -625,25 +623,24 @@ class Admin extends Admin_Controller {
     public function cetak_sk($date)
 	{
 	    $_tanggal 		= tanggal($date);
-	    list($tgl,$bln,$thn)	= explode(" ",$_tanggal);
-	    $style  = "
-			<title>Surat Keputusan Dekan Yudisium ".$bln." ".$thn."</title>
-			<style type=\"text/css\" >
-			body {
+	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
+	    $style  = "<title>Surat Keputusan Dekan Yudisium ".$bln." ".$thn."</title>
+		<style type=\"text/css\" >
+		    body {
 			height: 842px;
 			width: 595px;
 			margin-left: auto;
 			margin-right: auto;
 			}
-			tr.yellow td {
-			    border: 1px solid #FB7A31;
-			    font-size:60%;
-			    }
-			    tr.smaller td{
-				    font-size:70%;
-				    font-weight: bold;
-			    }
-			</style>";
+		    tr.yellow td {
+			border: 1px solid #FB7A31;
+			font-size:60%;
+			}
+		    tr.smaller td{
+			font-size:70%;
+			font-weight: bold;
+			}
+		</style>";
 	    $table  = "<table style=\"font-size:15px;\">";
 	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAHUN  ".$thn."<br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
