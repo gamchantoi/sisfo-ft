@@ -4,6 +4,8 @@
  * @package  	PyroCMS
  * @subpackage  Prakerin
  * @category  	Module
+ * @author	Dwi Agus p
+ * @email	dwiagus@cempakaweb.com
  */
 class Admin extends Admin_Controller{
     protected $section = 'prakerin';
@@ -112,63 +114,65 @@ class Admin extends Admin_Controller{
    }
    
    public function preview($id=0)
-   {
-	$this->data->mhs = $this->pkl->get_data($id);
-	$this->data->lisence= $this->get_printed($id,'2');
-	$this->data->thanks = $this->get_printed($id,'3');
-	$this->data->company= $this->pkl->get_company($id);
-	$this->load->view('admin/view',$this->data);
-   }
-   
+	{
+	     $this->data->mhs = $this->pkl->get_data($id);
+	     $this->data->lisence= $this->get_printed($id,'2');
+	     $this->data->thanks = $this->get_printed($id,'3');
+	     $this->data->company= $this->pkl->get_company($id);
+	     $this->load->view('admin/view',$this->data);
+	}
+	
    public function mhs()
-   {
-	$base_where = array('printed' => 'all');
-	$base_where = $this->input->post('f_nim') ? $base_where + array('nim' => $this->input->post('f_nim')) : $base_where;
-	$base_where['printed'] = $this->input->post('f_printed') ? $this->input->post('f_printed') : $base_where['printed'];
-	$base_where = $this->input->post('f_name') ? $base_where + array('name' => $this->input->post('f_name')) : $base_where;    
-	$total_rows = $this->pkl->count_mhs_by($base_where);
-	$pagination = create_pagination('admin/prakerin/mhs', $total_rows);
-		// Using this data, get the relevant results
-	 $data = $this->pkl->limit($pagination['limit'])->get_mhs_by($base_where);
-	 //print_r($data);
-		//do we need to unset the layout because the request is ajax?
-	 $this->input->is_ajax_request() ? $this->template->set_layout(FALSE) : '';
-	 $this->template
-			->title($this->module_details['name'])
-			->append_metadata(js('admin/filter.js'))
-			->append_metadata(js('jquery.printPage.js','yudisium'))
-			->append_metadata(js('jquery.qtip.js','yudisium'))
-			->append_metadata(css('jquery.qtip.css','yudisium'))
-			->set('pagination', $pagination)
-			->set('data', $data);
-
-	 $this->input->is_ajax_request() ? $this->template->build('admin/tables/mhs', $this->data) : $this->template->build('admin/mhs', $this->data);
-   }
+	{
+	     $base_where = array('printed' => 'all');
+	     $base_where = $this->input->post('f_nim') ? $base_where + array('nim' => $this->input->post('f_nim')) : $base_where;
+	     $base_where['printed'] = $this->input->post('f_printed') ? $this->input->post('f_printed') : $base_where['printed'];
+	     $base_where = $this->input->post('f_name') ? $base_where + array('name' => $this->input->post('f_name')) : $base_where;    
+	     $total_rows = $this->pkl->count_mhs_by($base_where);
+	     $pagination = create_pagination('admin/prakerin/mhs', $total_rows);
+		     // Using this data, get the relevant results
+	      $data = $this->pkl->limit($pagination['limit'])->get_mhs_by($base_where);
+	      //print_r($data);
+		     //do we need to unset the layout because the request is ajax?
+	      $this->input->is_ajax_request() ? $this->template->set_layout(FALSE) : '';
+	      $this->template
+			     ->title($this->module_details['name'])
+			     ->append_metadata(js('admin/filter.js'))
+			     ->append_metadata(js('jquery.printPage.js','yudisium'))
+			     ->append_metadata(js('jquery.qtip.js','yudisium'))
+			     ->append_metadata(css('jquery.qtip.css','yudisium'))
+			     ->set('pagination', $pagination)
+			     ->set('data', $data);
+     
+	      $this->input->is_ajax_request() ? $this->template->build('admin/tables/mhs', $this->data) : $this->template->build('admin/mhs', $this->data);
+	}
    
    public function lisence($number)
-   {
-	$this->data->company= $this->pkl->get_company($number);
-	list($this->data->date_in, $this->data->date_in) = explode(" ", $this->data->company['date']);
-	$this->data->mhs    = $this->pkl->get_mhs($number);
-	$this->data->nums   = $this->pkl->count_mhs($number);
-	$this->load->view ('admin/lisence',$this->data);
-   }
+	{
+	     $this->data->company= $this->pkl->get_company($number);
+	     list($this->data->date_in, $this->data->date_in) = explode(" ", $this->data->company['date']);
+	     $this->data->mhs    = $this->pkl->get_mhs($number);
+	     $this->data->nums   = $this->pkl->count_mhs($number);
+	     $this->load->view ('admin/lisence',$this->data);
+	}
    
    public function l_printed($id)
-   {
-	$this->data->result= $this->get_printed($id,'2');
-	$this->load->view('admin/printed',$this->data);
-   }
+	{
+	     $this->data->result= $this->get_printed($id,'2');
+	     $this->load->view('admin/printed',$this->data);
+	}
    
    public function t_printed($id)
-   {
-	$result= $this->get_printed($id,'3');
-   }
+	{
+	     $result= $this->get_printed($id,'3');
+	}
+	
    public function get_printed($id,$code)
-   {
-	$result=$this->pkl->get_print($id,$code);
-	return $result;
-   }
+	{
+	     $result=$this->pkl->get_print($id,$code);
+	     return $result;
+	}
+   
    public function ajax_filter()
 	{
 		//$category = $this->input->post('f_category');
@@ -202,6 +206,7 @@ class Admin extends Admin_Controller{
 			->set('data', $results)
 			->build('admin/tables/prakerin');
 	}
+	
     public function ajax_search()
 	{
 	    $nim 	= $this->input->post('f_nim');
