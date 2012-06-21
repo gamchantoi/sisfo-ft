@@ -205,18 +205,18 @@ class Admin extends Admin_Controller {
 	    {
 		
 		$id=$this->ym->insert(array(
-			    'name'	            => $this->input->post('name'),
+			    'name'	        => $this->input->post('name'),
 			    'date'              => date('Y-m-d H:i:s'),
-			    'nim'	            => $this->input->post('nim'),
+			    'nim'	        => $this->input->post('nim'),
 			    'department'        => $this->input->post('department'),
-			    'pa'	            => $this->input->post('pa'),
+			    'pa'	        => $this->input->post('pa'),
 			    'place_of_birth'    => $this->input->post('pob'),
 			    'date_of_birth'     => $this->input->post('dob'),
 			    'religion'          => $this->input->post('religion'),
 			    'sex'               => $this->input->post('sex'),
 			    'meriage'           => $this->input->post('meriage'),
 			    'address'           => $this->input->post('address'),
-			    'parrent'   	    => $this->input->post('parrent'),
+			    'parrent'   	=> $this->input->post('parrent'),
 			    'parrent_address'   => $this->input->post('parrent_address'),
 			    'parrental'         => $this->input->post('parrental'),
 			    'soo'               => $this->input->post('soo'),
@@ -473,7 +473,7 @@ class Admin extends Admin_Controller {
 		$table .= "<tr><td colspan=3 align=\"right\">Yogyakarta ". tanggal(date('Y-m-d'))."<td></tr>";
 		$table .= "<tr><td align=\"center\">Mengetahui,<br /> KaSubbag Pendidikan</td><td align=\"center\">Yang Menyerahkan</td><td align=\"center\">Yang Menerima</td><tr>";
 		$table .= "<tr><td align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/eko.jpg\" height=\"30px\"><td><td></td><td></td></tr>";
-		$table .= "<tr><td align=\"center\" width=\"190px\">Drs.Eka Purwana<br /> Nip. 19600905 198812 1 001</td><td align=\"center\" >".$item->name."</td><td align=\"center\" width=\"190px\">Haryo Aji Pambudi, S.Pd</td><tr>";
+		$table .= "<tr><td align=\"center\" width=\"190px\">Dra. Sari Puspita<br />Nip. 19630912 198812 2 001</td><td align=\"center\" >".$item->name."</td><td align=\"center\" width=\"190px\">Haryo Aji Pambudi, S.Pd</td><tr>";
 		$table .= "</table>";
 		echo $style;
 		echo $table;
