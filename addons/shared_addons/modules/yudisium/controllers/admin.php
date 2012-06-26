@@ -158,6 +158,7 @@ class Admin extends Admin_Controller {
 		$this->data->prodies  = $this->prodies();
 		$this->data->lectures = $this->lectures();
 		$this->load->library('form_validation');
+		$this->load->library('ExportToExcel');
 		$this->load->helper('tanggal');
 		$this->load->helper('printed');
 		$this->load->helper('yudisium');
