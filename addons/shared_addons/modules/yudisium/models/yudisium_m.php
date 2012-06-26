@@ -38,6 +38,18 @@ class Yudisium_m extends MY_Model {
 	{
 	    
 	}
+    function count_yudis_by($parrams = array())
+	{
+	    if(!empty($parrams['thesis']))
+	    {
+		$this->db->where('thesis',$parrams['thesis']);
+	    }
+	    if(!empty($parrams['date']))
+	    {
+		$this->db->where('yudisium_date',$parrams['date']);
+	    }
+	    return $this->db->count_all_results('yudisium');
+	}
     function get_yudis_by($key,$value)
     {
 	

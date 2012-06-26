@@ -160,6 +160,7 @@ class Admin extends Admin_Controller {
 		$this->load->library('form_validation');
 		$this->load->helper('tanggal');
 		$this->load->helper('printed');
+		$this->load->helper('yudisium');
 		$this->data->religions= $this->ym->get_religions();
 	}
     
@@ -493,7 +494,8 @@ class Admin extends Admin_Controller {
 	//
     public function decree()
 	{
-	    $data= $this->ym->get_yudisium();
+	    $data	= $this->ym->get_yudisium();
+	    
 	    $this->template
 			->title($this->module_details['name'], lang('yudisium_decree'))
 			->append_js('module::jquery.printPage.js')
