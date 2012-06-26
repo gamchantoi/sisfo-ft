@@ -423,6 +423,69 @@ class Admin extends Admin_Controller {
 	    $this->ym->update($id,array('printed' => '1'));
 	    $this->ym->add_print($id,'4');
 	}
+	
+    public function export_xls($date,$thesis)
+	{
+	    if($thesis   == 'all')
+	    {
+		$parrams = array('yudisium_date'=>$date);
+	    }else{
+		$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis);
+	    }
+	    $data	 = $this->ym->get_many_by($parrams);
+	    $_tanggal 		= tanggal($date);
+	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
+	    if($data){
+	    $i      = 1;
+	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
+	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA ";
+	    switch ($thesis)
+	    {
+		case	'D3'	:
+		    $table .= "D3<br>";
+		    break;
+		case	'Skripsi':
+		    $table .= "S1<br>";
+		    break;
+		default		:
+		    $table .= "<br />";
+		    break;
+	    }
+	    $table .= "YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
+	    $table .= "<tr><td colspan=3><br></td></tr>";
+	    $table .= "</tabel>";
+	    $table .= "<table  class='gridtable' >";
+	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
+	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    foreach ($data as $d)
+	    {
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$d->nim."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$d->yudisium_date."</td><td>".$d->nim."</td><td>".$d->yudisium_date."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$d->date_of_birth."</td></tr>";
+		$i++;
+	    }    
+	    $table .= "</table>";
+	    }else{
+		$table = 'Maaf Data Tidak tersedia';
+	    }
+	    
+	    $excel= new ExportToExcel();
+	    $excel->exportWithPage($table,"Rekap-data-yudisium.xls");
+	}
+	
+    public function export_d3($date)
+	{
+	    return $this->export_xls($date,'D3');
+	}
+	
+    public function export_s1($date)
+	{
+	    return $this->export_xls($date,'Skripsi');
+	}
+    
+    public function export_all($date)
+	{
+	    return $this->export_xls($date,'all');
+	}
     
     public function repo($id=0)
 	{
@@ -834,6 +897,7 @@ class Admin extends Admin_Controller {
 	    list($name,$stage) = explode ('-',$prodies->x);
 	    return $stage;
 	}
+	
     public function predicate($nim,$date,$ipk,$parrental)
 	{
 	    $stage 	= trim($this->get_dpt($nim));
