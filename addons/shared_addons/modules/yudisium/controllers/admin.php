@@ -397,7 +397,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td>12.</td><td>Sekolah Asal</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->soo."</td></tr>";
 	    $table .= "<tr><td>13.</td><td>Alamat Sekolah</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->school_address."</td></tr>";
 	    $table .= "<tr><td>14.</td><td>Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->thesis."</td></tr>";
-	    $table .= "<tr><td valign=\"top\">15.</td><td valign=\"top\">Judul</td><td valign=\"top\">:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->thesis_title."</td></tr>";
+	    $table .= "<tr><td valign=\"top\">15.</td><td valign=\"top\">Judul</td><td valign=\"top\">:</td><td>&nbsp;&nbsp;</td><td colspan=2><font size=\"1.9px\"><b> ".strtoupper($item->thesis_title)."</b></font></td></tr>";
 	    $table .= "<tr><td>16.</td><td>Dosen Pembimbing</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$this->get_name($item->lecture)."</td></tr>";
 	    $table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".tanggal($item->finish)." &nbsp; <b>IPK:</b> ".$item->ipk." &nbsp; <b>Total SKS:</b> ".$item->sks."</td></tr>";
 	    $table .= "<tr><td>18.</td><td>Lama Penulisan TA</td><td>:</td><td>&nbsp;&nbsp;</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
@@ -410,7 +410,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td colspan=2><br /></td></tr>";
 	    $table .= "<tr><td align=\"center\">".$this->get_name($item->pa)."</td><td align=\"center\"  style=\"padding-left: 100px; \">".$item->name."</td></tr>";
 	    $table .= "<tr><td align=\"center\">NIP ".$this->get_nip($item->pa)."</td><td align=\"center\"  style=\"padding-left: 100px; \">NIM ".$item->nim."</td></tr>";
-	    $table .= "<tr><td colspan=2 align=\"center\">Mengetahui, <br />Pembentu Dekan I</td></tr>";
+	    $table .= "<tr><td colspan=2 align=\"center\">Mengetahui, <br />Wakil Dekan I</td></tr>";
 	    //$table .= "<tr><td colspan=4 align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/sunar-ttd.png\" width=\"100\"></td></tr>";
 	    $table .= "<tr><td colspan=2 align=\"center\"><br /></td></tr>";
 	    $table .= "<tr><td colspan=2 align=\"center\">Dr. Soenaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
@@ -418,7 +418,7 @@ class Admin extends Admin_Controller {
 	    echo $style;
 	    echo $table;
 	    echo "<hr>";
-	    echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani PD I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES/OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
+	    echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani Wakil I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES / OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
 	    echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
 	    $this->ym->update($id,array('printed' => '1'));
 	    $this->ym->add_print($id,'4');
