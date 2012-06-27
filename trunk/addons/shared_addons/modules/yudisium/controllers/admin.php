@@ -438,8 +438,8 @@ class Admin extends Admin_Controller {
 	    if($data){
 	    $i      = 1;
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
-	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA ";
+	    $table .= "<tr><td align=\"center\" colspan=17><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=17><b>DAFTAR URUTAN IPK MAHASISWA ";
 	    switch ($thesis)
 	    {
 		case	'D3'	:
@@ -455,7 +455,7 @@ class Admin extends Admin_Controller {
 	    $table .= "YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
 	    $table .= "<tr><td colspan=3><br></td></tr>";
 	    $table .= "</tabel>";
-	    $table .= "<table  class='gridtable' >";
+	    $table .= "<table  class='gridtable' border=\"1px\">";
 	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
 	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
 	    foreach ($data as $d)
@@ -469,7 +469,19 @@ class Admin extends Admin_Controller {
 	    }
 	    
 	    $excel= new ExportToExcel();
-	    $excel->exportWithPage($table,"Rekap-data-yudisium.xls");
+	    switch ($thesis)
+	    {
+		case	'D3'	:
+		    $excel->exportWithPage($table,"Rekap-data-yudisium-d3-".$date.".xls");
+		    break;
+		case	'Skripsi':
+		    $excel->exportWithPage($table,"Rekap-data-yudisium-s1-".$date.".xls");
+		    break;
+		default		:
+		    $excel->exportWithPage($table,"Rekap-data-yudisium-all-".$date.".xls");
+		    break;
+	    }
+	    
 	}
 	
     public function export_d3($date)
