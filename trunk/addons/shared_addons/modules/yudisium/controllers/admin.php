@@ -559,7 +559,6 @@ class Admin extends Admin_Controller {
 		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
-	    
 	    $table .= "</table>";
 	    echo $style;
 	    echo $table;
@@ -661,7 +660,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
 	    foreach ($data as $d)
 	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$d->nim."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$d->yudisium_date."</td><td>".$d->nim."</td><td>".$d->yudisium_date."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$d->date_of_birth."</td></tr>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->nim."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$d->yudisium_date."</td><td>".$d->nim."</td><td>".$d->yudisium_date."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$d->date_of_birth."</td></tr>";
 		$i++;
 	    }    
 	    $table .= "</table>";
@@ -866,7 +865,9 @@ class Admin extends Admin_Controller {
     public function get_dpt($nim)
 	{
 	    $prodies = $this->ym->get_prodies($nim);
-	    list($name,$stage) = explode ('-',$prodies->x);
+	    $split = explode ('-',$prodies->x);
+	    $nama  = $split[0];
+	    $stage = $split[1];
 	    return $stage;
 	}
 	
@@ -925,5 +926,6 @@ class Admin extends Admin_Controller {
 		}
 	    }
 	    return $predicate;
+	
 	}
 }
