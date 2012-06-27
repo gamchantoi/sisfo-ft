@@ -353,7 +353,30 @@ class Admin extends Admin_Controller {
 	    $this->data->printed 	= $this->get_printed($id);
 	    $this->load->view('admin/view',$this->data);
 	}
-    
+	
+    //fungsi rekap data peserta yudisium
+    public function report(){
+	    $data= $this->ym->get_yudisium();
+	    $this->template
+			->title($this->module_details['name'], lang('yudisium_decree'))
+			->append_js('module::jquery.printPage.js')
+			->set('data', $data)
+			->build('admin/report');
+	}
+	
+	//fungsi tampil data Surat keputusan Dekan
+    public function decree()
+	{
+	    $data	= $this->ym->get_yudisium();
+	    
+	    $this->template
+			->title($this->module_details['name'], lang('yudisium_decree'))
+			->append_js('module::jquery.printPage.js')
+			->set('data', $data)
+			->build('admin/decree');
+	}
+	
+	//fungsi cetak Isian Kelulusan
     public function cetak($id=0)
 	{
 	    $id OR redirect('admin/yudisium');
@@ -424,81 +447,7 @@ class Admin extends Admin_Controller {
 	    $this->ym->add_print($id,'4');
 	}
 	
-    public function export_xls($date,$thesis)
-	{
-	    if($thesis   == 'all')
-	    {
-		$parrams = array('yudisium_date'=>$date);
-	    }else{
-		$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis);
-	    }
-	    $data	 = $this->ym->get_many_by($parrams);
-	    $_tanggal 		= tanggal($date);
-	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    if($data){
-	    $i      = 1;
-	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
-	    $table .= "<tr><td align=\"center\" colspan=17><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";
-	    $table .= "<tr><td align=\"center\" colspan=17><b>DAFTAR URUTAN IPK MAHASISWA ";
-	    switch ($thesis)
-	    {
-		case	'D3'	:
-		    $table .= "D3<br>";
-		    break;
-		case	'Skripsi':
-		    $table .= "S1<br>";
-		    break;
-		default		:
-		    $table .= "<br />";
-		    break;
-	    }
-	    $table .= "YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
-	    $table .= "<tr><td colspan=3><br></td></tr>";
-	    $table .= "</tabel>";
-	    $table .= "<table  class='gridtable' border=\"1px\">";
-	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
-	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
-	    foreach ($data as $d)
-	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$d->nim."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$d->yudisium_date."</td><td>".$d->nim."</td><td>".$d->yudisium_date."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$d->date_of_birth."</td></tr>";
-		$i++;
-	    }    
-	    $table .= "</table>";
-	    }else{
-		$table = 'Maaf Data Tidak tersedia';
-	    }
-	    
-	    $excel= new ExportToExcel();
-	    switch ($thesis)
-	    {
-		case	'D3'	:
-		    $excel->exportWithPage($table,"Rekap-data-yudisium-d3-".$date.".xls");
-		    break;
-		case	'Skripsi':
-		    $excel->exportWithPage($table,"Rekap-data-yudisium-s1-".$date.".xls");
-		    break;
-		default		:
-		    $excel->exportWithPage($table,"Rekap-data-yudisium-all-".$date.".xls");
-		    break;
-	    }
-	    
-	}
-	
-    public function export_d3($date)
-	{
-	    return $this->export_xls($date,'D3');
-	}
-	
-    public function export_s1($date)
-	{
-	    return $this->export_xls($date,'Skripsi');
-	}
-    
-    public function export_all($date)
-	{
-	    return $this->export_xls($date,'all');
-	}
-    
+	//fungsi cetak tanda terima Penyerahan CD Tugas Akhir
     public function repo($id=0)
 	{
 	    $id OR redirect('admin/yudisium');
@@ -557,28 +506,6 @@ class Admin extends Admin_Controller {
 		
 	}
     
-	//fungsi rekap data peserta yudisium
-    public function report(){
-	    $data= $this->ym->get_yudisium();
-	    $this->template
-			->title($this->module_details['name'], lang('yudisium_decree'))
-			->append_js('module::jquery.printPage.js')
-			->set('data', $data)
-			->build('admin/report');
-	}
-	
-	//
-    public function decree()
-	{
-	    $data	= $this->ym->get_yudisium();
-	    
-	    $this->template
-			->title($this->module_details['name'], lang('yudisium_decree'))
-			->append_js('module::jquery.printPage.js')
-			->set('data', $data)
-			->build('admin/decree');
-	}
-	
 	//fungsi cetak rekap peserta yudisium D3
     public function report_d3($date)
 	{
@@ -697,91 +624,114 @@ class Admin extends Admin_Controller {
 	    echo $table;
 	}
     
-	//fungsi cetak surat keputusan dekan
-    public function cetak_sk($date)
+	//fungsi export excel data peserta yudisium    
+    public function export_xls($date,$thesis)
 	{
+	    if($thesis   == 'all')
+	    {
+		$parrams = array('yudisium_date'=>$date);
+	    }else{
+		$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis);
+	    }
+	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $style  = "<title>Surat Keputusan Dekan Yudisium ".$bln." ".$thn."</title>
-		<style type=\"text/css\" >
-		    body {
-			height: 842px;
-			width: 595px;
-			margin-left: auto;
-			margin-right: auto;
-			}
-		    tr.yellow td {
-			border: 1px solid #FB7A31;
-			font-size:60%;
-			}
-		    tr.smaller td{
-			font-size:70%;
-			font-weight: bold;
-			}
-		</style>";
-	    $table  = "<table style=\"font-size:15px;\">";
-	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAHUN  ".$thn."<br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
-	    $table .= "PERIODE ".strtoupper($bln)." ".$thn."<br><br> DEKAN FAKULTAS TEKNIK <br> UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
+	    if($data){
+	    $i      = 1;
+	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
+	    $table .= "<tr><td align=\"center\" colspan=17><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=17><b>DAFTAR URUTAN IPK MAHASISWA ";
+	    switch ($thesis)
+	    {
+		case	'D3'	:
+		    $table .= "D3<br>";
+		    break;
+		case	'Skripsi':
+		    $table .= "S1<br>";
+		    break;
+		default		:
+		    $table .= "<br />";
+		    break;
+	    }
+	    $table .= "YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
+	    $table .= "<tr><td colspan=3><br></td></tr>";
 	    $table .= "</tabel>";
-	    $table .= "<table>";
-	    $table .= "<tr class='smaller'><td valign=\"top\">Menimbang</td><td valign=\"top\">:</td><td valign=\"top\">a.</td><td style=\"padding-left: 10px; \">bahwa sehubungan dengan telah selesainya studi beberapa mahasiswa Fakultas Teknik Universitas Negeri Yogyakarta Program Diploma-3 (D-3) dan Strata-1 (S-1) dipandang perlu untuk diyudisiumkan.</td></tr>";
-	    $table .= "<tr class='smaller'><td></td><td></td><td valign=\"top\">b.</td><td style=\"padding-left: 10px; \">bahwa untuk keperluan seperti tersebut di atas perlu ditetapkan dengan keputusan Dekan</td></tr>";
-	    $table .= "<tr class='smaller'><td valign=\"top\">Mengingat</td><td>:</td><td valign=\"top\">1.</td><td style=\"padding-left: 10px; \">Undang-undang RI Nomor 20 Tahun 2003;</td></tr>";
-	    $table .= "<tr class='smaller'><td colspan=3 align='right'>2.</td><td style=\"padding-left: 10px; \">Peraturan Pemerintah RI Nomor 60 Tahun 1999;</td></tr>";
-	    $table .= "<tr class='smaller'><td colspan=3 align='right'>3.</td><td style=\"padding-left: 10px; \">Keputusan Presiden RI : <br>a. Nomor 93 Tahun 1999<br>b. Nomor 240/M Tahun 2003;</td></tr>";
-	    $table .= "<tr class='smaller'><td colspan=3 align='right'>4.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 23 Tahun 2011;</td></tr>";
-	    $table .= "<tr class='smaller'><td colspan=3 align='right'>5.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 34 Tahun 2011;</td></tr>";
-	    $table .= "<tr class='smaller'><td colspan=3 align='right'>6.</td><td style=\"padding-left: 10px; \">Keputusan Rektor IKIP YOGYAKARTA Nomor 024 Tahun 1998;</td></tr>";
-	    $table .= "<tr class='smaller'><td colspan=3 align='right'>7.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Nomor 01 Tahun 2011;</td></tr>";
-	    $table .= "<tr class='smaller'><td colspan=3 align='right' valign=\"top\">8.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Universitas Negeri Yogyakarta : <br>a. Nomor 207 Tahun 2000; &nbsp;&nbsp;&nbsp;c. Nomor 297 Tahun 2006 <br>b. Nomor 303 Tahun 2000; &nbsp;&nbsp;&nbsp;d. Nomor: 1160/UN34/KP/2011</td></tr>";
+	    $table .= "<table  class='gridtable' border=\"1px\">";
+	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
+	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    foreach ($data as $d)
+	    {
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$d->nim."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$d->yudisium_date."</td><td>".$d->nim."</td><td>".$d->yudisium_date."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$d->date_of_birth."</td></tr>";
+		$i++;
+	    }    
 	    $table .= "</table>";
-	    $table .= "<table>";
-	    $table .= "<tr><td colspan=4 align='center'><b>MEMUTUSKAN</b></td></tr>";
-	    $table .= "<tr class='smaller'><td>Menetapkan</td><td>:</td><td colspan=4></td></tr>";
-	    $table .= "<tr class='smaller'><td valign='top'>Pertama</td><td valign='top'>:</td><td></td><td colspan=2>Yudisium Mahasiswa Program Diploma-3 (D-3) dan Strata-1 (S-1) Fakultas Teknik Universitas Negeri Yogyakarta Periode yang nama-namanya seperti tersebut pada lampiran 1 dan lampiran 2 Keputusan ini.</td></tr>";
-	    $table .= "<tr class='smaller'><td valign='top'>Kedua</td><td valign='top'>:</td><td></td><td colspan=2>Mahasiswa yang namanya seperti tersebut pada diktum Pertama tersebut di atas berhak mengikuti wisuda dalam Upacara Wisuda Universitas Negeri Yogyakarta sesuai dengan ketentuan yang berlaku.</td></tr>";
-	    $table .= "<tr class='smaller'><td valign='top'>Ketiga</td><td valign='top'>:</td><td></td><td colspan=2>Keputusan ini berlaku sejak ditetapkan.</td></tr>";
-	    $table .= "<tr class='smaller'><td valign='top'>Keempat</td><td valign='top'>:</td><td></td><td colspan=2>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
-	    $table .= "</table>";
-	    $table .= "<table>";
-	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \">Ditetapkan di :  Yogyakarta</td></tr>";
-	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><u>Pada tanggal : ".tanggal($date)." </u></td></tr>";
-	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><img src=\"".base_url().$this->module_details['path']."/img/brur.gif\" height=\"50px\"><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
-	    $table .= "<tr class='smaller'><td colspan=2>Tembusan Yth. :</td></tr>";
-	    $table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td><td style=\"padding-left: 190px; \">7. Kasubag Registrasi dan Statistik<br>8. Para Pembantu Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
-	    $table .= "</table>";
-	    $table .= "<table>";
-	    $table .= "<tr class='yellow'><td width='70px' valign='top'>Dibuat Oleh :<br><br> &nbsp;</td><td align='center' valign='top'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh<br><br>&nbsp;</td></tr>";
-	    //$table .= "<table>";
-	    $table .= "</table>";
-	    echo $style;
-	    echo $table;			
+	    }else{
+		$table = 'Maaf Data Tidak tersedia';
+	    }
+	    
+	    $excel= new ExportToExcel();
+	    switch ($thesis)
+	    {
+		case	'D3'	:
+		    $excel->exportWithPage($table,"Rekap-data-yudisium-d3-".$date.".xls");
+		    break;
+		case	'Skripsi':
+		    $excel->exportWithPage($table,"Rekap-data-yudisium-s1-".$date.".xls");
+		    break;
+		default		:
+		    $excel->exportWithPage($table,"Rekap-data-yudisium-all-".$date.".xls");
+		    break;
+	    }
+	    
 	}
+	
+	//fungsi export excel data peserta Yudisium D3
+    public function export_d3($date)
+	{
+	    return $this->export_xls($date,'D3');
+	}
+	
+	//fungsi export excel data peserta Yudisium S1
+    public function export_s1($date)
+	{
+	    return $this->export_xls($date,'Skripsi');
+	}
+	
+	//fungsi export excel data peserta Yudisium S1-D3
+    public function export_all($date)
+	{
+	    return $this->export_xls($date,'all');
+	}
+    
+	//fungsi pengecekan dokumen telah tercetak
     public function get_printed($id=0)
 	{
 	    $result=$this->ym->get_print($id);
 	    return $result;
 	}
+	
+	//fungsi penampil Agama
     public function get_religion($id)
 	{
 	    $result = $this->ym->get_religion($id);
 	    return $result;
 	}
-
+	
+	//fungsi penampil Jurusan
    public function get_major($id=0)
 	{
 	  $result=$this->ym->get_major($id);
 	  return $result;
 	}
-   
+	
+	//fungsi pencari Nama Dosen
    public function get_name($id=0)
 	{
 	     $result=$this->ym->get_lecture_by('id',$id);
 	     return $result->name;
 	}
    
-  
+	//fungsi pencari nim dosen
    public function get_nip($id=0)
 	{
 	  $result=$this->ym->get_lecture_by('id',$id);
@@ -814,6 +764,7 @@ class Admin extends Admin_Controller {
 	    return $result;
 	}
     
+	//filter ajax pd select box
     public function ajax_filter()
 	{
 		//$category = $this->input->post('f_category');
@@ -848,12 +799,14 @@ class Admin extends Admin_Controller {
 			->build('admin/tables/yudis');
 	}
 	
+	//fungsi pengecek NIM
     public function _check_nim($nim, $id = null)
 	{
 	    $this->form_validation->set_message('_check_nim', sprintf(lang('yudisium_already_exist_error'), lang('yudisium_nim_label')));
 	    return $this->ym->check_exists('nim', $nim, $id);			
 	}
 	
+	//fungsi penghitung usia
     public function get_age($umur)
 	{
 	    list($hari,$bulan, $tahun) = explode('-', $umur);
@@ -867,6 +820,7 @@ class Admin extends Admin_Controller {
 	    return $thn;
 	}
 	
+	//fungsi pencari tahun Angkatan
     public function get_year($nim)
 	{
 	    $first	= substr($nim,0,1);
@@ -874,6 +828,8 @@ class Admin extends Admin_Controller {
 	    $res	= '20'.$year;
 	    return $res;
 	}
+	
+	//fungsi penghitung Usia
     public function cal_age($dob)
 	{
 	    $dob = date("Y-m-d",strtotime($dob));
@@ -885,6 +841,7 @@ class Admin extends Admin_Controller {
 	    return $diff->y;
 	}
     
+	//fungsi mencari jumlah semester yg telah ditempuh
     public function get_semester($nim,$date)
 	{
 	    $year 	= substr($nim,0,2);
@@ -894,6 +851,8 @@ class Admin extends Admin_Controller {
 	    $result 	= $diff * 2;
 	    return $result;
 	}
+	
+	//fungsi penghitung selisih waktu antara dua tanggal
     public function get_datediff($d1,$d2)
 	{
 	    $date1 = new DateTime($d1); 
@@ -903,6 +862,7 @@ class Admin extends Admin_Controller {
 	    return $diff;
 	}
 	
+	//fungsi penampil Program Studi Mahasiswa
     public function get_dpt($nim)
 	{
 	    $prodies = $this->ym->get_prodies($nim);
@@ -910,6 +870,7 @@ class Admin extends Admin_Controller {
 	    return $stage;
 	}
 	
+	//fungsi penghitung/penampil predikat mahasiswa
     public function predicate($nim,$date,$ipk,$parrental)
 	{
 	    $stage 	= trim($this->get_dpt($nim));
