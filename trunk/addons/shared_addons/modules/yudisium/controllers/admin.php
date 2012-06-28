@@ -622,7 +622,72 @@ class Admin extends Admin_Controller {
 	    echo $style;
 	    echo $table;
 	}
-    
+	
+	//function export lampiran SK dekan
+    public function attch_xls($date,$thesis)
+	{
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk');
+	    $data	 = $this->ym->get_many_by($parrams);
+	    $_tanggal	= tanggal($date);
+	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
+	    if($data)
+	    {
+		$i      = 1;
+		$table  = "<table style=\"font-size:15px;\" align=\"center\">";
+		$table .= "<tr><td align=\"center\" colspan=7><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";
+		switch ($thesis)
+		{
+		    case	'D3'	:
+			$stage	= "D3";
+			$lamp	= 1;
+			break;
+		    case	'Skripsi':
+			$stage	= "S1";
+			$lamp	= 2;
+			break;
+		    default		:
+			$table .= "<br />";
+			break;
+		}
+		$table .= "<tr><td colspan=4></td><td colspan=3>Lampiran $lamp Keputusan Dekan</td></tr>";
+		$table .= "<tr><td colspan=4></td><td colspan=3>Fakultas Teknik Universitas Negeri Yogyakarta</td></tr>";
+		$table .= "<tr><td colspan=4></td><td>Nomor</td><td>:</td><td>Tahun $thn</td></tr>";
+		$table .= "<tr><td colspan=4></td><td>Tanggal</td><td>: $tgl</td><td>$bln $thn</td></tr>";
+		$table .= "<tr><td align=\"center\" colspan=7><b>DAFTAR NAMA MAHASISWA $stage FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";
+		$table .= "<tr><td align=\"center\" colspan=7><b> PESERTA YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</b></td></tr>";
+		$table .= "</tabel>";
+		$table .= "<table border=\"1px\">";
+		$table .= "<tr><td>NO</td><td>NIM</td><td>NAMA</td><td>PROGRAM STUDI</td><td>SKS</td><td>IPK</td><td>PREDIKAT</td></tr>";
+		foreach ($data as $d)
+		{
+		    $table .= "<tr><td>$i</td><td>".(string)$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td></tr>";
+		    $i++;
+		}    
+		$table .= "</table>";
+	    }else{
+		$table =  "Data Tidak tersedia";
+	    }
+	    $excel= new ExportToExcel();
+	    if ($thesis == 'Skripsi')
+	    {
+		$excel->exportWithPage($table,"Lampiran2-SK-dekan-yudisium-s1-".$date.".xls");
+	    }else{
+		$excel->exportWithPage($table,"Lampiran1-SK-dekan-yudisium-d3-".$date.".xls");
+	    }
+	}
+	
+	//fungsi export excel lampiran sk dekan mahasiswa D3   
+    public function attch_d3($date)
+	{
+	    return $this->attch_xls($date,'D3');
+	}
+	
+	//fungsi export excel lampiran sk dekan mahasiswa S1
+    public function attch_s1($date)
+	{
+	    return $this->attch_xls($date,'Skripsi');
+	}
+	
 	//fungsi export excel data peserta yudisium    
     public function export_xls($date,$thesis)
 	{
