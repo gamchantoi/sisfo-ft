@@ -511,7 +511,7 @@ class Admin extends Admin_Controller {
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date);
+	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'order' => 'ipk','group'=>'department');
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
@@ -569,7 +569,7 @@ class Admin extends Admin_Controller {
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'order' =>'ipk');
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'order' =>'ipk','group' => 'department');
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
@@ -662,7 +662,7 @@ class Admin extends Admin_Controller {
 	//function view attch table
     public function attach_table($date,$thesis,$logo)
 	{
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk');
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
 	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
