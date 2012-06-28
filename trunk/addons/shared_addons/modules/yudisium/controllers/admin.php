@@ -375,16 +375,10 @@ class Admin extends Admin_Controller {
 			->set('data', $data)
 			->build('admin/decree');
 	}
-	
-	//fungsi cetak Isian Kelulusan
-    public function cetak($id=0)
+    
+    public function style_print($title)
 	{
-	    $id OR redirect('admin/yudisium');
-	    $item= $this->ym->get($id);
-	    $d3= array('1','2','3','4','5','6','7','8');
-	    $s1= array('9','10','11','12','13','14','15','16','17','18');
-	    
-	    $style  = "<title>Cetak Isian kelulusan</title>
+	    $style  = "<title>".$title."</title>
 			<style type=\"text/css\" >
 			body {
 			height: 842px;
@@ -393,6 +387,118 @@ class Admin extends Admin_Controller {
 			margin-right: auto;
 			}
 			</style>";
+	    return $style;
+	}
+	
+    public function style_report($bln,$thn)
+	{
+	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
+		<style type=\"text/css\" >
+		    body {
+			width: 842px;
+			height: 595px;
+			margin-left: auto;
+			margin-right: auto;
+			}
+		    table.gridtable {
+			font-family: verdana,arial,sans-serif;
+			font-size:7px;
+			color:#333333;
+			border-width: 1px;
+			border-color: #666666;
+			border-collapse: collapse;
+			width: 842px;			
+			}
+		    table.gridtable th {
+			border-width: 1px;
+			padding: 6px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #dedede;
+			}
+		    table.gridtable td {
+			border-width: 1px;
+			padding: 5px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #ffffff;
+					}
+		</style>";
+	    return $style;
+	}
+	
+    public function zebra_jq()
+	{
+	    $script = '<script type="text/javascript">
+			$(document).ready(function() {  
+			$("table").each(function () {
+			    $(this).find("tr:odd").addClass("zebra_odd");  
+			    $(this).find("tr:even").addClass("zebra_even");        
+			});    
+			$(".tablelist").each(function () {
+			    $(this).find("li:odd").addClass("zebra_odd");  
+			    $(this).find("li:even").addClass("zebra_even");        
+			});    
+		    });
+	    </script>';
+	    return $script;
+	}
+	
+    //style css table
+    public function style_table($title,$bln,$thn)
+	{
+	    $style		="<title>".$title." ".$bln." ".$thn."</title>
+		<style type=\"text/css\" >
+		    body {
+			width: 595px;
+			height:842px;
+			margin-left: auto;
+			margin-right: auto;
+			}
+		    table.header{
+			width: 595px;			
+		    }
+		    table.header th{
+			font-size:15px;
+		    }
+		    table.header td{
+			font-size:11px;
+		    }
+		    table.gridtable {
+			font-family: verdana,arial,sans-serif;
+			font-size:12px;
+			color:#333333;
+			border-width: 1px;
+			border-color: #666666;
+			border-collapse: collapse;
+			width: 595px;			
+			}
+		    table.gridtable th {
+			border-width: 1px;
+			padding: 6px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #dedede;
+			}
+		    table.gridtable td {
+			border-width: 1px;
+			padding: 5px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #ffffff;
+			}
+		</style>";
+		return $style;
+	}
+	
+	//fungsi cetak Isian Kelulusan
+    public function cetak($id=0)
+	{
+	    $id OR redirect('admin/yudisium');
+	    $item= $this->ym->get($id);
+	    $d3= array('1','2','3','4','5','6','7','8');
+	    $s1= array('9','10','11','12','13','14','15','16','17','18');
+	    $style  = $this->style_print('Cetak Isian Kelulusan');
 	    $table  = "<table style=\"font-size:14px;\">";
 	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM ";
 	    if(in_array($item->department,$d3)) :
@@ -452,16 +558,7 @@ class Admin extends Admin_Controller {
 	{
 	    $id OR redirect('admin/yudisium');
 	    $item= $this->ym->get($id);
-		$style  = "
-			<title>Penyerahan CD</title>
-			<style type=\"text/css\" >
-			body {
-			height: 842px;
-			width: 595px;
-			margin-left: auto;
-			margin-right: auto;
-			}
-			</style>";
+		$style  = $this->style_print('Tanda Terima Penyerahan CD');
 		$table  = "<table style=\"font-size:15px;\">";
 		$table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>KEMENTRIAN PENDIDIKAN DAN KEBUDAYAAN <br> UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 		$table .= "</tabel>";
@@ -504,43 +601,6 @@ class Admin extends Admin_Controller {
 		echo $style;
 		echo $table;
 		
-	}
-	
-    public function style_report($bln,$thn)
-	{
-	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
-		<style type=\"text/css\" >
-		    body {
-			width: 842px;
-			height: 595px;
-			margin-left: auto;
-			margin-right: auto;
-			}
-		    table.gridtable {
-			font-family: verdana,arial,sans-serif;
-			font-size:7px;
-			color:#333333;
-			border-width: 1px;
-			border-color: #666666;
-			border-collapse: collapse;
-			width: 842px;			
-			}
-		    table.gridtable th {
-			border-width: 1px;
-			padding: 6px;
-			border-style: solid;
-			border-color: #666666;
-			background-color: #dedede;
-			}
-		    table.gridtable td {
-			border-width: 1px;
-			padding: 5px;
-			border-style: solid;
-			border-color: #666666;
-			background-color: #ffffff;
-					}
-		</style>";
-	    return $style;
 	}
     
 	//fungsi cetak rekap peserta yudisium D3
@@ -708,53 +768,6 @@ class Admin extends Admin_Controller {
 	    return $table;
 	}
 	
-	//style css table
-    public function style_table($title,$bln,$thn)
-	{
-	    $style		="<title>".$title." ".$bln." ".$thn."</title>
-		<style type=\"text/css\" >
-		    body {
-			width: 595px;
-			height:842px;
-			margin-left: auto;
-			margin-right: auto;
-			}
-		    table.header{
-			width: 595px;			
-		    }
-		    table.header th{
-			font-size:15px;
-		    }
-		    table.header td{
-			font-size:11px;
-		    }
-		    table.gridtable {
-			font-family: verdana,arial,sans-serif;
-			font-size:12px;
-			color:#333333;
-			border-width: 1px;
-			border-color: #666666;
-			border-collapse: collapse;
-			width: 595px;			
-			}
-		    table.gridtable th {
-			border-width: 1px;
-			padding: 6px;
-			border-style: solid;
-			border-color: #666666;
-			background-color: #dedede;
-			}
-		    table.gridtable td {
-			border-width: 1px;
-			padding: 5px;
-			border-style: solid;
-			border-color: #666666;
-			background-color: #ffffff;
-			}
-		</style>";
-		return $style;
-	}
-	
 	//function export lampiran SK dekan
     public function attch_xls($date,$thesis)
 	{
@@ -784,15 +797,13 @@ class Admin extends Admin_Controller {
 		default		:
 		    $excel->exportWithPage($table,"Rekap-data-yudisium-all-".$date.".xls");
 		    break;
-	    }
-	    
+	    }  
 	}
 	
 	//fungsi cetak lampiran sk dekan
     public function print_attch($date,$thesis)
 	{
 	    list($thn,$bln,$tgl) = explode("-",$date);
-	    
 	    $table = $this->attach_table($date,$thesis,'yes');
 	    $style = $this->style_table('Cetak Lampiran SK Dekan Yudisium',$bln,$thn);
 	    echo $style;
@@ -839,6 +850,22 @@ class Admin extends Admin_Controller {
     public function export_all($date)
 	{
 	    return $this->export_xls($date,'all');
+	}
+    
+    public function present_xls($date,$thesis)
+	{
+	       $jq = $this->zebra_jq();
+	       echo $jq;
+	}
+	
+    public function present_s1($date)
+	{
+	    return $this->present_xls($date,'Skripsi');
+	}
+	
+    public function present_d3($date)
+	{
+	    return $this->present_xls($date,'D3');
 	}
     
 	//fungsi pengecekan dokumen telah tercetak
