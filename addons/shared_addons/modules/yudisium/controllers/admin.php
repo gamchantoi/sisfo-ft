@@ -623,8 +623,8 @@ class Admin extends Admin_Controller {
 	    echo $table;
 	}
 	
-	//function export lampiran SK dekan
-    public function attch_xls($date,$thesis)
+	//function view attch table
+    public function attach_table($date,$thesis)
 	{
 	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk');
 	    $data	 = $this->ym->get_many_by($parrams);
@@ -656,7 +656,7 @@ class Admin extends Admin_Controller {
 		$table .= "<tr><td align=\"center\" colspan=7><b>DAFTAR NAMA MAHASISWA $stage FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";
 		$table .= "<tr><td align=\"center\" colspan=7><b> PESERTA YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</b></td></tr>";
 		$table .= "</tabel>";
-		$table .= "<table border=\"1px\">";
+		$table .= "<table class='gridtable' border=\"1px\">";
 		$table .= "<tr><td>NO</td><td>NIM</td><td>NAMA</td><td>PROGRAM STUDI</td><td>SKS</td><td>IPK</td><td>PREDIKAT</td></tr>";
 		foreach ($data as $d)
 		{
@@ -667,29 +667,11 @@ class Admin extends Admin_Controller {
 	    }else{
 		$table =  "Data Tidak tersedia";
 	    }
-	    $excel= new ExportToExcel();
-	    if ($thesis == 'Skripsi')
-	    {
-		$excel->exportWithPage($table,"Lampiran2-SK-dekan-yudisium-s1-".$date.".xls");
-	    }else{
-		$excel->exportWithPage($table,"Lampiran1-SK-dekan-yudisium-d3-".$date.".xls");
-	    }
+	    return $table;
 	}
 	
-	//fungsi export excel lampiran sk dekan mahasiswa D3   
-    public function attch_d3($date)
-	{
-	    return $this->attch_xls($date,'D3');
-	}
-	
-	//fungsi export excel lampiran sk dekan mahasiswa S1
-    public function attch_s1($date)
-	{
-	    return $this->attch_xls($date,'Skripsi');
-	}
-	
-	//fungsi export excel data peserta yudisium    
-    public function export_xls($date,$thesis)
+	// function view export table
+    public function export_table($date,$thesis)
 	{
 	    if($thesis   == 'all')
 	    {
@@ -734,6 +716,64 @@ class Admin extends Admin_Controller {
 		$table = 'Maaf Data Tidak tersedia';
 	    }
 	    
+	    return $table;
+	}
+	
+	//style css table
+    public function style_table($title,$bln,$thn)
+	{
+	    $style		="<title>".$title." ".$bln." ".$thn."</title>
+		<style type=\"text/css\" >
+		    body {
+			width: 842px;
+			height: 595px;
+			margin-left: auto;
+			margin-right: auto;
+			}
+		    table.gridtable {
+			font-family: verdana,arial,sans-serif;
+			font-size:7px;
+			color:#333333;
+			border-width: 1px;
+			border-color: #666666;
+			border-collapse: collapse;
+			width: 842px;			
+			}
+		    table.gridtable th {
+			border-width: 1px;
+			padding: 6px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #dedede;
+			}
+		    table.gridtable td {
+			border-width: 1px;
+			padding: 5px;
+			border-style: solid;
+			border-color: #666666;
+			background-color: #ffffff;
+			}
+		</style>";
+		return $style;
+	}
+	
+	//function export lampiran SK dekan
+    public function attch_xls($date,$thesis)
+	{
+	    $table	= $this->attach_table($date,$thesis);
+	    $excel	= new ExportToExcel();
+	    if ($thesis == 'Skripsi')
+	    {
+		$excel->exportWithPage($table,"Lampiran2-SK-dekan-yudisium-s1-".$date.".xls");
+	    }else{
+		$excel->exportWithPage($table,"Lampiran1-SK-dekan-yudisium-d3-".$date.".xls");
+	    }
+	}
+    
+	//fungsi export excel data peserta yudisium    
+    public function export_xls($date,$thesis)
+	{
+	    $table = $this->export_table($date,$thesis);
 	    $excel= new ExportToExcel();
 	    switch ($thesis)
 	    {
@@ -748,6 +788,41 @@ class Admin extends Admin_Controller {
 		    break;
 	    }
 	    
+	}
+	
+	//fungsi cetak lampiran sk dekan
+    public function print_attch($date,$thesis)
+	{
+	    list($thn,$bln,$tgl) = explode("-",$date);
+	    
+	    $table = $this->attach_table($date,$thesis);
+	    $style = $this->style_table('Cetak Lampiran SK Dekan Yudisium',$bln,$thn);
+	    echo $style;
+	    echo $table;
+	}
+	
+	//fungsi cetak lampiran sk dekan mahasiswa d3
+    public function pattch_d3($date)
+	{
+	    return $this->print_attch($date,'D3');
+	}
+	
+	//fungsi cetak lampiran sk dekan mahasiswa s1
+    public function pattch_s1($date)
+	{
+	    return $this->print_attch($date,'Skripsi');
+	}
+	
+	//fungsi export excel lampiran sk dekan mahasiswa D3   
+    public function attch_d3($date)
+	{
+	    return $this->attch_xls($date,'D3');
+	}
+	
+	//fungsi export excel lampiran sk dekan mahasiswa S1
+    public function attch_s1($date)
+	{
+	    return $this->attch_xls($date,'Skripsi');
 	}
 	
 	//fungsi export excel data peserta Yudisium D3
