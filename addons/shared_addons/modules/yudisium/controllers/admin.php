@@ -623,19 +623,16 @@ class Admin extends Admin_Controller {
 	    echo $table;
 	}
 	
-	//function view attch table
-    public function attach_table($date,$thesis)
+    public function attch_header($tgl,$bln,$thn,$thesis,$logo)
 	{
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk');
-	    $data	 = $this->ym->get_many_by($parrams);
-	    $_tanggal	= tanggal($date);
-	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
-	    if($data)
+	    $header  = "<table class=\"header\" align=\"center\">";
+	    if($logo == 'yes')
 	    {
-		$i      = 1;
-		$table  = "<table style=\"font-size:15px;\" align=\"center\">";
-		$table .= "<tr><td align=\"center\" colspan=7><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";
-		switch ($thesis)
+		$header .= "<tr><th><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"></th><th align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></th><th align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></th></tr>";
+	    }else{
+		$header .= "<tr><th align=\"center\" colspan=3><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></th></tr>";
+	    }
+	    switch ($thesis)
 		{
 		    case	'D3'	:
 			$stage	= "D3";
@@ -646,18 +643,35 @@ class Admin extends Admin_Controller {
 			$lamp	= 2;
 			break;
 		    default		:
-			$table .= "<br />";
+			$header .= "<br />";
 			break;
 		}
-		$table .= "<tr><td colspan=4></td><td colspan=3>Lampiran $lamp Keputusan Dekan</td></tr>";
-		$table .= "<tr><td colspan=4></td><td colspan=3>Fakultas Teknik Universitas Negeri Yogyakarta</td></tr>";
-		$table .= "<tr><td colspan=4></td><td>Nomor</td><td>:</td><td>Tahun $thn</td></tr>";
-		$table .= "<tr><td colspan=4></td><td>Tanggal</td><td>: $tgl</td><td>$bln $thn</td></tr>";
-		$table .= "<tr><td align=\"center\" colspan=7><b>DAFTAR NAMA MAHASISWA $stage FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";
-		$table .= "<tr><td align=\"center\" colspan=7><b> PESERTA YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</b></td></tr>";
-		$table .= "</tabel>";
+	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Lampiran $lamp Keputusan Dekan</td></tr>";
+	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Fakultas Teknik Universitas Negeri Yogyakarta</td></tr>";
+	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Nomor:         Tahun $thn</td></tr>";
+	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Tanggal</td></tr>";
+	    $header .= "<tr><td colspan=3><br /></td></tr>";
+	    $header .= "<tr><th align=\"center\" colspan=3><b>DAFTAR NAMA MAHASISWA $stage FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA</b></th></tr>";
+	    $header .= "<tr><th align=\"center\" colspan=3><b> PESERTA YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</b></th></tr>";
+	    $header .= "<tr><th align=\"center\" colspan=3><br /></th></tr>";
+	    $header .= "</tabel>";
+	    
+	    return $header;    
+	}
+	
+	//function view attch table
+    public function attach_table($date,$thesis,$logo)
+	{
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk');
+	    $data	 = $this->ym->get_many_by($parrams);
+	    $_tanggal	= tanggal($date);
+	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
+	    if($data)
+	    {
+		$i      = 1;
+		$table  = $this->attch_header($tgl,$bln,$thn,$thesis,$logo);
 		$table .= "<table class='gridtable' border=\"1px\">";
-		$table .= "<tr><td>NO</td><td>NIM</td><td>NAMA</td><td>PROGRAM STUDI</td><td>SKS</td><td>IPK</td><td>PREDIKAT</td></tr>";
+		$table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th>SKS</th><th>IPK</th><th>PREDIKAT</th></tr>";
 		foreach ($data as $d)
 		{
 		    $table .= "<tr><td>$i</td><td>".(string)$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td></tr>";
@@ -725,19 +739,28 @@ class Admin extends Admin_Controller {
 	    $style		="<title>".$title." ".$bln." ".$thn."</title>
 		<style type=\"text/css\" >
 		    body {
-			width: 842px;
-			height: 595px;
+			width: 595px;
+			height:842px;
 			margin-left: auto;
 			margin-right: auto;
 			}
+		    table.header{
+			width: 595px;			
+		    }
+		    table.header th{
+			font-size:15px;
+		    }
+		    table.header td{
+			font-size:11px;
+		    }
 		    table.gridtable {
 			font-family: verdana,arial,sans-serif;
-			font-size:7px;
+			font-size:12px;
 			color:#333333;
 			border-width: 1px;
 			border-color: #666666;
 			border-collapse: collapse;
-			width: 842px;			
+			width: 595px;			
 			}
 		    table.gridtable th {
 			border-width: 1px;
@@ -760,7 +783,7 @@ class Admin extends Admin_Controller {
 	//function export lampiran SK dekan
     public function attch_xls($date,$thesis)
 	{
-	    $table	= $this->attach_table($date,$thesis);
+	    $table	= $this->attach_table($date,$thesis,'no');
 	    $excel	= new ExportToExcel();
 	    if ($thesis == 'Skripsi')
 	    {
@@ -795,7 +818,7 @@ class Admin extends Admin_Controller {
 	{
 	    list($thn,$bln,$tgl) = explode("-",$date);
 	    
-	    $table = $this->attach_table($date,$thesis);
+	    $table = $this->attach_table($date,$thesis,'yes');
 	    $style = $this->style_table('Cetak Lampiran SK Dekan Yudisium',$bln,$thn);
 	    echo $style;
 	    echo $table;
