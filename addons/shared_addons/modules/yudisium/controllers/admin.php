@@ -505,15 +505,9 @@ class Admin extends Admin_Controller {
 		echo $table;
 		
 	}
-    
-	//fungsi cetak rekap peserta yudisium D3
-    public function report_d3($date)
+	
+    public function style_report($bln,$thn)
 	{
-	    $_tanggal 		= tanggal($date);
-	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'order' => 'ipk','group'=>'department');
-	    $data		= $this->ym->get_many_by($basewhere);
-	    $i			= 1;
 	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
 		<style type=\"text/css\" >
 		    body {
@@ -546,6 +540,18 @@ class Admin extends Admin_Controller {
 			background-color: #ffffff;
 					}
 		</style>";
+	    return $style;
+	}
+    
+	//fungsi cetak rekap peserta yudisium D3
+    public function report_d3($date)
+	{
+	    $_tanggal 		= tanggal($date);
+	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
+	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'order' => 'ipk','group'=>'department');
+	    $data		= $this->ym->get_many_by($basewhere);
+	    $i			= 1;
+	    $style  = $this->style_report($bln,$thn);
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
@@ -572,38 +578,7 @@ class Admin extends Admin_Controller {
 	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'order' =>'ipk','group' => 'department');
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
-	    $style		="<title>Daftar Peserta Yudisium ".$bln." ".$thn."</title>
-		<style type=\"text/css\" >
-		    body {
-			width: 842px;
-			height: 595px;
-			margin-left: auto;
-			margin-right: auto;
-			}
-		    table.gridtable {
-			font-family: verdana,arial,sans-serif;
-			font-size:7px;
-			color:#333333;
-			border-width: 1px;
-			border-color: #666666;
-			border-collapse: collapse;
-			width: 842px;			
-			}
-		    table.gridtable th {
-			border-width: 1px;
-			padding: 6px;
-			border-style: solid;
-			border-color: #666666;
-			background-color: #dedede;
-			}
-		    table.gridtable td {
-			border-width: 1px;
-			padding: 5px;
-			border-style: solid;
-			border-color: #666666;
-			background-color: #ffffff;
-			}
-		</style>";
+	    $style  = $this->style_report($bln,$thn);
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\" cellpadding=4>";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA S1<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
