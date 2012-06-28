@@ -187,6 +187,10 @@ class Yudisium_m extends MY_Model {
 		{
 		    $this->db->order_by($params['order'],'DESC');
 		}
+		if(!empty($params['group']))
+		{
+		    $this->db->group_by($params['group']); 
+		}
 		// Is a status set?
 		if (!empty($params['printed']))
 		{
