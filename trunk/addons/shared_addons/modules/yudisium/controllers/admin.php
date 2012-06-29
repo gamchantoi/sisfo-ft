@@ -427,23 +427,6 @@ class Admin extends Admin_Controller {
 	    return $style;
 	}
 	
-    public function zebra_jq()
-	{
-	    $script = '<script type="text/javascript">
-			$(document).ready(function() {  
-			$("table").each(function () {
-			    $(this).find("tr:odd").addClass("zebra_odd");  
-			    $(this).find("tr:even").addClass("zebra_even");        
-			});    
-			$(".tablelist").each(function () {
-			    $(this).find("li:odd").addClass("zebra_odd");  
-			    $(this).find("li:even").addClass("zebra_even");        
-			});    
-		    });
-	    </script>';
-	    return $script;
-	}
-	
     //style css table
     public function style_table($title,$bln,$thn)
 	{
@@ -851,11 +834,111 @@ class Admin extends Admin_Controller {
 	{
 	    return $this->export_xls($date,'all');
 	}
+	
+    public function present_header($tgl,$bln,$thn,$thesis,$logo)
+	{
+	    $header	= "<table id =\"printhead\">";
+	    $header    .= "<tr><td>okk</td></tr>";
+	    $header    .= "</table>";
+	    return $header;
+	}
+	
+    public function odd_even($i)
+	{
+	    if($i % 2 == 0)
+	    {
+		//$res = "even";
+		$res = "<td></td><td>".$i.")..........</td>";
+	    }else{
+		//$res = "odd";
+		$res = "<td>".$i.")..........</td><td></td>";
+	    }
+	    return $res;
+	}
+	
+    public function style_present($title,$bln,$thn)
+	{
+	    $style              ="<title>".$title." ".$bln." ".$thn."</title>
+                <style type=\"text/css\">
+                    body {
+                        width: 595px;
+                        height:842px;
+                        margin-left: auto;
+                        margin-right: auto;
+                        }
+                    table.header{
+                        width: 595px;                   
+                    }
+                    table.header th{
+                        font-size:15px;
+                    }
+                    table.header td{
+                        font-size:11px;
+                    }
+                    table.gridtable {
+                        font-family: verdana,arial,sans-serif;
+                        font-size:12px;
+                        color:#333333;
+                        border-width: 1px;
+                        border-color: #666666;
+                        border-collapse: collapse;
+                        width: 595px;                   
+                        }
+                    table.gridtable th {
+                        border-width: 1px;
+                        padding: 6px;
+                        border-style: solid;
+                        border-color: #666666;
+                        background-color: #dedede;
+                        }
+                    table.gridtable td {
+                        border-width: 1px;
+                        padding: 5px;
+                        border-style: solid;
+                        border-color: #666666;
+                        background-color: #ffffff;
+			font-size:11px;
+                        }
+		    #even{
+			background-color: #dddd;
+			padding-left:50px;
+		    }
+		    #odd{
+			background-color: #cccccc;
+			padding-right:50px;
+		    }
+                </style>";
+                return $style;
+	}
+    public function present_table($date,$thesis)
+	{
+	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
+            $data       = $this->ym->get_many_by($parrams);
+            $_tanggal   = tanggal($date);
+            list($tgl,$bln,$thn) = explode(" ",$_tanggal);
+            if($data)
+            {
+                $i      = 1;
+		$table  = $this->style_present('Presensi',$bln,$thn);
+                $table .= $this->present_header($tgl,$bln,$thn,$thesis,'no');
+                $table .= "<table class='gridtable' border=\"1px\">";
+                $table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th colspan=2>Tanda Tangan</th></tr>";
+                foreach ($data as $d)
+                {
+                    $table .= "<tr><td>$i</td><td>".(string)$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td>".$this->odd_even($i)."</tr>";
+                    $i++;
+                }    
+                $table .= "</table>";
+            }else{
+                $table =  "Data Tidak tersedia";
+            }
+            return $table;
+	}
     
     public function present_xls($date,$thesis)
 	{
-	       $jq = $this->zebra_jq();
-	       echo $jq;
+	    $present= $this->present_table($date,$thesis);
+	    echo $present;
 	}
 	
     public function present_s1($date)
