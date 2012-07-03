@@ -36,7 +36,11 @@ class Module_Yudisium extends Module {
                             'report'  => array(
                                     'name'  => 'yudisium_report',
                                     'uri'   => 'admin/yudisium/report'
-                            )
+                            ),
+			    'graduate' => array(
+				    'name'  => 'yudisium_graduate',
+				    'uri'   => 'admin/yudisium/graduate'
+			    )
                         ),                      
 		);
 	}

@@ -837,8 +837,17 @@ class Admin extends Admin_Controller {
 	
     public function present_header($tgl,$bln,$thn,$thesis,$logo)
 	{
-	    $header	= "<table id =\"printhead\">";
-	    $header    .= "<tr><td>okk</td></tr>";
+	    $header	= "<table align=\"center\">";
+	    $header    .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"></td><td align=\"center\"><b>FAKULTAS TEKNIK <br /> UNIVERSITAS NEGERI YOGYAKARTA<br/></b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	    $header    .= "<tr><td align=\"center\" colspan=3></td></tr>";
+	    if($thesis == 'Skripsi')
+	    {
+		$header    .= "<tr><td align=\"center\" colspan=3><b>DAFTAR HADIR MAHASISWA S1 PESERTA YUDISIUM</b></td></tr>";
+	    }else{
+		$header    .= "<tr><td align=\"center\" colspan=3><b>DAFTAR HADIR MAHASISWA D3 PESERTA YUDISIUM</b></td></tr>";
+	    }
+	    $header    .= "<tr><td align=\"center\" colspan=3><b>PERIODE ".strtoupper($bln)." ".$thn."</b></td></tr>";
+	    $header    .= "<tr><td align=\"center\" colspan=3></td></tr>";
 	    $header    .= "</table>";
 	    return $header;
 	}
@@ -922,7 +931,7 @@ class Admin extends Admin_Controller {
 		$table  = $this->style_present('Presensi',$bln,$thn);
                 $table .= $this->present_header($tgl,$bln,$thn,$thesis,'no');
                 $table .= "<table class='gridtable' border=\"1px\">";
-                $table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th colspan=2>Tanda Tangan</th></tr>";
+                $table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th colspan=2>TANDA TANGAN</th></tr>";
                 foreach ($data as $d)
                 {
                     $table .= "<tr><td>$i</td><td>".(string)$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td>".$this->odd_even($i)."</tr>";
@@ -939,6 +948,21 @@ class Admin extends Admin_Controller {
 	{
 	    $present= $this->present_table($date,$thesis);
 	    echo $present;
+	    /**
+	    $excel= new ExportToExcel();
+	    switch ($thesis)
+	    {
+		case	'D3'	:
+		    $excel->exportWithPage($present,"Presensi-Mahasiswa-D3-yudisium-".$date.".xls");
+		    break;
+		case	'Skripsi':
+		    $excel->exportWithPage($present,"Presensi-Mahasiswa-S1-yudisium-".$date.".xls");
+		    break;
+		default		:
+		    $excel->exportWithPage($present,"Presensi-Mahasiswa-yudisium-".$date.".xls");
+		    break;
+	    }
+	    **/
 	}
 	
     public function present_s1($date)
@@ -951,6 +975,10 @@ class Admin extends Admin_Controller {
 	    return $this->present_xls($date,'D3');
 	}
     
+    public function graduate()
+	{
+	    
+	}
 	//fungsi pengecekan dokumen telah tercetak
     public function get_printed($id=0)
 	{
