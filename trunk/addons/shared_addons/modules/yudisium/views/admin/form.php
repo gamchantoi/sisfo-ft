@@ -49,7 +49,7 @@
 			</li>
 			
 			<li>
-				<label for="lecture"><?php echo lang('yudisium_pa')?></label>
+				<label for="pa"><?php echo lang('yudisium_pa')?></label>
 				<div class="input"><?php echo form_dropdown('pa',$lectures,$data->lecture); ?></div>
 			</li>
 			<li class="even">
@@ -65,7 +65,7 @@
 				<div class="input"><?php echo form_dropdown('meriage',array('0'=>'-Status-','Kawin'=>'Kawin','Belum Kawin'=>'Belum Kawin'),$data->meriage); ?></div>
 			</li>
 			<li>
-				<label for="dob"><?php echo lang('yudisium_pob') ?>/<?php echo lang('yudisium_dob') ?>:</label>
+				<label for="place_of_birth"><?php echo lang('yudisium_pob') ?>/<?php echo lang('yudisium_dob') ?>:</label>
 				<div class="input datetime_input"><?php echo form_input('place_of_birth',$data->place_of_birth); ?> : <?php echo form_input('date_of_birth',$data->date_of_birth,'id="d_dob"'); ?></div>
 			</li>
 			<li class="even">
