@@ -66,7 +66,7 @@
 			</li>
 			<li>
 				<label for="dob"><?php echo lang('yudisium_pob') ?>/<?php echo lang('yudisium_dob') ?>:</label>
-				<div class="input datetime_input"><?php echo form_input('pob',$data->place_of_birth); ?> : <?php echo form_input('dob',$data->date_of_birth,'id="datepicker"'); ?></div>
+				<div class="input datetime_input"><?php echo form_input('place_of_birth',$data->place_of_birth); ?> : <?php echo form_input('date_of_birth',$data->date_of_birth,'id="d_dob"'); ?></div>
 			</li>
 			<li class="even">
 				<label for="address"><?php echo lang('yudisium_address')?></label>

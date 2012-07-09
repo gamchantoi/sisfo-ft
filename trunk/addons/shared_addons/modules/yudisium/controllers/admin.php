@@ -4,7 +4,7 @@
  * @package  	PyroCMS
  * @subpackage  Yudisium
  * @category  	Module
- * @author		mrcoco@cempakaweb.com
+ * @author	mrcoco@cempakaweb.com
  */
 
 class Admin extends Admin_Controller {
@@ -212,8 +212,8 @@ class Admin extends Admin_Controller {
 			    'nim'	        => $this->input->post('nim'),
 			    'department'        => $this->input->post('department'),
 			    'pa'	        => $this->input->post('pa'),
-			    'place_of_birth'    => $this->input->post('pob'),
-			    'date_of_birth'     => $this->input->post('dob'),
+			    'place_of_birth'    => $this->input->post('place_of_birth'),
+			    'date_of_birth'     => $this->input->post('date_of_birth'),
 			    'religion'          => $this->input->post('religion'),
 			    'sex'               => $this->input->post('sex'),
 			    'meriage'           => $this->input->post('meriage'),
@@ -283,8 +283,8 @@ class Admin extends Admin_Controller {
 			    'nim'	        => $this->input->post('nim'),
 			    'department'        => $this->input->post('department'),
 			    'pa'	        => $this->input->post('pa'),
-			    'place_of_birth'    => $this->input->post('pob'),
-			    'date_of_birth'     => $this->input->post('dob'),
+			    'place_of_birth'    => $this->input->post('place_of_birth'),
+			    'date_of_birth'     => $this->input->post('date_of_birth'),
 			    'religion'          => $this->input->post('religion'),
 			    'sex'               => $this->input->post('sex'),
 			    'meriage'           => $this->input->post('meriage'),
@@ -332,10 +332,11 @@ class Admin extends Admin_Controller {
 			    ->append_metadata($this->load->view('fragments/wysiwyg', $this->data, TRUE))
 			    ->append_metadata('<script type="text/javascript">
 					      $(function() {
-					      $( "#d_input" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true});
+					      $( "#d_input" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
 					      $( "#d_yudis" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
 					      $( "#d_start" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
 					      $( "#d_finish" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
+					      $( "#d_dob" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
 					      });</script>')
 			    ->append_js('module::jquery.tagsinput.min.js')
 			    ->append_js('module::blog_form.js')
