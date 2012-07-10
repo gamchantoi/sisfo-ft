@@ -526,7 +526,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td colspan=2 align=\"center\">Mengetahui, <br />Wakil Dekan I</td></tr>";
 	    //$table .= "<tr><td colspan=4 align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/sunar-ttd.png\" width=\"100\"></td></tr>";
 	    $table .= "<tr><td colspan=2 align=\"center\"><br /></td></tr>";
-	    $table .= "<tr><td colspan=2 align=\"center\">Dr. Soenaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
+	    $table .= "<tr><td colspan=2 align=\"center\">Dr. Sunaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
 	    $table .= "</table>";
 	    echo $style;
 	    echo $table;
