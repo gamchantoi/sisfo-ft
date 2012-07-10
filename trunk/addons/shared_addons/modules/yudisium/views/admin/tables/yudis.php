@@ -48,11 +48,11 @@ $(document).ready(function()
 						<a id="bufferdie" href="admin/yudisium/get_printed/<?php echo $item->nim; ?>" title="Dokument telah dicetak"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print_yes.png"></a>
 						<?php
 					}
-					?>
+					?>				
 					<?php if($item->repo_printed == '2')
 					{
 						?>
-						<a id="bufferdie" href="#" title="Dokumen ini belum pernah dicetak| <br> silahkan cetak dokument melalui tombol cetak  atau pd gambar printer"><img src="<?php echo base_url().$this->module_details['path'];?>/img/no_print.png"></a>
+						<a id="bufferdie" href="#" title="Surat Tanda terima Penyerahan CD belum pernah dicetak| <br> silahkan cetak dokument melalui tombol cetak  atau pd gambar CD"><img src="<?php echo base_url().$this->module_details['path'];?>/img/no_print.png"></a>
 						<?php
 					}else{
 						?>
