@@ -584,6 +584,8 @@ class Admin extends Admin_Controller {
 		$table .= "</table>";
 		echo $style;
 		echo $table;
+		$this->ym->update($id,array('printed' => '1'));
+		$this->ym->add_print($id,'8');
 		
 	}
     
@@ -986,7 +988,7 @@ class Admin extends Admin_Controller {
 	    $result=$this->ym->get_print($id);
 	    return $result;
 	}
-	
+    
 	//fungsi penampil Agama
     public function get_religion($id)
 	{
