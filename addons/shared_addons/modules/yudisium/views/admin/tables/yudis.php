@@ -49,7 +49,7 @@ $(document).ready(function()
 						<?php
 					}
 					?>				
-					<?php if($item->repo_printed == '2')
+					<?php if($item->printed_repo == '2')
 					{
 						?>
 						<a id="bufferdie" href="#" title="Surat Tanda terima Penyerahan CD belum pernah dicetak| <br> silahkan cetak dokument melalui tombol cetak  atau pd gambar CD"><img src="<?php echo base_url().$this->module_details['path'];?>/img/no_print.png"></a>
