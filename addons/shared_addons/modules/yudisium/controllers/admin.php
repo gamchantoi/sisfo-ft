@@ -994,13 +994,6 @@ class Admin extends Admin_Controller {
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
 	    $array_bulan	 = $this->ym->get_yudisium();
 	    $style  = $this->style_present("Data Lulusan",$bln,$thn);
-	    $_data = $this->ym->get_many_by(array('yudisium_date' => $date));
-		foreach ($_data as $_d)
-		{
-		    $semester = $this->get_semester($_d->nim,$_d->yudisium_date);
-		    echo $semester;
-		    
-		}
 	    //print_r($array_bulan);
 	    $table  = "<table class=\"gridtable\" border=\"1px\">";
 	    $table .= "<tr><th>Data Lulusan</th>";
@@ -1008,7 +1001,12 @@ class Admin extends Admin_Controller {
 	    {
 		$table .="<th>".tanggal($thb->yudisium_date)."</th>";
 	    }
-	    $table .= "<tr><td>Peserta</td></tr>";
+	    $table .= "</tr>";
+	    $table .= "<tr><td>Peserta</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .="<td></td>";
+	    }
 	    $table .= "</tr>";
 	    $table .= "<td>Jumlah Peserta Yudisium</td>";
 	    foreach($array_bulan as $thb)
@@ -1021,37 +1019,37 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td>Rerata Lama Penulisan TA</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$table .= "<td>".$this->get_avg_studi($thb->yudisium_date)."</td>";
+		$table .= "<td>".round($this->get_avg_studi($thb->yudisium_date),2)." bln</td>";
 	    }
 	    $table .= "</tr>";
 	    $table .= "<tr><td>LAMA MINIMAL PENULISAN TA</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$table .= "<td>".$this->ym->get_write_min($thb->yudisium_date)."</td>";
+		$table .= "<td>".round($this->ym->get_write_min($thb->yudisium_date),2)." bln</td>";
 	    }
 	    $table .= "</tr>";
 	    $table .= "<tr><td>LAMA MIKSIMAL PENULISAN TA</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$table .= "<td>".$this->ym->get_write_max($thb->yudisium_date)."</td>";
+		$table .= "<td>".round($this->ym->get_write_max($thb->yudisium_date),2)." bln</td>";
 	    }
 	    $table .= "</tr>";
 	    $table .= "<tr><td>RERATA MASA STUDI</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$table .= "<td>".ceil($this->ym->get_sem_avg($thb->yudisium_date))."</td>";
+		$table .= "<td>".ceil($this->ym->get_sem_avg($thb->yudisium_date))." sm</td>";
 	    }
 	    $table .= "</tr>";
 	    $table .= "<tr><td>MASA STUDI MINIMUM</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$table .= "<td>".ceil($this->ym->get_sem_min($thb->yudisium_date))."</td>";
+		$table .= "<td>".ceil($this->ym->get_sem_min($thb->yudisium_date))." sm</td>";
 	    }
 	    $table .= "</tr>";
 	    $table .= "<tr><td>MASA STUDI MAKSIMUM</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$table .= "<td>".ceil($this->ym->get_sem_max($thb->yudisium_date))."</td>";
+		$table .= "<td>".ceil($this->ym->get_sem_max($thb->yudisium_date))." sm</td>";
 	    }
 	    $table .= "</tr>";
 	    $table .= "<tr><td>PBU</td>";
@@ -1075,7 +1073,6 @@ class Admin extends Admin_Controller {
 	    $table .= "</table>";
 	    echo $style;
 	    echo $table;
-	    echo $this->get_mountdiff('2012-06-20','2011-06-23');
 	}
 	//fungsi pengecekan dokumen telah tercetak
     public function get_printed($id=0)
