@@ -980,6 +980,7 @@ class Admin extends Admin_Controller {
 	//data lulusan    
     public function graduate()
 	{
+	    /**
 	    $data	= $this->ym->get_yudisium();
 	    
 	    $this->template
@@ -987,6 +988,89 @@ class Admin extends Admin_Controller {
 			->append_js('module::jquery.printPage.js')
 			->set('data', $data)
 			->build('admin/graduate');
+			**/
+	    $array_bulan	 = $this->ym->get_yudisium();
+	    $style  = $this->style_present("Data Lulusan","","");
+	    //print_r($array_bulan);
+	    $table  = "<table class=\"gridtable\" border=\"1px\">";
+	    $table .= "<tr><th>Data Lulusan</th>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .="<th>".tanggal($thb->yudisium_date)."</th>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>Peserta</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .="<td></td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<td>Jumlah Peserta Yudisium</td>";
+	    foreach($array_bulan as $thb)
+	    {
+		
+		$bulan	= array('date' => $thb->yudisium_date);
+		$table .="<td>".$this->ym->count_yudis_by($bulan)."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>Rerata Lama Penulisan TA</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".round($this->get_avg_studi($thb->yudisium_date),2)." bln</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>LAMA MINIMAL PENULISAN TA</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".round($this->ym->get_write_min($thb->yudisium_date),2)." bln</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>LAMA MIKSIMAL PENULISAN TA</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".round($this->ym->get_write_max($thb->yudisium_date),2)." bln</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>RERATA MASA STUDI</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".ceil($this->ym->get_sem_avg($thb->yudisium_date))." sm</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>MASA STUDI MINIMUM</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".ceil($this->ym->get_sem_min($thb->yudisium_date))." sm</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>MASA STUDI MAKSIMUM</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".ceil($this->ym->get_sem_max($thb->yudisium_date))." sm</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>PBU</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PBU'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>UTUL</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'UTUL'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>PKS</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PKS'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "</table>";
+	    echo $style;
+	    echo $table;
+	    
 	}
     public function print_graduate($date)
 	{
@@ -1270,6 +1354,14 @@ class Admin extends Admin_Controller {
 		    {
 			$predicate = 'Cumlaude';
 		    }
+		    if($ipk >= 2.76  && $ipk <= 3.50)
+		    {
+			$predicate = 'Sangat Memuaskan';
+		    }
+		    if($ipk >= 2.00 && $ipk <= 2.75)
+		    {
+			$predicate = 'Memuaskan';
+		    }
 		}else{
 		    if($ipk <= 4.0 && $ipk >= 3.51)
 		    {
@@ -1287,6 +1379,7 @@ class Admin extends Admin_Controller {
 	    }else{
 		if($smster <= 10)
 		{
+		    //$ok = "ok";
 		    if($ipk <= 4.0 && $ipk >= 3.51)
 		    {
 			if($parrental == 'PKS')
@@ -1296,7 +1389,16 @@ class Admin extends Admin_Controller {
 			    $predicate = 'Cumlaude';   
 			}
 		    }
+		    if($ipk >= 2.76  && $ipk <= 3.50)
+		    {
+			$predicate = 'Sangat Memuaskan';
+		    }
+		    if($ipk >= 2.00 && $ipk <= 2.75)
+		    {
+			$predicate = 'Memuaskan';
+		    }
 		}else{
+		    //$ok = "ok";
 		    if($ipk <= 4.0 && $ipk >= 3.51)
 		    {
 			$predicate = 'Sangat Memuaskan';
