@@ -41,6 +41,40 @@ class Yudisium_m extends MY_Model {
 	    return $result->semester;
 	    **/
 	}
+    function count_cum_s1($where)
+	{
+	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
+	    $this->db->from('default_yudisium');
+	    $this->db->where('yudisium_date',$where);
+	    $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=","10");
+	    $this->db->where("thesis","Skripsi");
+	    $this->db->where("parrental <> ","PKS");
+	    $this->db->where('ipk >=','3.51');
+	    return $this->db->count_all_results();
+	}
+	
+    function count_verygood_s1($where)
+	{
+	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
+	    $this->db->from('default_yudisium');
+	    $this->db->where('yudisium_date',$where);
+	   // $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=","10");
+	    $this->db->where("thesis","Skripsi");
+	    //$this->db->where('ipk <=','3.50');
+	    $this->db->where('ipk >=','2.76');
+	    return $this->db->count_all_results();
+	}
+    function count_good_s1($where)
+	{
+	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
+	    $this->db->from('default_yudisium');
+	    $this->db->where('yudisium_date',$where);
+	   // $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=","10");
+	    $this->db->where("thesis","Skripsi");
+	    $this->db->where('ipk <=','2.75');
+	    $this->db->where('ipk >=','2.00');
+	    return $this->db->count_all_results();
+	}
 	
     function get_sem_min($where)
 	{

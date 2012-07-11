@@ -621,7 +621,8 @@ class Admin extends Admin_Controller {
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'order' =>'ipk','group' => 'department');
+	    //$basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'order' =>'ipk','group' => 'department');
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style  = $this->style_report($bln,$thn);
@@ -683,7 +684,8 @@ class Admin extends Admin_Controller {
 	//function view attch table
     public function attach_table($date,$thesis,$logo)
 	{
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
+	    //$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis);
 	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -712,6 +714,7 @@ class Admin extends Admin_Controller {
 	    {
 		$parrams = array('yudisium_date'=>$date);
 	    }else{
+		//$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis);
 		$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis);
 	    }
 	    $data	 = $this->ym->get_many_by($parrams);
@@ -1070,24 +1073,35 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td>Cumlaude</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$where =array('date' =>$thb->yudisium_date);
-		$data = $this->ym->get_many_by($where);
-		$jml = 0;
-		$total =0;
-		foreach($data as $d)
-		{
-		    //$predicate = $this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental);
-		    echo "<pre>";
-		    if($d->parrental=='PKS')
-		    {
-			echo "YES";
-		    }
-		    else{
-			echo "NO";
-		    }
-		    echo "</pre>";
-		    //$total +=$d->parrental;
-		}
+		
+		$cumloude =$this->ym->count_cum_s1($thb->yudisium_date);
+		$table .= "<td>".$cumloude;
+		//print_r($cumloude);
+		$table .="</td>";
+		//$table .= "<td>$jml</td>";
+		//$table .= "<td>".$thb."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>Sangat Memuaskan</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		
+		$cumloude =$this->ym->count_verygood_s1($thb->yudisium_date);
+		$table .= "<td>".$cumloude;
+		//print_r($cumloude);
+		$table .="</td>";
+		//$table .= "<td>$jml</td>";
+		//$table .= "<td>".$thb."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>MEMUASKAN</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		
+		$cumloude =$this->ym->count_good_s1($thb->yudisium_date);
+		$table .= "<td>".$cumloude;
+		//print_r($cumloude);
+		$table .="</td>";
 		//$table .= "<td>$jml</td>";
 		//$table .= "<td>".$thb."</td>";
 	    }
