@@ -1067,6 +1067,31 @@ class Admin extends Admin_Controller {
 		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PKS'))."</td>";
 	    }
 	    $table .= "</tr>";
+	    $table .= "<tr><td>Cumlaude</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$where =array('date' =>$thb->yudisium_date);
+		$data = $this->ym->get_many_by($where);
+		$jml = 0;
+		$total =0;
+		foreach($data as $d)
+		{
+		    //$predicate = $this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental);
+		    echo "<pre>";
+		    if($d->parrental=='PKS')
+		    {
+			echo "YES";
+		    }
+		    else{
+			echo "NO";
+		    }
+		    echo "</pre>";
+		    //$total +=$d->parrental;
+		}
+		//$table .= "<td>$jml</td>";
+		//$table .= "<td>".$thb."</td>";
+	    }
+	    $table .= "</tr>";
 	    $table .= "</table>";
 	    echo $style;
 	    echo $table;
