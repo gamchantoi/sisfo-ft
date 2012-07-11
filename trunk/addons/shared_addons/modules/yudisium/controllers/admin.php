@@ -584,7 +584,7 @@ class Admin extends Admin_Controller {
 		$table .= "</table>";
 		echo $style;
 		echo $table;
-		$this->ym->update($id,array('printed' => '1'));
+		$this->ym->update($id,array('printed_repo' => '1'));
 		$this->ym->add_print($id,'8');
 		
 	}
@@ -977,10 +977,105 @@ class Admin extends Admin_Controller {
 	{
 	    return $this->present_xls($date,'D3');
 	}
-    
+	//data lulusan    
     public function graduate()
 	{
+	    $data	= $this->ym->get_yudisium();
 	    
+	    $this->template
+			->title($this->module_details['name'], lang('yudisium_graduate'))
+			->append_js('module::jquery.printPage.js')
+			->set('data', $data)
+			->build('admin/graduate');
+	}
+    public function print_graduate($date)
+	{
+	    $_tanggal = tanggal($date);
+	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
+	    $array_bulan	 = $this->ym->get_yudisium();
+	    $style  = $this->style_present("Data Lulusan",$bln,$thn);
+	    $_data = $this->ym->get_many_by(array('yudisium_date' => $date));
+		foreach ($_data as $_d)
+		{
+		    $semester = $this->get_semester($_d->nim,$_d->yudisium_date);
+		    echo $semester;
+		    
+		}
+	    //print_r($array_bulan);
+	    $table  = "<table class=\"gridtable\" border=\"1px\">";
+	    $table .= "<tr><th>Data Lulusan</th>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .="<th>".tanggal($thb->yudisium_date)."</th>";
+	    }
+	    $table .= "<tr><td>Peserta</td></tr>";
+	    $table .= "</tr>";
+	    $table .= "<td>Jumlah Peserta Yudisium</td>";
+	    foreach($array_bulan as $thb)
+	    {
+		
+		$bulan	= array('date' => $thb->yudisium_date);
+		$table .="<td>".$this->ym->count_yudis_by($bulan)."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>Rerata Lama Penulisan TA</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->get_avg_studi($thb->yudisium_date)."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>LAMA MINIMAL PENULISAN TA</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->get_write_min($thb->yudisium_date)."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>LAMA MIKSIMAL PENULISAN TA</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->get_write_max($thb->yudisium_date)."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>RERATA MASA STUDI</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".ceil($this->ym->get_sem_avg($thb->yudisium_date))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>MASA STUDI MINIMUM</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".ceil($this->ym->get_sem_min($thb->yudisium_date))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>MASA STUDI MAKSIMUM</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".ceil($this->ym->get_sem_max($thb->yudisium_date))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>PBU</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PBU'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>UTUL</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'UTUL'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>PKS</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PKS'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "</table>";
+	    echo $style;
+	    echo $table;
+	    echo $this->get_mountdiff('2012-06-20','2011-06-23');
 	}
 	//fungsi pengecekan dokumen telah tercetak
     public function get_printed($id=0)
@@ -1131,6 +1226,20 @@ class Admin extends Admin_Controller {
 	    return $result;
 	}
 	
+   public function get_avg_studi($date)
+	{
+	    $avg= $this->ym->get_write_avg($date);
+	    return $avg;
+	}
+	
+    public function get_mountdiff($d1,$d2)
+	{
+	    $date1 = new DateTime($d1);
+	    $date2 = new DateTime($d2);
+	    $interval = $date1->diff($date2);
+	    $diff     = $interval->format('%m');
+	    return $diff;
+	}
 	//fungsi penghitung selisih waktu antara dua tanggal
     public function get_datediff($d1,$d2)
 	{

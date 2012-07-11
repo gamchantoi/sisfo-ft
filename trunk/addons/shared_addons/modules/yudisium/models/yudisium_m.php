@@ -21,8 +21,56 @@ class Yudisium_m extends MY_Model {
         return $this->db->get('printed')->result();
     }
     
+    function get_write_avg($where)
+    {
+	$this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
+	$this->db->where('yudisium_date',$where);
+	$result = $this->db->get('yudisium')->row();
+	return $result->rerata;
+    }
+    function get_sem_avg($where)
+	{
+	    $query  = $this->db->query("SELECT AVG( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS semester FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."'");
+	    $result = $query->row();
+	    return $result->semester;
+	    /**
+	    $this->db->select("AVG( DATEDIFF(`yudisium_date`,CONCAT('20',LEFT(`nim`,2),'-09-01'))/180 ) AS semester");
+	    
+	    $this->db->where('yudisium_date',$where);
+	    $result= $this->db->get('yudisium')->row();
+	    return $result->semester;
+	    **/
+	}
 	
-	function add_print($parrent,$code)
+    function get_sem_min($where)
+	{
+	    $query  = $this->db->query("SELECT MIN( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS minimum FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."'");
+	    $result = $query->row();
+	    return $result->minimum;
+	}
+    
+    function get_sem_max($where)
+	{
+	    $query  = $this->db->query("SELECT MAX( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS maksimum FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."'");
+	    $result = $query->row();
+	    return $result->maksimum;
+	}
+	
+    function get_write_min($where)
+	{
+	    $this->db->select("MIN( DATEDIFF(  `finish` ,  `start` ) /30 ) as minimal");
+	    $this->db->where('yudisium_date',$where);
+	    $result = $this->db->get('yudisium')->row();
+	    return $result->minimal;
+	}
+    function get_write_max($where)
+	{
+	    $this->db->select("MAX( DATEDIFF(  `finish` ,  `start` ) /30 ) as maximal");
+	    $this->db->where('yudisium_date',$where);
+	    $result = $this->db->get('yudisium')->row();
+	    return $result->maximal;
+	}
+    function add_print($parrent,$code)
 	{
 		$this->db->set('id_parrent', $parrent);
 		$this->db->set('code',$code);
@@ -44,6 +92,10 @@ class Yudisium_m extends MY_Model {
 	    if(!empty($parrams['thesis']))
 	    {
 		$this->db->where('thesis',$parrams['thesis']);
+	    }
+	    if(!empty($parrams['parrental']))
+	    {
+		$this->db->where('parrental',$parrams['parrental']);
 	    }
 	    if(!empty($parrams['date']))
 	    {
@@ -171,6 +223,8 @@ class Yudisium_m extends MY_Model {
 
 		return $this->db->get($this->_table)->row();
     }
+    
+    
     
     function get_many_by($params = array())
 	{
