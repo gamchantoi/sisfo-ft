@@ -76,6 +76,27 @@ class Yudisium_m extends MY_Model {
 	    return $this->db->count_all_results();
 	}
 	
+    function get_avg_ipk($where)
+	{
+	    $query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE `yudisium_date`='".$where."'");
+	    $result = $query->row();
+	    return $result->rerata;
+	}
+    
+    function get_max_ipk($where)
+	{
+	    $query  = $this->db->query("SELECT MAX(ipk) AS maksimum FROM `default_yudisium` WHERE `yudisium_date`='".$where."'");
+	    $result = $query->row();
+	    return $result->maksimum;
+	}
+    
+    function get_min_ipk($where)
+	{
+	    $query  = $this->db->query("SELECT MIN(ipk) AS minimum FROM `default_yudisium` WHERE `yudisium_date`='".$where."'");
+	    $result = $query->row();
+	    return $result->minimum;
+	}
+    
     function get_sem_min($where)
 	{
 	    $query  = $this->db->query("SELECT MIN( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS minimum FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."'");
@@ -272,9 +293,13 @@ class Yudisium_m extends MY_Model {
 		{
 		    $this->db->where('yudisium_date',$params['yudisium_date']);
 		}
-		if(!empty($params['order']))
+		if(!empty($params['orderdesc']))
 		{
-		    $this->db->order_by($params['order'],'DESC');
+		    $this->db->order_by($params['orderdesc'],'DESC');
+		}
+		if(!empty($params['orderasc']))
+		{
+		    $this->db->order_by($params['orderasc'],'ASC');
 		}
 		if(!empty($params['group']))
 		{
