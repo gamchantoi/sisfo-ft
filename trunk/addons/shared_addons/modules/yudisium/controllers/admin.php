@@ -621,8 +621,8 @@ class Admin extends Admin_Controller {
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    //$basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'order' =>'ipk','group' => 'department');
-	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'orderdesc' =>'ipk');
+	    //$basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style  = $this->style_report($bln,$thn);
@@ -996,19 +996,20 @@ class Admin extends Admin_Controller {
 	    $style  = $this->style_present("Data Lulusan","","");
 	    //print_r($array_bulan);
 	    $table  = "<table class=\"gridtable\" border=\"1px\">";
-	    $table .= "<tr><th>Data Lulusan</th>";
+	    $table .= "<tr><th>NO</th><th>DATA LULUSAN S1</th>";
 	    foreach ($array_bulan as $thb)
 	    {
 		$table .="<th>".tanggal($thb->yudisium_date)."</th>";
 	    }
+	    //$count  = count($array_bulan);
 	    $table .= "</tr>";
-	    $table .= "<tr><td>Peserta</td>";
-	    foreach ($array_bulan as $thb)
-	    {
-		$table .="<td></td>";
-	    }
+	    $table .= "<tr><td>1</td><td><b>PESERTA</b></td>";
+	    for($i=0;$i<count($array_bulan);$i++) 
+	    { 
+	       $table .= "<td></td>";
+	    } 
 	    $table .= "</tr>";
-	    $table .= "<td>Jumlah Peserta Yudisium</td>";
+	    $table .= "<tr><td></td><td>Jumlah Peserta Yudisium</td>";
 	    foreach($array_bulan as $thb)
 	    {
 		
@@ -1016,61 +1017,86 @@ class Admin extends Admin_Controller {
 		$table .="<td>".$this->ym->count_yudis_by($bulan)."</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>Rerata Lama Penulisan TA</td>";
+	    $table .= "<tr><td>2</td><td><b>PENULISAN TA</b></td>";
+	    for($i=0;$i<count($array_bulan);$i++) 
+	    { 
+	       $table .= "<td></td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td></td><td>Rerata Lama Penulisan TA</td>";
 	    foreach ($array_bulan as $thb)
 	    {
 		$table .= "<td>".round($this->get_avg_studi($thb->yudisium_date),2)." bln</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>LAMA MINIMAL PENULISAN TA</td>";
+	    $table .= "<tr><td></td><td>LAMA MINIMAL PENULISAN TA</td>";
 	    foreach ($array_bulan as $thb)
 	    {
 		$table .= "<td>".round($this->ym->get_write_min($thb->yudisium_date),2)." bln</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>LAMA MIKSIMAL PENULISAN TA</td>";
+	    $table .= "<tr><td></td><td>LAMA MIKSIMAL PENULISAN TA</td>";
 	    foreach ($array_bulan as $thb)
 	    {
 		$table .= "<td>".round($this->ym->get_write_max($thb->yudisium_date),2)." bln</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>RERATA MASA STUDI</td>";
+	    $table .= "<tr><td>3</td><td><b>MASA STUDI</b></td>";
+	    for($i=0;$i<count($array_bulan);$i++) 
+	    { 
+	       $table .= "<td></td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td></td><td>RERATA MASA STUDI</td>";
 	    foreach ($array_bulan as $thb)
 	    {
 		$table .= "<td>".ceil($this->ym->get_sem_avg($thb->yudisium_date))." sm</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>MASA STUDI MINIMUM</td>";
+	    $table .= "<tr><td></td><td>MASA STUDI MINIMUM</td>";
 	    foreach ($array_bulan as $thb)
 	    {
 		$table .= "<td>".ceil($this->ym->get_sem_min($thb->yudisium_date))." sm</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>MASA STUDI MAKSIMUM</td>";
+	    $table .= "<tr><td></td><td>MASA STUDI MAKSIMUM</td>";
 	    foreach ($array_bulan as $thb)
 	    {
 		$table .= "<td>".ceil($this->ym->get_sem_max($thb->yudisium_date))." sm</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>PBU</td>";
-	    foreach ($array_bulan as $thb)
-	    {
-		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PBU'))."</td>";
+	    $table .= "<tr><td>4</td><td><b>IPK</b></td>";
+	    for($i=0;$i<count($array_bulan);$i++) 
+	    { 
+	       $table .= "<td></td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>UTUL</td>";
+	    $table .= "<tr><td></td><td>RERATA IPK</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'UTUL'))."</td>";
+		$table .= "<td>".round($this->ym->get_avg_ipk($thb->yudisium_date),2)."</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>PKS</td>";
+	    $table .= "<tr><td></td><td>IPK MAKSIMUM</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PKS'))."</td>";
+		$table .= "<td>".$this->ym->get_max_ipk($thb->yudisium_date)."</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>Cumlaude</td>";
+	    $table .= "<tr><td></td><td>IPK MINIMUM</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->get_min_ipk($thb->yudisium_date)."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>5</td><td><b>PREDIKAT</b></td>";
+	    for($i=0;$i<count($array_bulan);$i++) 
+	    { 
+	       $table .= "<td></td>";
+	    }
+	    $table .= "</tr>";
+	
+	    $table .= "<tr><td></td><td>DENGAN PUJIAN</td>";
 	    foreach ($array_bulan as $thb)
 	    {
 		
@@ -1082,28 +1108,78 @@ class Admin extends Admin_Controller {
 		//$table .= "<td>".$thb."</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>Sangat Memuaskan</td>";
+	    $table .= "<tr><td></td><td>SANGAT MEMUASKAN</td>";
 	    foreach ($array_bulan as $thb)
 	    {
 		
-		$cumloude =$this->ym->count_verygood_s1($thb->yudisium_date);
-		$table .= "<td>".$cumloude;
-		//print_r($cumloude);
+		$verygood =$this->ym->count_verygood_s1($thb->yudisium_date);
+		$table .= "<td>".$verygood;
 		$table .="</td>";
-		//$table .= "<td>$jml</td>";
-		//$table .= "<td>".$thb."</td>";
 	    }
 	    $table .= "</tr>";
-	    $table .= "<tr><td>MEMUASKAN</td>";
+	    $table .= "<tr><td></td><td>MEMUASKAN</td>";
 	    foreach ($array_bulan as $thb)
 	    {
-		
-		$cumloude =$this->ym->count_good_s1($thb->yudisium_date);
-		$table .= "<td>".$cumloude;
-		//print_r($cumloude);
+		$good 	=$this->ym->count_good_s1($thb->yudisium_date);
+		$table .= "<td>".$good;
 		$table .="</td>";
-		//$table .= "<td>$jml</td>";
-		//$table .= "<td>".$thb."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>6</td><td><b>MASUK FT MELALUI</td>";
+	    for($i=0;$i<count($array_bulan);$i++) 
+	    { 
+	       $table .= "<td></td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td></td><td>PBU</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PBU'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td></td><td>UTUL</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'UTUL'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td></td><td>PKS</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PKS'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td>7</td><td>ASAL SEKOLAH</td>";
+	    for($i=0;$i<count($array_bulan);$i++) 
+	    { 
+	       $table .= "<td></td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "<tr><td></td><td>SMA</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'SMA'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    
+	    $table .= "<tr><td></td><td>SMK</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'SMK'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    
+	    $table .= "<tr><td></td><td>DIII</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'DIII'))."</td>";
+	    }
+	    $table .= "</tr>";
+	    $table .= "</tr>";
+	    $table .= "<tr><td></td><td>MAN, DLL</td>";
+	    foreach ($array_bulan as $thb)
+	    {
+		$table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'MAN DLL'))."</td>";
 	    }
 	    $table .= "</tr>";
 	    $table .= "</table>";
