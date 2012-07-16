@@ -21,10 +21,11 @@ class Yudisium_m extends MY_Model {
         return $this->db->get('printed')->result();
     }
     
-    function get_write_avg($where)
+    function get_write_avg($date,$prodi)
     {
 	$this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
-	$this->db->where('yudisium_date',$where);
+	$this->db->where('yudisium_date',$date);
+	$this->db->where('thesis',$prodi);
 	$result = $this->db->get('yudisium')->row();
 	return $result->rerata;
     }
@@ -111,17 +112,19 @@ class Yudisium_m extends MY_Model {
 	    return $result->maksimum;
 	}
 	
-    function get_write_min($where)
+    function get_write_min($date,$prodi)
 	{
 	    $this->db->select("MIN( DATEDIFF(  `finish` ,  `start` ) /30 ) as minimal");
-	    $this->db->where('yudisium_date',$where);
+	    $this->db->where('yudisium_date',$date);
+	    $this->db->where('thesis',$prodi);
 	    $result = $this->db->get('yudisium')->row();
 	    return $result->minimal;
 	}
-    function get_write_max($where)
+    function get_write_max($date,$prodi)
 	{
 	    $this->db->select("MAX( DATEDIFF(  `finish` ,  `start` ) /30 ) as maximal");
-	    $this->db->where('yudisium_date',$where);
+	    $this->db->where('yudisium_date',$date);
+	    $this->db->where('thesis',$prodi);
 	    $result = $this->db->get('yudisium')->row();
 	    return $result->maximal;
 	}
@@ -136,6 +139,16 @@ class Yudisium_m extends MY_Model {
     function get_yudisium()
 	{
 		return $this->db->select('DISTINCT(yudisium_date)')->order_by('yudisium_date','DESC')->get('yudisium')->result();
+	}
+	
+    function get_yudis_date($d_start,$d_finish)
+	{
+	    $this->db->select('DISTINCT(yudisium_date)');
+	    $this->db->where('yudisium_date',$d_start);
+	    $this->db->or_where('yudisium_date',$d_finish);
+	    $this->db->order_by('yudisium_date','DESC');
+	    return $this->db->get('yudisium')->result();
+	    
 	}
     
     function get_reportd()
