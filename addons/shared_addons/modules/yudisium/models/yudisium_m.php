@@ -29,19 +29,7 @@ class Yudisium_m extends MY_Model {
 	$result = $this->db->get('yudisium')->row();
 	return $result->rerata;
     }
-    function get_sem_avg($where)
-	{
-	    $query  = $this->db->query("SELECT AVG( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS semester FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."'");
-	    $result = $query->row();
-	    return $result->semester;
-	    /**
-	    $this->db->select("AVG( DATEDIFF(`yudisium_date`,CONCAT('20',LEFT(`nim`,2),'-09-01'))/180 ) AS semester");
-	    
-	    $this->db->where('yudisium_date',$where);
-	    $result= $this->db->get('yudisium')->row();
-	    return $result->semester;
-	    **/
-	}
+    
     function count_cum_s1($where)
 	{
 	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
@@ -52,6 +40,36 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where("parrental <> ","PKS");
 	    $this->db->where('ipk >=','3.51');
 	    return $this->db->count_all_results();
+	}
+    function count_cum($where,$thesis)
+	{
+	    if ($thesis == 'Skripsi') : $sem ="10"; else : $sem ="8"; endif;
+	    $this->db->from('default_yudisium');
+	    $this->db->where('yudisium_date',$where);
+	    $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=",$sem);
+	    $this->db->where("thesis",$thesis);
+	    $this->db->where("parrental <> ","PKS");
+	    $this->db->where('ipk >=','3.51');
+	    return $this->db->count_all_results();
+	}
+	
+    function count_verygood($where,$thesis)
+	{
+	    $this->db->from('default_yudisium');
+	    $this->db->where('yudisium_date',$where);
+	    $this->db->where("thesis",$thesis);
+	    $this->db->where('ipk >=','2.76');
+	    return $this->db->count_all_results();
+	}
+	
+    function count_good($where,$thesis)
+	{
+	    $this->db->from('default_yudisium');
+	    $this->db->where('yudisium_date',$where);
+	    $this->db->where("thesis",$thesis);
+	    $this->db->where('ipk <=','2.75');
+	    $this->db->where('ipk >=','2.00');
+	    return $this->db->count_all_results(); 
 	}
 	
     function count_verygood_s1($where)
@@ -65,6 +83,7 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('ipk >=','2.76');
 	    return $this->db->count_all_results();
 	}
+	
     function count_good_s1($where)
 	{
 	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
@@ -77,41 +96,55 @@ class Yudisium_m extends MY_Model {
 	    return $this->db->count_all_results();
 	}
 	
-    function get_avg_ipk($where)
+    function get_avg_ipk($where,$thesis)
 	{
-	    $query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE `yudisium_date`='".$where."'");
+	    $query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE `yudisium_date`='".$where."' AND thesis ='".$thesis."'");
 	    $result = $query->row();
 	    return $result->rerata;
 	}
     
-    function get_max_ipk($where)
+    function get_max_ipk($where,$thesis)
 	{
-	    $query  = $this->db->query("SELECT MAX(ipk) AS maksimum FROM `default_yudisium` WHERE `yudisium_date`='".$where."'");
+	    $query  = $this->db->query("SELECT MAX(ipk) AS maksimum FROM `default_yudisium` WHERE `yudisium_date`='".$where."' AND thesis ='".$thesis."'");
 	    $result = $query->row();
 	    return $result->maksimum;
 	}
     
-    function get_min_ipk($where)
+    function get_min_ipk($where,$thesis)
 	{
-	    $query  = $this->db->query("SELECT MIN(ipk) AS minimum FROM `default_yudisium` WHERE `yudisium_date`='".$where."'");
+	    $query  = $this->db->query("SELECT MIN(ipk) AS minimum FROM `default_yudisium` WHERE `yudisium_date`='".$where."' AND thesis ='".$thesis."'");
 	    $result = $query->row();
 	    return $result->minimum;
 	}
     
-    function get_sem_min($where)
+    function get_sem_min($where,$thesis)
 	{
-	    $query  = $this->db->query("SELECT MIN( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS minimum FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."'");
+	    $query  = $this->db->query("SELECT MIN( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS minimum FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."' AND `thesis` = '".$thesis."'");
 	    $result = $query->row();
 	    return $result->minimum;
 	}
     
-    function get_sem_max($where)
+    function get_sem_max($where,$thesis)
 	{
-	    $query  = $this->db->query("SELECT MAX( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS maksimum FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."'");
+	    $query  = $this->db->query("SELECT MAX( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS maksimum FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."' AND `thesis` = '".$thesis."'");
 	    $result = $query->row();
 	    return $result->maksimum;
 	}
 	
+    function get_sem_avg($where,$prodi)
+	{
+	    $query  = $this->db->query("SELECT AVG( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS semester FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."' AND `thesis` = '".$prodi."'");
+	    $result = $query->row();
+	    return $result->semester;
+	    /**
+	    $this->db->select("AVG( DATEDIFF(`yudisium_date`,CONCAT('20',LEFT(`nim`,2),'-09-01'))/180 ) AS semester");
+	    
+	    $this->db->where('yudisium_date',$where);
+	    $result= $this->db->get('yudisium')->row();
+	    return $result->semester;
+	    **/
+	}
+    
     function get_write_min($date,$prodi)
 	{
 	    $this->db->select("MIN( DATEDIFF(  `finish` ,  `start` ) /30 ) as minimal");
