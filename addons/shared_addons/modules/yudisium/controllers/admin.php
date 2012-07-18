@@ -841,6 +841,12 @@ class Admin extends Admin_Controller {
 	    return $this->export_xls($date,'all');
 	}
 	
+    public function header_logo()
+	{
+	    $header = "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"></td><td align=\"center\"><b>FAKULTAS TEKNIK <br /> UNIVERSITAS NEGERI YOGYAKARTA<br/></b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	    return $header;
+	}
+	
     public function present_header($tgl,$bln,$thn,$thesis,$logo)
 	{
 	    $header	= "<table align=\"center\">";
@@ -913,6 +919,23 @@ class Admin extends Admin_Controller {
                         border-color: #666666;
                         background-color: #ffffff;
 			font-size:11px;
+                        }
+		    table.legend{
+			font-family: verdana,arial,sans-serif;
+                        font-size:9px;
+                        color:#333333;
+                        border-width: 1px;
+                        border-color: #666666;
+                        border-collapse: collapse;
+                        width: 595px; 
+		    }
+		    table.legend td {
+                        border-width: 1px;
+                        padding: 3px;
+                        border-style: solid;
+                        border-color: #666666;
+                        background-color: #ffffff;
+			font-size:9px;
                         }
 		    #even{
 			background-color: #dddd;
@@ -1009,21 +1032,30 @@ class Admin extends Admin_Controller {
 	
     public function get_graduate()
 	{
-	   // if(isset($_POST))
-	    //{
-		//$start	= $_POST['d_start'];
-		//$finish	= $_POST['d_finish'];
-		$start  = '2012-06-28';
-		$finish = '2012-07-26';
-		$thesis = 'Skripsi';
+	   if(isset($_POST))
+	    {
+		$start	= $_POST['d_start'];
+		$finish	= $_POST['d_finish'];
+		$thesis = $_POST['prodi'];
+		//$start  = '2012-06-28';
+		//$finish = '2012-07-26';
+		list($tgl1,$bln1,$thn1) = explode(" ",tanggal($start));
+		list($tgl2,$bln2,$thn2) = explode(" ",tanggal($finish));
+		
 		if($thesis == 'Skripsi')
 		{
 		    $prodi = "S1";
 		}else{
 		    $prodi = "D3";
 		}
-		$style 	= $this->style_present("Data Lulusan","","");
-		$table 	= "<table class=\"gridtable\" border=\"1px\">";
+		$style 	 = $this->style_present("Data Lulusan","","");
+		$header  = "<table align=\"center\">";
+		$header	.= $this->header_logo();
+		$header .= "<tr><td colspan=\"3\"></td></tr>";
+		$header .= "<tr><td colspan=\"3\" align=\"center\">DATA LULUSAN MAHASISWA ".$prodi." FAKULTAS TEKNIK <br> BULAN ".strtoupper($bln1)." ".$thn1." DAN ".strtoupper($bln2)." ".$thn2."</td></tr>";
+		$header	.= "<tr><td colspan=\"3\"></td></tr>";
+		$header .= "</table>";
+		$table 	 = "<table class=\"gridtable\" border=\"1px\">";
 		$table	.= "<tr><th>No</th><th>DATA LULUSAN ".$prodi."</th><th>".tanggal($start)."</th><th>".tanggal($finish)."</th><th>KETERANGAN</th></tr>";
 		$jml1	 = $this->ym->count_yudis_by(array('date'=>$start,'thesis' => $thesis));
 		$jml2	 = $this->ym->count_yudis_by(array('date'=>$finish,'thesis' => $thesis));
@@ -1087,7 +1119,8 @@ class Admin extends Admin_Controller {
 		$good2   = $this->ym->count_good($finish,$thesis);
 		if($good1 < $good2) : $ketgood = "NAIK"; elseif($good1 == $good2): $ketgood ="TETAP"; else : $ketgood = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>MEMUASKAN</td><td>$good1</td><td>$good2</td><td>$ketgood</td></tr>";
-		$table	.= "<tr><td><b>6</b></td><td><b>MASUK FT MELALUI</b></td><td></td><td></td></tr>";
+		
+		$table	.= "<tr><td><b>6</b></td><td><b>MASUK FT MELALUI</b></td><td></td><td></td><td></td></tr>";
 		$pbu1	 = $this->ym->count_by(array('yudisium_date'=>$start,'parrental' => 'PBU'));
 		$pbu2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'parrental' => 'PBU'));
 		if($pbu1 < $pbu2) : $ketpbu = "NAIK"; elseif($pbu1 == $pbu2): $ketpbu ="TETAP"; else : $ketpbu = "TURUN"; endif;
@@ -1100,7 +1133,8 @@ class Admin extends Admin_Controller {
 		$pks2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'parrental' => 'PKS'));
 		if($pks1 < $pks2) : $ketpks = "NAIK"; elseif($pks1 == $pks2): $ketpks ="TETAP"; else : $ketpks = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>PKS</td><td>$pks1</td><td>$pks2</td><td>$ketpks</td></tr>";
-		$table	.= "<tr><td><b>7</b></td><td><b>ASAL SEKOLAH</b></td><td></td><td></td></tr>";
+		
+		$table	.= "<tr><td><b>7</b></td><td><b>ASAL SEKOLAH</b></td><td></td><td></td><td></td></tr>";
 		$sma1	 = $this->ym->count_by(array('yudisium_date'=>$start,'school' => 'SMA'));
 		$sma2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'school' => 'SMA'));
 		if($sma1 < $sma2) : $ketsma = "NAIK"; elseif($sma1 == $sma2): $ketsma ="TETAP"; else : $ketsma = "TURUN"; endif;
@@ -1118,12 +1152,27 @@ class Admin extends Admin_Controller {
 		if($man1 < $man2) : $ketman = "NAIK"; elseif($man1 == $man2): $ketman ="TETAP"; else : $ketman = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>MAN DLL</td><td>$man1</td><td>$man2</td><td>$ketman</td></tr>";
 		$table 	.= "</table>";
-		echo $style.$table;
-	    //}else{
-		//echo "No Data";
-	    //}
+		$sign 	 = "<table  align=\"center\">";
+		$sign	.= "<tr><td align=\"center\"><br>Wakil Dekan I</td></tr>";
+		$sign	.= "<tr><td><br></td></tr>";
+		//$sign	.= "<tr><td></td></tr>";
+		$sign	.= "<tr><td align=\"center\">Dr. Sunaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
+		$sign	.= "</table>";
+		$legend  = $this->legend();
+		
+		echo $style.$header.$table.$sign."<br>".$legend;
+	    }else{
+		echo "No Data";
+	    }
 	}
 	
+    public function legend ()
+	{
+	    $legend  = "<table class=\"legend\" >";
+	    $legend .= "<tr><td width=\"80px\" valign=\"top\">Dibuat Oleh</td><td  align=\"center\" >Dilarang memperbanyak sebagian atau seluruh isi dokumen tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width=\"80px\" valign=\"top\">Diperiksa Oleh</td></tr>";
+	    $legend .= "</table>";
+	    return $legend;
+	}
     public function print_graduate()
 	{
 	    if($_POST){
