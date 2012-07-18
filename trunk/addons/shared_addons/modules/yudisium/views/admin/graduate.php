@@ -8,7 +8,7 @@
 </section>
 <section class="item">
 <fieldset id="filters">
-	<?php echo form_open('/admin/yudisium/print_graduate', 'class="crud"'); ?>
+	<?php echo form_open('/admin/yudisium/get_graduate', 'class="crud"'); ?>
 	<ul>
 	  <li><?php echo form_dropdown('prodi',array(0=>'Pilih Program Studi','D3' => 'Diploma 3 /D3','Skripsi'=>'Sarjana Strata 1 /S1')); ?></li>
 	  <li><?php echo form_dropdown('d_start',$data); ?>  </li> 
