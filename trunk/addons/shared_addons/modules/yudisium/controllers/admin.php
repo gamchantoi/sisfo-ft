@@ -589,12 +589,74 @@ class Admin extends Admin_Controller {
 		
 	}
     
+    public function cetak_sk($date)
+	{
+	    $_tanggal 		= tanggal($date);
+	    list($tgl,$bln,$thn)	= explode(" ",$_tanggal);
+	    $style  = "<title>Surat Keputusan Dekan Yudisium ".$bln." ".$thn."</title>
+			<style type=\"text/css\" >
+			body {
+			height: 842px;
+			width: 595px;
+			margin-left: auto;
+			margin-right: auto;
+			}
+			tr.yellow td {
+			    border: 1px solid #000000;
+			    font-size:60%;
+			    }
+			    tr.smaller td{
+				    font-size:70%;
+				    font-weight: bold;
+			    }
+			</style>";
+	    $table  = "<table style=\"font-size:15px;\">";
+	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR : ".$this->ym->get_decree_num($date)." TAHUN  ".$thn."<br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
+	    $table .= "PERIODE ".strtoupper($bln)." ".$thn."<br><br> DEKAN FAKULTAS TEKNIK <br> UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
+	    $table .= "</tabel>";
+	    $table .= "<table>";
+	    $table .= "<tr class='smaller'><td valign=\"top\">Menimbang</td><td valign=\"top\">:</td><td valign=\"top\">a.</td><td style=\"padding-left: 10px; \">bahwa sehubungan dengan telah selesainya studi beberapa mahasiswa Fakultas Teknik Universitas Negeri Yogyakarta Program Diploma-3 (D-3) dan Strata-1 (S-1) dipandang perlu untuk diyudisiumkan.</td></tr>";
+	    $table .= "<tr class='smaller'><td></td><td></td><td valign=\"top\">b.</td><td style=\"padding-left: 10px; \">bahwa untuk keperluan seperti tersebut di atas perlu ditetapkan dengan keputusan Dekan</td></tr>";
+	    $table .= "<tr class='smaller'><td valign=\"top\">Mengingat</td><td>:</td><td valign=\"top\">1.</td><td style=\"padding-left: 10px; \">Undang-undang RI Nomor 20 Tahun 2003;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>2.</td><td style=\"padding-left: 10px; \">Peraturan Pemerintah RI Nomor 60 Tahun 1999;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>3.</td><td style=\"padding-left: 10px; \">Keputusan Presiden RI : <br>a. Nomor 93 Tahun 1999<br>b. Nomor 240/M Tahun 2003;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>4.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 23 Tahun 2011;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>5.</td><td style=\"padding-left: 10px; \">Keputusan Menteri Pendidikan Nasional RI Nomor 34 Tahun 2011;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>6.</td><td style=\"padding-left: 10px; \">Keputusan Rektor IKIP YOGYAKARTA Nomor 024 Tahun 1998;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right'>7.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Nomor 01 Tahun 2011;</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=3 align='right' valign=\"top\">8.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Universitas Negeri Yogyakarta : <br>a. Nomor 207 Tahun 2000; &nbsp;&nbsp;&nbsp;c. Nomor 297 Tahun 2006 <br>b. Nomor 303 Tahun 2000; &nbsp;&nbsp;&nbsp;d. Nomor: 1160/UN34/KP/2011</td></tr>";
+	    $table .= "</table>";
+	    $table .= "<table>";
+	    $table .= "<tr><td colspan=4 align='center'><b>MEMUTUSKAN</b></td></tr>";
+	    $table .= "<tr class='smaller'><td>Menetapkan</td><td>:</td><td colspan=4></td></tr>";
+	    $table .= "<tr class='smaller'><td valign='top'>Pertama</td><td valign='top'>:</td><td></td><td colspan=2>Yudisium Mahasiswa Program Diploma-3 (D-3) dan Strata-1 (S-1) Fakultas Teknik Universitas Negeri Yogyakarta Periode yang nama-namanya seperti tersebut pada lampiran 1 dan lampiran 2 Keputusan ini.</td></tr>";
+	    $table .= "<tr class='smaller'><td valign='top'>Kedua</td><td valign='top'>:</td><td></td><td colspan=2>Mahasiswa yang namanya seperti tersebut pada diktum Pertama tersebut di atas berhak mengikuti wisuda dalam Upacara Wisuda Universitas Negeri Yogyakarta sesuai dengan ketentuan yang berlaku.</td></tr>";
+	    $table .= "<tr class='smaller'><td valign='top'>Ketiga</td><td valign='top'>:</td><td></td><td colspan=2>Keputusan ini berlaku sejak ditetapkan.</td></tr>";
+	    $table .= "<tr class='smaller'><td valign='top'>Keempat</td><td valign='top'>:</td><td></td><td colspan=2>Segala sesuatu akan diubah dan dibetulkan sebagaimana mestinya apabila dikemudian hari ternyata terdapat kekeliruan dalam Keputusan ini.</td></tr>";
+	    $table .= "</table>";
+	    $table .= "<table>";
+	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \">Ditetapkan di :  Yogyakarta</td></tr>";
+	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><u>Pada tanggal : ".tanggal($date)." </u></td></tr>";
+	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><img src=\"".base_url().$this->module_details['path']."/img/brur.gif\" height=\"50px\"><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
+	    $table .= "<tr class='smaller'><td colspan=2>Tembusan Yth. :</td></tr>";
+	    $table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td><td style=\"padding-left: 190px; \">7. Kasubag Registrasi dan Statistik<br>8. Para Pembantu Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
+	    $table .= "</table>";
+	    
+	    $table .= "<table>";
+	    $table .= "<tr class='yellow'><td width='70px' valign='top'>Dibuat Oleh :<br><br> &nbsp;</td><td align='center' valign='top'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh<br><br>&nbsp;</td></tr>";
+	    //$table .= "<table>";
+	    $table .= "</table>";
+	    echo $style;
+	    echo $table;			
+	}
+    
 	//fungsi cetak rekap peserta yudisium D3
     public function report_d3($date)
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'order' => 'ipk','group'=>'department');
+	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'orderdesc' => 'ipk','orderasc'=>'department');
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style  = $this->style_report($bln,$thn);
@@ -645,8 +707,10 @@ class Admin extends Admin_Controller {
 	    echo $table;
 	}
 	
-    public function attch_header($tgl,$bln,$thn,$thesis,$logo)
+    public function attch_header($date,$thesis,$logo)
 	{
+	    $_tanggal	= tanggal($date);
+	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
 	    $header  = "<table class=\"header\" align=\"center\">";
 	    if($logo == 'yes')
 	    {
@@ -670,7 +734,7 @@ class Admin extends Admin_Controller {
 		}
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Lampiran $lamp Keputusan Dekan</td></tr>";
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Fakultas Teknik Universitas Negeri Yogyakarta</td></tr>";
-	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Nomor:         Tahun $thn</td></tr>";
+	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Nomor: ".$this->ym->get_decree_num($date)." Tahun $thn</td></tr>";
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Tanggal</td></tr>";
 	    $header .= "<tr><td colspan=3><br /></td></tr>";
 	    $header .= "<tr><th align=\"center\" colspan=3><b>DAFTAR NAMA MAHASISWA $stage FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA</b></th></tr>";
@@ -685,14 +749,14 @@ class Admin extends Admin_Controller {
     public function attach_table($date,$thesis,$logo)
 	{
 	    //$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis);
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'orderasc' => 'department');
 	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
 	    if($data)
 	    {
 		$i      = 1;
-		$table  = $this->attch_header($tgl,$bln,$thn,$thesis,$logo);
+		$table  = $this->attch_header($date,$thesis,$logo);
 		$table .= "<table class='gridtable' border=\"1px\">";
 		$table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th>SKS</th><th>IPK</th><th>PREDIKAT</th></tr>";
 		foreach ($data as $d)
@@ -950,7 +1014,7 @@ class Admin extends Admin_Controller {
 	}
     public function present_table($date,$thesis)
 	{
-	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
+	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'orderdesc' => 'department');
             $data       = $this->ym->get_many_by($parrams);
             $_tanggal   = tanggal($date);
             list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -967,6 +1031,9 @@ class Admin extends Admin_Controller {
                     $i++;
                 }    
                 $table .= "</table>";
+		$table .= $this->sign();
+		$table .= "<br>";
+		$table .= $this->legend();
             }else{
                 $table =  "Data Tidak tersedia";
             }
@@ -1152,12 +1219,7 @@ class Admin extends Admin_Controller {
 		if($man1 < $man2) : $ketman = "NAIK"; elseif($man1 == $man2): $ketman ="TETAP"; else : $ketman = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>MAN DLL</td><td>$man1</td><td>$man2</td><td>$ketman</td></tr>";
 		$table 	.= "</table>";
-		$sign 	 = "<table  align=\"center\">";
-		$sign	.= "<tr><td align=\"center\"><br>Wakil Dekan I</td></tr>";
-		$sign	.= "<tr><td><br></td></tr>";
-		//$sign	.= "<tr><td></td></tr>";
-		$sign	.= "<tr><td align=\"center\">Dr. Sunaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
-		$sign	.= "</table>";
+		$sign 	 = $this->sign();
 		$legend  = $this->legend();
 		
 		echo $style.$header.$table.$sign."<br>".$legend;
@@ -1166,7 +1228,17 @@ class Admin extends Admin_Controller {
 	    }
 	}
 	
-    public function legend ()
+    public function sign()
+	{
+	    $sign 	 = "<table  align=\"center\">";
+	    $sign	.= "<tr><td align=\"center\"><br>Wakil Dekan I</td></tr>";
+	    $sign	.= "<tr><td><br></td></tr>";
+		//$sign	.= "<tr><td></td></tr>";
+	    $sign	.= "<tr><td align=\"center\">Dr. Sunaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
+	    $sign	.= "</table>";
+	    return $sign;
+	}
+    public function legend()
 	{
 	    $legend  = "<table class=\"legend\" >";
 	    $legend .= "<tr><td width=\"80px\" valign=\"top\">Dibuat Oleh</td><td  align=\"center\" >Dilarang memperbanyak sebagian atau seluruh isi dokumen tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width=\"80px\" valign=\"top\">Diperiksa Oleh</td></tr>";
