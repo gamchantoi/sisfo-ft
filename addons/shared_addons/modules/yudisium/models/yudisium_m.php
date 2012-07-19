@@ -325,7 +325,17 @@ class Yudisium_m extends MY_Model {
 		return $this->db->get($this->_table)->row();
     }
     
-    
+    function get_decree_num($date)
+	{
+	    $result = $this->db->where('date',$date)->get('decree')->row();
+	    return $result->number;  
+	}
+    function get_decree_dy($bln,$thn)
+	{
+	    $bt= $bln."-".$thn;
+	    $result = $this->db->where("DATE_FORMAT(`datei` , '%M-%Y' )=",$bt)->get('decree')->row();
+	    return $result->number;  
+	}
     
     function get_many_by($params = array())
 	{
