@@ -512,7 +512,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td>14.</td><td>Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->thesis."</td></tr>";
 	    $table .= "<tr><td valign=\"top\">15.</td><td valign=\"top\">Judul</td><td valign=\"top\">:</td><td>&nbsp;&nbsp;</td><td colspan=2><font size=\"1.9px\"><b> ".strtoupper($item->thesis_title)."</b></font></td></tr>";
 	    $table .= "<tr><td>16.</td><td>Dosen Pembimbing</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$this->get_name($item->lecture)."</td></tr>";
-	    $table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".tanggal($item->finish)." &nbsp; <b>IPK:</b> ".$item->ipk." &nbsp; <b>Total SKS:</b> ".$item->sks."</td></tr>";
+	    $table .= "<tr><td>17.</td><td width=\"170px\">Lulus Tugas Akhir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".tanggal($item->graduation)." &nbsp; <b>IPK:</b> ".$item->ipk." &nbsp; <b>Total SKS:</b> ".$item->sks."</td></tr>";
 	    $table .= "<tr><td>18.</td><td>Lama Penulisan TA</td><td>:</td><td>&nbsp;&nbsp;</td><td>dari  ".tanggal($item->start)."</td><td>s.d. ".tanggal($item->finish)."</td></tr>";
 	    $table .= "<tr><td>19.</td><td>Cuti Kuliah</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->vacation." kali</td></tr>";
 	    $table .= "<tr><td>20.</td><td>Tanggal Yudisium</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> <b>".tanggal($item->yudisium_date)."</b></td></tr>";
@@ -743,6 +743,14 @@ class Admin extends Admin_Controller {
 	    $header .= "</tabel>";
 	    
 	    return $header;    
+	}
+	
+    public function date_ind($date)
+	{
+	    $_tanggal= tanggal($date);
+	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
+	    $array = array('tanggal'=>$tgl,'bulan'=> $bln,'tahun' => $thn);
+	    ret
 	}
 	
 	//function view attch table
