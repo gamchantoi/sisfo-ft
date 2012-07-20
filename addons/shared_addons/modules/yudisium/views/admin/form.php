@@ -47,11 +47,17 @@
 				<label for="department"><?php echo lang('yudisium_department'); ?></label>	
 				<div class="input"><?php echo form_dropdown('department', $prodies,$data->department,'class="department"'); ?></div>
 			</li>
-			
+			<?php if($this->method == 'edit'): ?>
+			<li>
+				<label for="pa"><?php echo lang('yudisium_pa')?></label>
+				<div class="input"><?php echo form_dropdown('pa',$lectures,$data->pa); ?></div>
+			</li>
+			<?php else : ?>
 			<li>
 				<label for="pa"><?php echo lang('yudisium_pa')?></label>
 				<div class="input"><?php echo form_dropdown('pa',$lectures,$data->lecture); ?></div>
 			</li>
+			<?php endif; ?>
 			<li class="even">
 				<label for="religion"><?php echo lang('yudisium_religion')?></label>
 				<div class="input"><?php echo form_dropdown('religion',$religions,$data->religion); ?></div>
