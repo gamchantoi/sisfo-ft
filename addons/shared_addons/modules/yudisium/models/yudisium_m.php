@@ -333,7 +333,7 @@ class Yudisium_m extends MY_Model {
     function get_decree_dy($bln,$thn)
 	{
 	    $bt= $bln."-".$thn;
-	    $result = $this->db->where("DATE_FORMAT(`datei` , '%M-%Y' )=",$bt)->get('decree')->row();
+	    $result = $this->db->where("DATE_FORMAT(`date` , '%M-%Y' )=",$bt)->get('decree')->row();
 	    return $result->number;  
 	}
     
