@@ -118,7 +118,7 @@
 		<fieldset>
 		<ul>
 			<li>
-				<label for="graduation"><?php echo lang('yudisium_graduation')?></label>
+				<label for="graduation"><?php echo lang('yudisium_graduation')?> (Sesuai DHS)</label>
 				<div class="input datetime_input">
 				<?php echo form_input('graduation',$data->graduation,'id="graduation"'); ?>
 				<label for="ipk"><?php echo lang('yudisium_ipk')?></label>
@@ -145,7 +145,7 @@
 				<label for="start"><?php echo lang('yudisium_start')?></label>
 				<div class="input datetime_input">
 				<?php echo form_input('start',$data->start,'id="d_start"'); ?>
-				<label for="finish"><?php echo lang('yudisium_finish')?></label>
+				<label for="finish"><?php echo lang('yudisium_finish')?> (ACC Laporan)</label>
 				<?php echo form_input('finish',$data->finish,'id="d_finish"'); ?>
 				</div>
 			</li>

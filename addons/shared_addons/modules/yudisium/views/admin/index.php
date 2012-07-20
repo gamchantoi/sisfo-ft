@@ -4,6 +4,14 @@
     $(".cetak").printPage();
   });
 </script>
+
+<section class="title">
+	<h4>WARNING</h4>
+</section>
+<section class="item">
+  <div>
+  </div>
+</section>
 <section class="title">
 	<h4><?php echo lang('yudisium_title'); ?></h4>
 </section>

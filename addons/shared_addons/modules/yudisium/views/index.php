@@ -160,7 +160,7 @@
 						<?php echo form_input('start','','id="start"'); ?>
 					</div>
 					<div>
-						<label for="finish"><?php echo lang('yudisium_finish')?></label>
+						<label for="finish"><?php echo lang('yudisium_finish')?> (ACC Laporan)</label>
 						<?php echo form_input('finish','','id="finish"'); ?>
 					</div>
 					<div>

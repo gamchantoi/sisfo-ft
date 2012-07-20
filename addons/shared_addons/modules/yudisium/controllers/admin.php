@@ -750,7 +750,7 @@ class Admin extends Admin_Controller {
 	    $_tanggal= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
 	    $array = array('tanggal'=>$tgl,'bulan'=> $bln,'tahun' => $thn);
-	    ret
+	    
 	}
 	
 	//function view attch table
