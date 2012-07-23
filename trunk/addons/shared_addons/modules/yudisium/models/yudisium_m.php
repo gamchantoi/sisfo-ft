@@ -30,6 +30,25 @@ class Yudisium_m extends MY_Model {
 	return $result->rerata;
     }
     
+    function get_stage($nim)
+	{
+	    /**
+	    $this->db->select("RIGHT (`x`, '2) AS `stage`")
+	    ->where('nim',$nim);
+	    $result = $this->db->get('college')->row();
+	    return $result->stage; **/
+	    $query = $this->db->query("SELECT RIGHT (`x`,2) AS stage FROM `default_college` WHERE nim='".$nim."'");
+	    $row   = $query->row();
+	    return $row->stage;
+	}
+	
+    function antidatir($date)
+	{
+	    $this->db->from('default_yudisium')
+	    ->where('yudisium_date',$date)
+	    ->where('antidatir','1');
+	    return $this->db->count_all_results();
+	}
     function count_cum_s1($where)
 	{
 	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
