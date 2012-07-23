@@ -402,9 +402,17 @@ class Admin extends Admin_Controller {
 			margin-left: auto;
 			margin-right: auto;
 			}
+		    thead
+		    {
+			display:  table-header-group;    
+		    }
+		    tbody {
+		    display: table-row-group;
+		    }
+
 		    table.gridtable {
 			font-family: verdana,arial,sans-serif;
-			font-size:7px;
+			font-size:8px;
 			color:#333333;
 			border-width: 1px;
 			border-color: #666666;
@@ -461,6 +469,14 @@ class Admin extends Admin_Controller {
 			margin-left: auto;
 			margin-right: auto;
 			}
+		    thead
+		    {
+			display:  table-header-group;    
+		    }
+		    tbody {
+		    display: table-row-group;
+		    }
+
 		    table.header{
 			width: 595px;			
 		    }
@@ -704,18 +720,25 @@ class Admin extends Admin_Controller {
 	    $i			= 1;
 	    $style  = $this->style_report($bln,$thn);
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
+	    $table .= "<thead>";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
 	    $table .= "<tr><td colspan=3><br></td></tr>";
+	    $table .= "<thead>";
 	    $table .= "</tabel>";
 	    $table .= "<table  class='gridtable' >";
+	    $table .= "<thead>";
 	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
+    
 	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    $table .= "</thead>";
+	    $table .= "<tbody>";
 	    foreach ($data as $d)
 	    {
 		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
+	    $table .= "</tbody>";
 	    $table .= "</table>";
 	    $sign   = $this->sign();
 	    $legend = $this->legend();
@@ -737,20 +760,25 @@ class Admin extends Admin_Controller {
 	    
 	    $style  = $this->style_report($bln,$thn);
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\" cellpadding=4>";
+	    $table .= "<thead>";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
 	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA S1<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
 	    $table .= "<tr><td colspan=3><br></td></tr>";
+	    $table .= "</thead>";
 	    $table .= "</tabel>";
 	    $table .= "<table  class='gridtable' >";
+	    $table .= "<thead>";
 	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
 	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    $table .= "</thead>";
+	    $table .= "<tbody>";
 	    foreach ($data as $d)
 	    {
 		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		//$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".trim($this->get_dpt($d->nim))."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
-	    
+	    $table .= "</tbody>";
 	    $table .= "</table>";
 	    $sign   = $this->sign();
 	    $legend = $this->legend();
@@ -819,12 +847,16 @@ class Admin extends Admin_Controller {
 		$i      = 1;
 		$table  = $this->attch_header($date,$thesis,$logo);
 		$table .= "<table class='gridtable' border=\"1px\">";
+		$table .= "<thead>";
 		$table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th>SKS</th><th>IPK</th><th>PREDIKAT</th></tr>";
+		$table .= "</thead>";
+		$table .= "<tbody>";
 		foreach ($data as $d)
 		{
 		    $table .= "<tr><td>$i</td><td>".(string)$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td></tr>";
 		    $i++;
-		}    
+		}
+		$table .= "<tbody>";
 		$table .= "</table>";
 	    }else{
 		$table =  "Data Tidak tersedia";
@@ -866,14 +898,18 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td colspan=3><br></td></tr>";
 	    $table .= "</tabel>";
 	    $table .= "<table  class='gridtable' border=\"1px\">";
+	    $table .= "<thead>";
 	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
 	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    $table .= "</thead>";
+	    $table .= "<tbody>";
 	    foreach ($data as $d)
 	    {
 		//$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$d->yudisium_date."</td><td>".$d->nim."</td><td>".$d->yudisium_date."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$d->date_of_birth."</td></tr>";
 		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
-	    }    
+	    }
+	    $table .= "</tbody>";
 	    $table .= "</table>";
 	    }else{
 		$table = 'Maaf Data Tidak tersedia';
@@ -1016,6 +1052,13 @@ class Admin extends Admin_Controller {
                         margin-left: auto;
                         margin-right: auto;
                         }
+		    thead {
+			display: table-header-group;
+			}
+
+		    tbody {
+			display: table-row-group;
+		    }
                     table.header{
                         width: 595px;                   
                     }
@@ -1089,12 +1132,16 @@ class Admin extends Admin_Controller {
 		$table  = $this->style_present('Presensi',$bln,$thn);
                 $table .= $this->present_header($tgl,$bln,$thn,$thesis,'no');
                 $table .= "<table class='gridtable' border=\"1px\">";
+		$table .= "<thead>";
                 $table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th colspan=2>TANDA TANGAN</th></tr>";
+		$table .= "</thead>";
+		$table .= "<tbody>";
                 foreach ($data as $d)
                 {
                     $table .= "<tr><td>$i</td><td>".(string)$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td>".$this->odd_even($i)."</tr>";
                     $i++;
-                }    
+                }
+		$table .= "</tbody>";
                 $table .= "</table>";
 		$table .= $this->sign();
 		$table .= "<br>";
