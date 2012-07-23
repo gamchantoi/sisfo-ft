@@ -18,6 +18,14 @@ function count_yudisium_by($tgl,$thesis)
         $count = $ci->yudisium_m->count_yudis_by($parrams);
         return $count;
     }
+    
+function get_antidatir($tgl)
+    {
+        $ci =& get_instance();
+        $ci->load->model('yudisium_m');
+        $result = $ci->yudisium_m->antidatir($tgl);
+        return $result;
+    }
 /**    
 function export_xls($date,$thesis)
     {

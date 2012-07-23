@@ -186,13 +186,14 @@ class Admin extends Admin_Controller {
 		$data = $this->ym->limit($pagination['limit'])->get_many_by($base_where);
 		//do we need to unset the layout because the request is ajax?
 		$this->input->is_ajax_request() ? $this->template->set_layout(FALSE) : '';
-		
+		$yudis = $this->ym->get_yudisium();
 		$this->template
 			->title($this->module_details['name'])
 			->append_js('admin/filter.js')
 			->append_js('module::jquery.printPage.js')
 			->append_js('module::jquery.qtip.js')
 			->append_css('module::jquery.qtip.css')
+			->set('yudisium',$yudis)
 			->set('base_where',$base_where)
 			->set('pagination', $pagination)
 			->set('data', $data);
@@ -424,6 +425,27 @@ class Admin extends Admin_Controller {
 			border-color: #666666;
 			background-color: #ffffff;
 					}
+		    table.legend{
+			font-family: verdana,arial,sans-serif;
+                        font-size:9px;
+                        color:#333333;
+                        border-width: 1px;
+                        border-color: #666666;
+                        border-collapse: collapse;
+                        width: 595px;
+			text-align:center; 
+			margin-left:auto; 
+			margin-right:auto; 
+			
+		    }
+		    table.legend td {
+                        border-width: 1px;
+                        padding: 3px;
+                        border-style: solid;
+                        border-color: #666666;
+                        background-color: #ffffff;
+			font-size:9px;
+                        }
 		</style>";
 	    return $style;
 	}
@@ -471,6 +493,27 @@ class Admin extends Admin_Controller {
 			border-color: #666666;
 			background-color: #ffffff;
 			}
+		    table.legend{
+			font-family: verdana,arial,sans-serif;
+                        font-size:9px;
+                        color:#333333;
+                        border-width: 1px;
+                        border-color: #666666;
+                        border-collapse: collapse;
+                        width: 595px;
+			text-align:center; 
+			margin-left:auto; 
+			margin-right:auto; 
+			
+		    }
+		    table.legend td {
+                        border-width: 1px;
+                        padding: 3px;
+                        border-style: solid;
+                        border-color: #666666;
+                        background-color: #ffffff;
+			font-size:9px;
+                        }
 		</style>";
 		return $style;
 	}
@@ -531,7 +574,7 @@ class Admin extends Admin_Controller {
 	    echo $style;
 	    echo $table;
 	    echo "<hr>";
-	    echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani Wakil I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES / OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
+	    echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani Wakil Dekan I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES / OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
 	    echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
 	    $this->ym->update($id,array('printed' => '1'));
 	    $this->ym->add_print($id,'4');
@@ -674,8 +717,12 @@ class Admin extends Admin_Controller {
 		$i++;
 	    }
 	    $table .= "</table>";
+	    $sign   = $this->sign();
+	    $legend = $this->legend();
 	    echo $style;
 	    echo $table;
+	    echo $sign;
+	    echo $legend;
 	}
 	
 	//fungsi cetak rekap peserta yudisium S1
@@ -687,6 +734,7 @@ class Admin extends Admin_Controller {
 	    //$basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
+	    
 	    $style  = $this->style_report($bln,$thn);
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\" cellpadding=4>";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
@@ -699,12 +747,17 @@ class Admin extends Admin_Controller {
 	    foreach ($data as $d)
 	    {
 		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
+		//$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".trim($this->get_dpt($d->nim))."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
 	    
 	    $table .= "</table>";
+	    $sign   = $this->sign();
+	    $legend = $this->legend();
 	    echo $style;
 	    echo $table;
+	    echo $sign;
+	    echo $legend;
 	}
 	
     public function attch_header($date,$thesis,$logo)
@@ -867,8 +920,12 @@ class Admin extends Admin_Controller {
 	    list($thn,$bln,$tgl) = explode("-",$date);
 	    $table = $this->attach_table($date,$thesis,'yes');
 	    $style = $this->style_table('Cetak Lampiran SK Dekan Yudisium',$bln,$thn);
+	    $legend= $this->legend();
+	    $dekan = $this->dekan();
 	    echo $style;
 	    echo $table;
+	    echo $dekan;
+	    echo $legend;
 	}
 	
 	//fungsi cetak lampiran sk dekan mahasiswa d3
@@ -1243,6 +1300,17 @@ class Admin extends Admin_Controller {
 	    $sign	.= "<tr><td><br></td></tr>";
 		//$sign	.= "<tr><td></td></tr>";
 	    $sign	.= "<tr><td align=\"center\">Dr. Sunaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
+	    $sign	.= "</table>";
+	    return $sign;
+	}
+	
+    public function dekan()
+	{
+	    $sign 	 = "<table  align=\"center\">";
+	    $sign	.= "<tr><td align=\"center\"><br>Dekan, </td></tr>";
+	    $sign	.= "<tr><td><br></td></tr>";
+		//$sign	.= "<tr><td></td></tr>";
+	    $sign	.= "<tr><td align=\"center\">Dr. Moch Bruri Triyono <br />NIP. 19560216 198603 1 003</td></tr>";
 	    $sign	.= "</table>";
 	    return $sign;
 	}
@@ -1639,6 +1707,7 @@ class Admin extends Admin_Controller {
 	    $split = explode ('-',$prodies->x);
 	    $nama  = $split[0];
 	    $stage = $split[1];
+	    //$stage = $this->ym->get_stage($nim);
 	    return $stage;
 	}
 	
