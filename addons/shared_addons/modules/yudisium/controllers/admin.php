@@ -412,22 +412,22 @@ class Admin extends Admin_Controller {
 
 		    table.gridtable {
 			font-family: verdana,arial,sans-serif;
-			font-size:8px;
+			font-size:9px;
 			color:#333333;
-			border-width: 1px;
+			border-width: 2px;
 			border-color: #666666;
 			border-collapse: collapse;
 			width: 842px;			
 			}
 		    table.gridtable th {
-			border-width: 1px;
+			border-width: 2px;
 			padding: 6px;
 			border-style: solid;
 			border-color: #666666;
 			background-color: #dedede;
 			}
 		    table.gridtable td {
-			border-width: 1px;
+			border-width: 2px;
 			padding: 5px;
 			border-style: solid;
 			border-color: #666666;
@@ -437,7 +437,7 @@ class Admin extends Admin_Controller {
 			font-family: verdana,arial,sans-serif;
                         font-size:9px;
                         color:#333333;
-                        border-width: 1px;
+                        border-width: 2px;
                         border-color: #666666;
                         border-collapse: collapse;
                         width: 595px;
@@ -447,7 +447,7 @@ class Admin extends Admin_Controller {
 			
 		    }
 		    table.legend td {
-                        border-width: 1px;
+                        border-width: 2px;
                         padding: 3px;
                         border-style: solid;
                         border-color: #666666;
@@ -464,7 +464,7 @@ class Admin extends Admin_Controller {
 	    $style		="<title>".$title." ".$bln." ".$thn."</title>
 		<style type=\"text/css\" >
 		    body {
-			width: 595px;
+			width: 800px;
 			height:842px;
 			margin-left: auto;
 			margin-right: auto;
@@ -478,10 +478,10 @@ class Admin extends Admin_Controller {
 		    }
 
 		    table.header{
-			width: 595px;			
+			 width: 595px; 			
 		    }
 		    table.header th{
-			font-size:15px;
+			font-size:16px;
 		    }
 		    table.header td{
 			font-size:11px;
@@ -490,20 +490,20 @@ class Admin extends Admin_Controller {
 			font-family: verdana,arial,sans-serif;
 			font-size:12px;
 			color:#333333;
-			border-width: 1px;
+			border-width: 2px;
 			border-color: #666666;
 			border-collapse: collapse;
-			width: 595px;			
+			/** width: 595px; **/	
 			}
 		    table.gridtable th {
-			border-width: 1px;
+			border-width: 2px;
 			padding: 6px;
 			border-style: solid;
 			border-color: #666666;
 			background-color: #dedede;
 			}
 		    table.gridtable td {
-			border-width: 1px;
+			border-width: 2px;
 			padding: 5px;
 			border-style: solid;
 			border-color: #666666;
@@ -513,7 +513,7 @@ class Admin extends Admin_Controller {
 			font-family: verdana,arial,sans-serif;
                         font-size:9px;
                         color:#333333;
-                        border-width: 1px;
+                        border-width: 2px;
                         border-color: #666666;
                         border-collapse: collapse;
                         width: 595px;
@@ -523,7 +523,7 @@ class Admin extends Admin_Controller {
 			
 		    }
 		    table.legend td {
-                        border-width: 1px;
+                        border-width: 2px;
                         padding: 3px;
                         border-style: solid;
                         border-color: #666666;
@@ -660,6 +660,23 @@ class Admin extends Admin_Controller {
 			margin-left: auto;
 			margin-right: auto;
 			}
+			table.legend{
+			font-family: verdana,arial,sans-serif;
+                        font-size:9px;
+                        color:#333333;
+                        border-width: 1px;
+                        border-color: #666666;
+                        border-collapse: collapse;
+                        width: 595px; 
+		    }
+		    table.legend td {
+                        border-width: 1px;
+                        padding: 3px;
+                        border-style: solid;
+                        border-color: #666666;
+                        background-color: #ffffff;
+			font-size:9px;
+                        }
 			tr.yellow td {
 			    border: 1px solid #000000;
 			    font-size:60%;
@@ -687,7 +704,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr class='smaller'><td colspan=3 align='right' valign=\"top\">8.</td><td style=\"padding-left: 10px; \">Keputusan Rektor Universitas Negeri Yogyakarta : <br>a. Nomor 207 Tahun 2000; &nbsp;&nbsp;&nbsp;c. Nomor 297 Tahun 2006 <br>b. Nomor 303 Tahun 2000; &nbsp;&nbsp;&nbsp;d. Nomor: 1160/UN34/KP/2011</td></tr>";
 	    $table .= "</table>";
 	    $table .= "<table>";
-	    $table .= "<tr><td colspan=4 align='center'><b>MEMUTUSKAN</b></td></tr>";
+	    $table .= "<tr><td colspan=5 align='center'><b>MEMUTUSKAN</b></td></tr>";
 	    $table .= "<tr class='smaller'><td>Menetapkan</td><td>:</td><td colspan=4></td></tr>";
 	    $table .= "<tr class='smaller'><td valign='top'>Pertama</td><td valign='top'>:</td><td></td><td colspan=2>Yudisium Mahasiswa Program Diploma-3 (D-3) dan Strata-1 (S-1) Fakultas Teknik Universitas Negeri Yogyakarta Periode yang nama-namanya seperti tersebut pada lampiran 1 dan lampiran 2 Keputusan ini.</td></tr>";
 	    $table .= "<tr class='smaller'><td valign='top'>Kedua</td><td valign='top'>:</td><td></td><td colspan=2>Mahasiswa yang namanya seperti tersebut pada diktum Pertama tersebut di atas berhak mengikuti wisuda dalam Upacara Wisuda Universitas Negeri Yogyakarta sesuai dengan ketentuan yang berlaku.</td></tr>";
@@ -697,17 +714,20 @@ class Admin extends Admin_Controller {
 	    $table .= "<table>";
 	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \">Ditetapkan di :  Yogyakarta</td></tr>";
 	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><u>Pada tanggal : ".tanggal($date)." </u></td></tr>";
-	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><img src=\"".base_url().$this->module_details['path']."/img/brur.gif\" height=\"50px\"><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
+	    //$table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><img src=\"".base_url().$this->module_details['path']."/img/brur.gif_\" height=\"50px\"><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
+	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><br><br><br><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
 	    $table .= "<tr class='smaller'><td colspan=2>Tembusan Yth. :</td></tr>";
 	    $table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td><td style=\"padding-left: 190px; \">7. Kasubag Registrasi dan Statistik<br>8. Para Pembantu Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
 	    $table .= "</table>";
 	    
-	    $table .= "<table>";
-	    $table .= "<tr class='yellow'><td width='70px' valign='top'>Dibuat Oleh :<br><br> &nbsp;</td><td align='center' valign='top'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh<br><br>&nbsp;</td></tr>";
 	    //$table .= "<table>";
-	    $table .= "</table>";
+	    //$table .= "<tr class='yellow'><td width='70px' valign='top'>Dibuat Oleh :<br><br> &nbsp;</td><td align='center' valign='top'>Dilarang memperbanyak sebagian atau seluruh isi document tanpa ijin tertulis dari Fakultas Teknik Universitas Negeri Yogyakarta</td><td width='70px' valign='top'>Diperiksa Oleh<br><br>&nbsp;</td></tr>";
+	    //$table .= "<table>";
+	    //$table .= "</table>";
+	    $legend  = $this->legend();
 	    echo $style;
-	    echo $table;			
+	    echo $table."<br>";
+	    echo $legend;
 	}
     
 	//fungsi cetak rekap peserta yudisium D3
@@ -740,7 +760,7 @@ class Admin extends Admin_Controller {
 	    }
 	    $table .= "</tbody>";
 	    $table .= "</table>";
-	    $sign   = $this->sign();
+	    $sign   = $this->sign("600");
 	    $legend = $this->legend();
 	    echo $style;
 	    echo $table;
@@ -780,7 +800,7 @@ class Admin extends Admin_Controller {
 	    }
 	    $table .= "</tbody>";
 	    $table .= "</table>";
-	    $sign   = $this->sign();
+	    $sign   = $this->sign("600");
 	    $legend = $this->legend();
 	    echo $style;
 	    echo $table;
@@ -816,10 +836,11 @@ class Admin extends Admin_Controller {
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Lampiran $lamp Keputusan Dekan</td></tr>";
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Fakultas Teknik Universitas Negeri Yogyakarta</td></tr>";
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Nomor: ".$this->ym->get_decree_num($date)." Tahun $thn</td></tr>";
-	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Tanggal</td></tr>";
+	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Tanggal ".$_tanggal."</td></tr>";
 	    $header .= "<tr><td colspan=3><br /></td></tr>";
-	    $header .= "<tr><th align=\"center\" colspan=3><b>DAFTAR NAMA MAHASISWA $stage FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA</b></th></tr>";
-	    $header .= "<tr><th align=\"center\" colspan=3><b> PESERTA YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</b></th></tr>";
+	    $header .= "<tr><th align=\"center\" colspan=3><b>DAFTAR NAMA PESERTA YUDISIUM MAHASISWA $stage </b></th></tr>";
+	    $header .= "<tr><th align=\"center\" colspan=3><b>FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA</b></th></tr>";
+	    $header .= "<tr><th align=\"center\" colspan=3><b> PERIODE ".strtoupper($bln)."  ".$thn."</b></th></tr>";
 	    $header .= "<tr><th align=\"center\" colspan=3><br /></th></tr>";
 	    $header .= "</tabel>";
 	    
@@ -960,7 +981,7 @@ class Admin extends Admin_Controller {
 	    $dekan = $this->dekan();
 	    echo $style;
 	    echo $table;
-	    echo $dekan;
+	    echo $dekan."<br>";
 	    echo $legend;
 	}
 	
@@ -1122,7 +1143,7 @@ class Admin extends Admin_Controller {
 	}
     public function present_table($date,$thesis)
 	{
-	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'orderdesc' => 'department');
+	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'orderasc' => 'department');
             $data       = $this->ym->get_many_by($parrams);
             $_tanggal   = tanggal($date);
             list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -1331,7 +1352,7 @@ class Admin extends Admin_Controller {
 		if($man1 < $man2) : $ketman = "NAIK"; elseif($man1 == $man2): $ketman ="TETAP"; else : $ketman = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>MAN DLL</td><td>$man1</td><td>$man2</td><td>$ketman</td></tr>";
 		$table 	.= "</table>";
-		$sign 	 = $this->sign();
+		$sign 	 = $this->sign("500");
 		$legend  = $this->legend();
 		
 		echo $style.$header.$table.$sign."<br>".$legend;
@@ -1340,24 +1361,24 @@ class Admin extends Admin_Controller {
 	    }
 	}
 	
-    public function sign()
+    public function sign($width)
 	{
-	    $sign 	 = "<table  align=\"center\">";
-	    $sign	.= "<tr><td align=\"center\"><br>Wakil Dekan I</td></tr>";
+	    $sign 	 = "<table>";
+	    $sign	.= "<tr><td width=\"".$width."px\"></td><td align=\"left\"><br>Wakil Dekan I</td></tr>";
 	    $sign	.= "<tr><td><br></td></tr>";
 		//$sign	.= "<tr><td></td></tr>";
-	    $sign	.= "<tr><td align=\"center\">Dr. Sunaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
+	    $sign	.= "<tr><td width=\"".$width."px\"></td><td align=\"left\">Dr. Sunaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
 	    $sign	.= "</table>";
 	    return $sign;
 	}
 	
     public function dekan()
 	{
-	    $sign 	 = "<table  align=\"center\">";
-	    $sign	.= "<tr><td align=\"center\"><br>Dekan, </td></tr>";
-	    $sign	.= "<tr><td><br></td></tr>";
+	    $sign 	 = "<table>";
+	    $sign	.= "<tr><td width=\"500px\"></td><td align=\"left\"><br>Dekan, </td><td  width=\"30\"></td></tr>";
+	    $sign	.= "<tr><td><br></td><td></td></tr>";
 		//$sign	.= "<tr><td></td></tr>";
-	    $sign	.= "<tr><td align=\"center\">Dr. Moch Bruri Triyono <br />NIP. 19560216 198603 1 003</td></tr>";
+	    $sign	.= "<tr><td width=\"500px\"></td><td align=\"left\">Dr. Moch Bruri Triyono <br />NIP. 19560216 198603 1 003</td><td width=\"30\"></td></tr>";
 	    $sign	.= "</table>";
 	    return $sign;
 	}
@@ -1769,7 +1790,7 @@ class Admin extends Admin_Controller {
 		{
 		    if($ipk <= 4.0 && $ipk >= 3.51)
 		    {
-			$predicate = 'Cumlaude';
+			$predicate = 'Dengan Pujian';
 		    }
 		    if($ipk >= 2.76  && $ipk <= 3.50)
 		    {
@@ -1803,7 +1824,7 @@ class Admin extends Admin_Controller {
 			{
 			    $predicate = 'Sangat Memuaskan';
 			}else{
-			    $predicate = 'Cumlaude';   
+			    $predicate = 'Dengan Pujian';   
 			}
 		    }
 		    if($ipk >= 2.76  && $ipk <= 3.50)
