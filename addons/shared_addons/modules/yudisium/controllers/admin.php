@@ -1186,7 +1186,7 @@ class Admin extends Admin_Controller {
                 }
 		$table .= "</tbody>";
                 $table .= "</table>";
-		$table .= $this->sign();
+		$table .= $this->sign("500");
 		$table .= "<br>";
 		$table .= $this->legend();
             }else{
