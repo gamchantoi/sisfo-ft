@@ -1071,6 +1071,16 @@ class Admin extends Admin_Controller {
 	    $header    .= "</table>";
 	    return $header;
 	}
+    public function receipt_header($bln,$thn)
+	{
+	    $header	= "<table align=\"center\">";
+	    $header    .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"></td><td align=\"center\"><b>FAKULTAS TEKNIK <br /> UNIVERSITAS NEGERI YOGYAKARTA<br/></b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
+	    $header    .= "<tr><td align=\"center\" colspan=3></td></tr>";
+	    $header    .= "<tr><td align=\"center\" colspan=3><b>DAFTAR PENERIMAAN SURAT KEPUTUSAN DEKAN FAKULTAS TEKNIK UNY TENTANG YUDISIUM MAHASISWA S1 DAN D3 PERIODE ".strtoupper($bln)." ".$thn."</b></td></tr>";
+	    $header    .= "<tr><td align=\"center\" colspan=3></td></tr>";
+	    $header    .= "</table>";
+	    return $header;
+	}
 	
     public function odd_even($i)
 	{
@@ -1194,6 +1204,39 @@ class Admin extends Admin_Controller {
             }
             return $table;
 	}
+	
+    public function present_receipt_table($date)
+	{
+	    $parrams 	= array('yudisium_date'=>$date ,'orderasc' => 'department');
+            $data       = $this->ym->get_many_by($parrams);
+            $_tanggal   = tanggal($date);
+            list($tgl,$bln,$thn) = explode(" ",$_tanggal);
+            if($data)
+            {
+                $i      = 1;
+		$table  = $this->style_present('Presensi',$bln,$thn);
+		$table .= $this->receipt_header($bln,$thn);
+                //$table .= $this->present_header($tgl,$bln,$thn,$thesis,'no');
+                $table .= "<table class='gridtable' border=\"1px\">";
+		$table .= "<thead>";
+                $table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th colspan=2>TANDA TANGAN</th></tr>";
+		$table .= "</thead>";
+		$table .= "<tbody>";
+                foreach ($data as $d)
+                {
+                    $table .= "<tr><td>$i</td><td>".(string)$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td>".$this->odd_even($i)."</tr>";
+                    $i++;
+                }
+		$table .= "</tbody>";
+                $table .= "</table>";
+		$table .= $this->sign("350");
+		$table .= "<br>";
+		$table .= $this->legend();
+            }else{
+                $table =  "Data Tidak tersedia";
+            }
+            return $table;
+	}
     
     public function present_xls($date,$thesis)
 	{
@@ -1225,6 +1268,14 @@ class Admin extends Admin_Controller {
 	{
 	    return $this->present_xls($date,'D3');
 	}
+	
+    public function present_receipt($date)
+	{
+	    $style = $this->style_present("","","");
+	    $table = $this->present_receipt_table($date);
+	    echo $style.$table;
+	}
+	
 	
     public function data_yudisium()
 	{
