@@ -859,7 +859,7 @@ class Admin extends Admin_Controller {
     public function attach_table($date,$thesis,$logo)
 	{
 	    //$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'orderasc' => 'department');
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'orderasc' => 'department', 'orderdesc' => 'ipk');
 	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -885,6 +885,28 @@ class Admin extends Admin_Controller {
 	    return $table;
 	}
 	
+    public function export_all_data($date)
+	{
+	    $parrams = array('yudisium_date' => $date);
+	    $data   = $this->ym->get_many_by($parrams);
+	    $i =1;
+	    $table  = "<table  class='gridtable' border=\"1px\">";
+	    $table .= "<thead>";
+	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th><th rowspan=\"2\">tmp lhr</th><th  rowspan=\"2\">tgl lhr</th><th  rowspan=\"2\">alamat</th><th  rowspan=\"2\">orangtua</th><th  rowspan=\"2\">Judul TA</th></tr>";
+	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    $table .= "</thead>";
+	    $table .= "<tbody>";
+	    foreach ($data as $d)
+	    {
+		//$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$d->yudisium_date."</td><td>".$d->nim."</td><td>".$d->yudisium_date."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$d->date_of_birth."</td></tr>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td><td>".$d->place_of_birth."</td><td>".$d->date_of_birth."</td><td>".$d->address."</td><td>".$d->parrent."</td><td>".$d->thesis_title."</td></tr>";
+		$i++;
+	    }
+	    $table .= "</tbody>";
+	    $table .= "</table>";
+	    $excel	= new ExportToExcel();
+	    $excel->exportWithPage($table,"Rekap-data-yudisium-all.xls");
+	}
 	// function view export table
     public function export_table($date,$thesis)
 	{
