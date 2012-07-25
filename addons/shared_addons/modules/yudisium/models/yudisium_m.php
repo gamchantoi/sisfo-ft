@@ -368,13 +368,13 @@ class Yudisium_m extends MY_Model {
 		{
 		    $this->db->where('yudisium_date',$params['yudisium_date']);
 		}
-		if(!empty($params['orderdesc']))
-		{
-		    $this->db->order_by($params['orderdesc'],'DESC');
-		}
 		if(!empty($params['orderasc']))
 		{
 		    $this->db->order_by($params['orderasc'],'ASC');
+		}
+		if(!empty($params['orderdesc']))
+		{
+		    $this->db->order_by($params['orderdesc'],'DESC');
 		}
 		if(!empty($params['group']))
 		{
