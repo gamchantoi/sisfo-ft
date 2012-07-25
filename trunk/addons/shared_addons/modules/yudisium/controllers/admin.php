@@ -773,7 +773,7 @@ class Admin extends Admin_Controller {
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'orderdesc' => 'ipk','orderasc'=>'department');
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'orderdesc' => 'ipk','orderasc'=>'department');
 	    //$basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
