@@ -755,14 +755,15 @@ class Admin extends Admin_Controller {
 	    $table .= "</tabel>";
 	    $table .= "<table  class='gridtable' >";
 	    $table .= "<thead>";
-	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
-    
-	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA th/bl/hr</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
+	    $table .= "<tr><td>Sm</td><td>Th/bl/hr</td></tr>";
 	    $table .= "</thead>";
 	    $table .= "<tbody>";
 	    foreach ($data as $d)
 	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td>";
+		$datein = $this->get_year($d->nim)."-09-01";
+		$table .= "<td>".tanggal($datein)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td>";
 		$semester =$this->get_sem_wc($d->nim,$d->yudisium_date,$d->vacation);
 		$vacation = intval($d->vacation);
 		if ($d->vacation == 0 )
@@ -775,7 +776,10 @@ class Admin extends Admin_Controller {
 		    $sem = $semester;
 		}
 		
-		$table .= "<td>".$sem."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
+		$table .= "<td>".$sem."</td>";
+		//$table .= "<td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td>";
+		$table .= "<td>".$this->periode($d->nim,$d->yudisium_date,$d->vacation)."</td>";
+		$table .= "<td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
 	    $table .= "</tbody>";
@@ -808,13 +812,15 @@ class Admin extends Admin_Controller {
 	    $table .= "</tabel>";
 	    $table .= "<table  class='gridtable' >";
 	    $table .= "<thead>";
-	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
-	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
+	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA th/bl/hr</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th></tr>";
+	    $table .= "<tr><td>Sm</td><td>Th/bl/hr</td></tr>";
 	    $table .= "</thead>";
 	    $table .= "<tbody>";
 	    foreach ($data as $d)
 	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td>";
+		$datein = $this->get_year($d->nim)."-09-01";
+		$table .= "<td>".tanggal($datein)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td>";
 		$semester =$this->get_sem_wc($d->nim,$d->yudisium_date,$d->vacation);
 		$vacation = intval($d->vacation);
 		if ($d->vacation == 0 )
@@ -826,7 +832,11 @@ class Admin extends Admin_Controller {
 		    
 		    $sem = $semester;
 		}
-		$table .= "<td>".$sem."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
+		
+		$table .= "<td>".$sem."</td>";
+		//$table .= "<td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td>";
+		$table .= "<td>".$this->periode($d->nim,$d->yudisium_date,$d->vacation)."</td>";
+		$table .= "<td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
 	    $table .= "</tbody>";
@@ -1966,4 +1976,60 @@ class Admin extends Admin_Controller {
 	    }
 	return $predicate;
 	}
+	
+    public function periode($nim,$yudisium,$cuti)
+	{
+	    $year= $this->get_year($nim);
+	    $d1		= $year."-09-01";
+	    switch($cuti)
+	    {
+		case "1" :
+		    $start	= $this->add_date($d1,0,6,0);
+		    $period	= $this->get_datediff($start,$yudisium);
+		    
+		    //$dateB = new DateTime($d1); 
+		    //$dateA = $dateB->sub(date_interval_create_from_date_string('6 months'));
+		    //$start = date_format($dateA, 'Y-m-d');
+
+		break;
+		case "2" :
+		    //$dateB = new DateTime($d1); 
+		    //$dateA = $dateB->sub(date_interval_create_from_date_string('12 months'));
+		    //$start = date_format($dateA, 'Y-m-d');
+		    $start	= $this->add_date($d1,1,0,0);
+		    //$period	= $this->get_datediff($start,$yudisium);
+		break;
+		case "3" :
+		    $start	= $this->add_date($d1,1,6,0);
+		    //$period	= $this->get_datediff($start,$yudisium);
+		    //$dateB = new DateTime($d1); 
+		    //$dateA = $dateB->sub(date_interval_create_from_date_string('18 months'));
+		    //$start = date_format($dateA, 'Y-m-d');
+		break;
+		case "4" :
+		    $start	= $this->add_date($d1,2,0,0);
+		    //$period	= $this->get_datediff($start,$yudisium);
+		    //$dateB = new DateTime($d1); 
+		    //$dateA = $dateB->sub(date_interval_create_from_date_string('24 months'));
+		    //$start = date_format($dateA, 'Y-m-d');
+		break;
+		default	 :
+		    $start	= $d1;
+		    //$period	= $this->get_datediff($start,$yudisium);
+		break;    
+		    
+	    }
+	    $period	= $this->get_datediff($start,$yudisium);
+	    return $period;
+	    
+	}
+	
+    public function add_date($givendate,$day=0,$mth=0,$yr=0)
+    {
+	$cd = strtotime($givendate);
+	$newdate = date('Y-m-d', mktime(date('h',$cd),
+	date('i',$cd), date('s',$cd), date('m',$cd)+$mth,
+	date('d',$cd)+$day, date('Y',$cd)+$yr));
+	return $newdate;
+    }
 }
