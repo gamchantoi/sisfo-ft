@@ -138,6 +138,11 @@ class Admin extends Admin_Controller {
 			    'rules' => 'trim'
 		    ),
 		    array(
+			    'field' => 'school',
+			    'label' => 'lang:yudisium_sma',
+			    'rules' => 'trim|required'
+		    ),
+		    array(
 			    'field' => 'phone',
 			    'label' => 'lang:yudisium_phone',
 			    'rules' => 'trim|required'
@@ -1396,34 +1401,34 @@ class Admin extends Admin_Controller {
 		$table  .= "<tr><td></td><td>MEMUASKAN</td><td>$good1</td><td>$good2</td><td>$ketgood</td></tr>";
 		
 		$table	.= "<tr><td><b>6</b></td><td><b>MASUK FT MELALUI</b></td><td></td><td></td><td></td></tr>";
-		$pbu1	 = $this->ym->count_by(array('yudisium_date'=>$start,'parrental' => 'PBU'));
-		$pbu2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'parrental' => 'PBU'));
+		$pbu1	 = $this->ym->count_yudis_by(array('yudisium_date'=>$start,'parrental' => 'PBU','thesis'=>$thesis));
+		$pbu2	 = $this->ym->count_yudis_by(array('yudisium_date'=>$finish,'parrental' => 'PBU','thesis'=>$thesis));
 		if($pbu1 < $pbu2) : $ketpbu = "NAIK"; elseif($pbu1 == $pbu2): $ketpbu ="TETAP"; else : $ketpbu = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>PBU</td><td>$pbu1</td><td>$pbu2</td><td>$ketpbu</td></tr>";
-		$utul1	 = $this->ym->count_by(array('yudisium_date'=>$start,'parrental' => 'UTUL'));
-		$utul2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'parrental' => 'UTUL'));
+		$utul1	 = $this->ym->count_yudis_by(array('yudisium_date'=>$start,'parrental' => 'UTUL','thesis'=>$thesis));
+		$utul2	 = $this->ym->count_yudis_by(array('yudisium_date'=>$finish,'parrental' => 'UTUL','thesis'=>$thesis));
 		if($utul1 < $utul2) : $ketutul = "NAIK"; elseif($utul1 == $utul2): $ketutul ="TETAP"; else : $ketutul = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>UTUL</td><td>$utul1</td><td>$utul2</td><td>$ketutul</td></tr>";
-		$pks1	 = $this->ym->count_by(array('yudisium_date'=>$start,'parrental' => 'PKS'));
-		$pks2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'parrental' => 'PKS'));
+		$pks1	 = $this->ym->count_yudis_by(array('yudisium_date'=>$start,'parrental' => 'PKS','thesis'=>$thesis));
+		$pks2	 = $this->ym->count_yudis_by(array('yudisium_date'=>$finish,'parrental' => 'PKS','thesis'=>$thesis));
 		if($pks1 < $pks2) : $ketpks = "NAIK"; elseif($pks1 == $pks2): $ketpks ="TETAP"; else : $ketpks = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>PKS</td><td>$pks1</td><td>$pks2</td><td>$ketpks</td></tr>";
 		
 		$table	.= "<tr><td><b>7</b></td><td><b>ASAL SEKOLAH</b></td><td></td><td></td><td></td></tr>";
-		$sma1	 = $this->ym->count_by(array('yudisium_date'=>$start,'school' => 'SMA'));
-		$sma2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'school' => 'SMA'));
+		$sma1	 = $this->ym->count_yudis_by(array('yudisium_date'=>$start,'school' => 'SMA','thesis'=>$thesis));
+		$sma2	 = $this->ym->count_yudis_by(array('yudisium_date'=>$finish,'school' => 'SMA','thesis'=>$thesis));
 		if($sma1 < $sma2) : $ketsma = "NAIK"; elseif($sma1 == $sma2): $ketsma ="TETAP"; else : $ketsma = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>SMA</td><td>$sma1</td><td>$sma2</td><td>$ketsma</td></tr>";
-		$smk1	 = $this->ym->count_by(array('yudisium_date'=>$start,'school' => 'SMK'));
-		$smk2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'school' => 'SMK'));
+		$smk1	 = $this->ym->count_yudis_by(array('yudisium_date'=>$start,'school' => 'SMK','thesis'=>$thesis));
+		$smk2	 = $this->ym->count_yudis_by(array('yudisium_date'=>$finish,'school' => 'SMK','thesis'=>$thesis));
 		if($smk1 < $smk2) : $ketsmk = "NAIK"; elseif($smk1 == $smk2): $ketsmk ="TETAP"; else : $ketsmk = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>SMK</td><td>$smk1</td><td>$smk2</td><td>$ketsmk</td></tr>";
-		$d31	 = $this->ym->count_by(array('yudisium_date'=>$start,'school' => 'D3'));
-		$d32	 = $this->ym->count_by(array('yudisium_date'=>$finish,'school' => 'D3'));
+		$d31	 = $this->ym->count_yudis_by(array('yudisium_date'=>$start,'school' => 'D3','thesis'=>$thesis));
+		$d32	 = $this->ym->count_yudis_by(array('yudisium_date'=>$finish,'school' => 'D3','thesis'=>$thesis));
 		if($d31 < $d32) : $ketd3 = "NAIK"; elseif($d31 == $d32): $ketd3 ="TETAP"; else : $ketd3 = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>DIII</td><td>$d31</td><td>$d32</td><td>$ketd3</td></tr>";
-		$man1	 = $this->ym->count_by(array('yudisium_date'=>$start,'school' => 'MAN DLL'));
-		$man2	 = $this->ym->count_by(array('yudisium_date'=>$finish,'school' => 'MAN DLL'));
+		$man1	 = $this->ym->count_yudis_by(array('yudisium_date'=>$start,'school' => 'MAN DLL','thesis'=>$thesis));
+		$man2	 = $this->ym->count_yudis_by(array('yudisium_date'=>$finish,'school' => 'MAN DLL','thesis'=>$thesis));
 		if($man1 < $man2) : $ketman = "NAIK"; elseif($man1 == $man2): $ketman ="TETAP"; else : $ketman = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>MAN DLL</td><td>$man1</td><td>$man2</td><td>$ketman</td></tr>";
 		$table 	.= "</table>";
@@ -1614,19 +1619,19 @@ class Admin extends Admin_Controller {
 		$table .= "<tr><td></td><td>PBU</td>";
 		foreach ($array_bulan as $thb)
 		{
-		    $table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PBU'))."</td>";
+		    $table .= "<td>".$this->ym->count_yudis_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PBU'))."</td>";
 		}
 		$table .= "</tr>";
 		$table .= "<tr><td></td><td>UTUL</td>";
 		foreach ($array_bulan as $thb)
 		{
-		    $table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'UTUL'))."</td>";
+		    $table .= "<td>".$this->ym->count_yudis_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'UTUL'))."</td>";
 		}
 		$table .= "</tr>";
 		$table .= "<tr><td></td><td>PKS</td>";
 		foreach ($array_bulan as $thb)
 		{
-		    $table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PKS'))."</td>";
+		    $table .= "<td>".$this->ym->count_yudis_by(array('yudisium_date' => $thb->yudisium_date,'parrental' => 'PKS'))."</td>";
 		}
 		$table .= "</tr>";
 		$table .= "<tr><td>7</td><td>ASAL SEKOLAH</td>";
@@ -1638,28 +1643,28 @@ class Admin extends Admin_Controller {
 		$table .= "<tr><td></td><td>SMA</td>";
 		foreach ($array_bulan as $thb)
 		{
-		    $table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'SMA'))."</td>";
+		    $table .= "<td>".$this->ym->count_yudis_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'SMA'))."</td>";
 		}
 		$table .= "</tr>";
 		
 		$table .= "<tr><td></td><td>SMK</td>";
 		foreach ($array_bulan as $thb)
 		{
-		    $table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'SMK'))."</td>";
+		    $table .= "<td>".$this->ym->count_yudis_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'SMK'))."</td>";
 		}
 		$table .= "</tr>";
 		
 		$table .= "<tr><td></td><td>DIII</td>";
 		foreach ($array_bulan as $thb)
 		{
-		    $table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'DIII'))."</td>";
+		    $table .= "<td>".$this->ym->count_yudis_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'DIII'))."</td>";
 		}
 		$table .= "</tr>";
 		$table .= "</tr>";
 		$table .= "<tr><td></td><td>MAN, DLL</td>";
 		foreach ($array_bulan as $thb)
 		{
-		    $table .= "<td>".$this->ym->count_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'MAN DLL'))."</td>";
+		    $table .= "<td>".$this->ym->count_yudis_by(array('yudisium_date' => $thb->yudisium_date,'school' => 'MAN DLL'))."</td>";
 		}
 		$table .= "</tr>";
 		$table .= "</table>";
