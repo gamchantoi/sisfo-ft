@@ -49,6 +49,12 @@ class Yudisium_m extends MY_Model {
 	    ->where('antidatir','1');
 	    return $this->db->count_all_results();
 	}
+    function error_data()
+	{
+	    $this->db->select('nim,name,graduation,yudisium_date')
+		->where('graduationi > yudisium_date');
+	    return $this->db->get('yudisium')->result();
+	}
     function count_cum_s1($where)
 	{
 	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
