@@ -762,7 +762,20 @@ class Admin extends Admin_Controller {
 	    $table .= "<tbody>";
 	    foreach ($data as $d)
 	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td>";
+		$semester =$this->get_sem_wc($d->nim,$d->yudisium_date,$d->vacation);
+		$vacation = intval($d->vacation);
+		if ($d->vacation == 0 )
+		{
+		      $sem = $semester;
+		     
+		}
+		else{
+		    
+		    $sem = $semester;
+		}
+		
+		$table .= "<td>".$sem."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
 	    $table .= "</tbody>";
@@ -801,8 +814,19 @@ class Admin extends Admin_Controller {
 	    $table .= "<tbody>";
 	    foreach ($data as $d)
 	    {
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
-		//$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".trim($this->get_dpt($d->nim))."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
+		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".$d->start."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td>";
+		$semester =$this->get_sem_wc($d->nim,$d->yudisium_date,$d->vacation);
+		$vacation = intval($d->vacation);
+		if ($d->vacation == 0 )
+		{
+		      $sem = $semester;
+		     
+		}
+		else{
+		    
+		    $sem = $semester;
+		}
+		$table .= "<td>".$sem."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$this->cal_age($d->date_of_birth)."</td></tr>";
 		$i++;
 	    }
 	    $table .= "</tbody>";
@@ -1820,7 +1844,16 @@ class Admin extends Admin_Controller {
 	    $start	= '20'.$year;
 	    $finish	= substr($date,0,4);
 	    $diff	= intval($finish) - intval($start);
-	    $result 	= $diff * 2;
+	    $result 	= ($diff * 2);
+	    return $result;
+	}
+    public function get_sem_wc($nim,$date,$cuti)
+	{
+	    $year 	= substr($nim,0,2);
+	    $start	= '20'.$year;
+	    $finish	= substr($date,0,4);
+	    $diff	= intval($finish) - intval($start);
+	    $result 	= ($diff * 2) - $cuti ;
 	    return $result;
 	}
 	
