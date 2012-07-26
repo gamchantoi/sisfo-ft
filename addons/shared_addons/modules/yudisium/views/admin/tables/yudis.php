@@ -22,6 +22,7 @@ $(document).ready(function()
 		<tfoot>
 			<tr>
 				<td colspan="7">
+				
 					<div class="inner"><?php $this->load->view('admin/partials/pagination'); ?></div>
 				</td>
 			</tr>
