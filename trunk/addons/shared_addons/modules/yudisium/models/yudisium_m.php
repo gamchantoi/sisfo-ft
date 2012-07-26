@@ -52,7 +52,7 @@ class Yudisium_m extends MY_Model {
     function error_data()
 	{
 	    $this->db->select('nim,name,graduation,yudisium_date')
-		->where('graduationi > yudisium_date');
+		->where('graduation > yudisium_date');
 	    return $this->db->get('yudisium')->result();
 	}
     function count_cum_s1($where)
