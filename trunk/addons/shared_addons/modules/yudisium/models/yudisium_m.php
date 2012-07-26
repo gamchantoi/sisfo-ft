@@ -219,6 +219,10 @@ class Yudisium_m extends MY_Model {
 	    {
 		$this->db->where('thesis',$parrams['thesis']);
 	    }
+	    if(!empty($parrams['school']))
+	    {
+		$this->db->where('school',$parrams['school']);
+	    }
 	    if(!empty($parrams['parrental']))
 	    {
 		$this->db->where('parrental',$parrams['parrental']);
