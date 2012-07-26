@@ -1423,8 +1423,8 @@ class Admin extends Admin_Controller {
 		$smk2	 = $this->ym->count_yudis_by(array('date'=>$finish,'school' => 'SMK','thesis'=>$thesis));
 		if($smk1 < $smk2) : $ketsmk = "NAIK"; elseif($smk1 == $smk2): $ketsmk ="TETAP"; else : $ketsmk = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>SMK</td><td>$smk1</td><td>$smk2</td><td>$ketsmk</td></tr>";
-		$d31	 = $this->ym->count_yudis_by(array('date'=>$start,'school' => 'D3','thesis'=>$thesis));
-		$d32	 = $this->ym->count_yudis_by(array('date'=>$finish,'school' => 'D3','thesis'=>$thesis));
+		$d31	 = $this->ym->count_yudis_by(array('date'=>$start,'school' => 'DIII','thesis'=>$thesis));
+		$d32	 = $this->ym->count_yudis_by(array('date'=>$finish,'school' => 'DIII','thesis'=>$thesis));
 		if($d31 < $d32) : $ketd3 = "NAIK"; elseif($d31 == $d32): $ketd3 ="TETAP"; else : $ketd3 = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>DIII</td><td>$d31</td><td>$d32</td><td>$ketd3</td></tr>";
 		$man1	 = $this->ym->count_yudis_by(array('date'=>$start,'school' => 'MAN DLL','thesis'=>$thesis));
