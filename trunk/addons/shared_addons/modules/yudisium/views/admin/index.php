@@ -6,11 +6,55 @@
 </script>
 
 <section class="title">
-	<h4>WARNING</h4>
+	<h4>Antidatir</h4>
 </section>
 <section class="item">
-  
   <div>
+    <table>
+      <thead>
+	<tr>
+	  <th>Periode</th>
+	  <th>Jumlah</th>
+	</tr>
+      </thead>
+      <tbody>
+	<?php
+	  foreach ($yudisium as $yudi)
+	  {
+	    ?>
+	    <tr><td><?php echo tanggal($yudi->yudisium_date); ?></td><td><?php echo get_antidatir($yudi->yudisium_date);?></td></tr>
+	<?php
+	  }
+	?>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="title">
+	<h4>Salah Entri</h4>
+</section>
+<section class="item">
+  <div>
+    <table>
+      <thead>
+	<tr>
+	  <th>Nama</th>
+	  <th>Nim</th>
+	  <th>Tanggal Lulus</th>
+	  <th>Tanggal Yudisium</th>
+	</tr>
+      </thead>
+      <tbody>
+	<?php
+	  foreach ($error_d as $y)
+	  {
+	    ?>
+	    <tr><td><?php echo $y->name; ?></td><td><?php echo $y->nim;?></td><td><?php echo $y->graduation; ?></td><td><?php $y->yudisium_date;?></td></tr>
+	<?php
+	  }
+	?>
+      </tbody>
+    </table>
   </div>
 </section>
 <section class="title">
