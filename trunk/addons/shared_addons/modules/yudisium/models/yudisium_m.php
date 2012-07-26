@@ -9,6 +9,12 @@
 class Yudisium_m extends MY_Model {
     protected $_table = 'yudisium';
     
+    function get_all()
+    {
+	$this->db->order_by('id', 'DESC');
+	return $this->db->get('yudisium')->result();
+    }
+    
     function get_prodies($nim){
     	return $get_major= $this->db->select('nim,name,x,department')->where('nim',$nim)->get('college')->row();
         //return $get_major->x;
@@ -83,6 +89,7 @@ class Yudisium_m extends MY_Model {
 	    $this->db->from('default_yudisium');
 	    $this->db->where('yudisium_date',$where);
 	    $this->db->where("thesis",$thesis);
+	    $this->db->where('ipk <=','3.50');
 	    $this->db->where('ipk >=','2.76');
 	    return $this->db->count_all_results();
 	}
@@ -104,7 +111,7 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('yudisium_date',$where);
 	   // $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=","10");
 	    $this->db->where("thesis","Skripsi");
-	    //$this->db->where('ipk <=','3.50');
+	    $this->db->where('ipk <=','3.51');
 	    $this->db->where('ipk >=','2.76');
 	    return $this->db->count_all_results();
 	}
@@ -406,6 +413,7 @@ class Yudisium_m extends MY_Model {
 			$this->db->where('status', '1');
 		}
                 
+		
                 /**
 		if(!empty($params['date'])){
                     $this->db->where('date_format("date","%Y-%m-%d")',$params['date']);
@@ -417,7 +425,7 @@ class Yudisium_m extends MY_Model {
 			$this->db->limit($params['limit'][0], $params['limit'][1]);
 		elseif (isset($params['limit']))
 			$this->db->limit($params['limit']);
-
+		$this->db->order_by('id','DESC');
 		return $this->get_all();
 	}
     

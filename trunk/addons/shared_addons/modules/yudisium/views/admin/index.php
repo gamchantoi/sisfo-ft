@@ -49,7 +49,7 @@
 	  foreach ($error_d as $y)
 	  {
 	    ?>
-	    <tr><td><?php echo $y->name; ?></td><td><?php echo $y->nim;?></td><td><?php echo $y->graduation; ?></td><td><?php $y->yudisium_date;?></td></tr>
+	    <tr><td><?php echo $y->name; ?></td><td><?php echo $y->nim;?></td><td><?php echo tanggal($y->graduation); ?></td><td><?php echo tanggal($y->yudisium_date);?></td></tr>
 	<?php
 	  }
 	?>
@@ -71,6 +71,7 @@
 	<?php echo form_open('admin/yudisium/action'); ?>
 
 		<?php echo $this->load->view('admin/tables/yudis'); ?>
+      
 
 	<?php echo form_close(); ?>
 	

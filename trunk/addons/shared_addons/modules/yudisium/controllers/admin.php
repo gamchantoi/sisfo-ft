@@ -202,7 +202,7 @@ class Admin extends Admin_Controller {
 			->set('error_d',$_error)
 			->set('yudisium',$yudis)
 			->set('base_where',$base_where)
-			->set('pagination', $pagination)
+			//->set('pagination', $pagination)
 			->set('data', $data);
 
 		$this->input->is_ajax_request() ? $this->template->build('admin/tables/yudis', $this->data) : $this->template->build('admin/index', $this->data);
