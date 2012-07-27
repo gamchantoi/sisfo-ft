@@ -1395,16 +1395,22 @@ class Admin extends Admin_Controller {
 		if($min1 < $min2) : $ketmin = "LEBIH LAMA"; else : $ketmin = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>LAMA MINIMUM PENULISAN TA</td><td>".$min1."</td><td>".$min2."</td><td>$ketmin</td></tr>";
 		$table  .= "<tr><td><b>3</b></td><td><b>MASA STUDI</b></td><td></td><td></td><td></td></tr>";
-		$avgsem1 = ceil ($this->ym->get_sem_avg($start,$thesis));
-		$avgsem2 = ceil ($this->ym->get_sem_avg($finish,$thesis));
+		//$avgsem1 = ceil ($this->ym->get_sem_avg($start,$thesis));
+		//$avgsem2 = ceil ($this->ym->get_sem_avg($finish,$thesis));
+		$avgsem1 = round($this->get_real_sem($start,$thesis,"avg"),2);
+		$avgsem2 = round($this->get_real_sem($finish,$thesis,"avg"),2);
 		if($avgsem1 < $avgsem2) : $ketavgsem = "LEBIH LAMA"; else : $ketavgsem = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>RERATA MASA STUDI</td><td>$avgsem1</td><td>$avgsem2</td><td>$ketavgsem</td></tr>";
-		$semmax1 = round ($this->ym->get_sem_max($start,$thesis),2);
-		$semmax2 = round ($this->ym->get_sem_max($finish,$thesis),2);
+		//$semmax1 = round ($this->ym->get_sem_max($start,$thesis),2);
+		//$semmax2 = round ($this->ym->get_sem_max($finish,$thesis),2);
+		$semmax1 = round($this->get_real_sem($start,$thesis,"max"),2);
+		$semmax2 = round($this->get_real_sem($finish,$thesis,"max",2));
 		if($semmax1 < $semmax2) : $ketsemmax = "LEBIH LAMA"; else : $ketsemmax = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>MASA STUDI MAKSIMUM</td><td>$semmax1</td><td>$semmax2</td><td>$ketsemmax</td></tr>";
-		$semmin1 = round ($this->ym->get_sem_min($start,$thesis),2);
-		$semmin2 = round ($this->ym->get_sem_min($finish,$thesis),2);
+		//$semmin1 = round ($this->ym->get_sem_min($start,$thesis),2);
+		//$semmin2 = round ($this->ym->get_sem_min($finish,$thesis),2);
+		$semmin1 = round($this->get_real_sem($start,$thesis,"min"),2);
+		$semmin2 = round($this->get_real_sem($finish,$thesis,"min",2));
 		if($semmin1 < $semmin2) : $ketsemmin = "LEBIH LAMA"; else : $ketsemmin = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>MASA STUDI MINIMUM</td><td>$semmin1</td><td>$semmin2</td><td>$ketsemmin</td></tr>";
 		$table  .= "<tr><td><b>4</b></td><td><b>IPK</b></td><td></td><td></td><td></td></tr>";
@@ -1425,8 +1431,8 @@ class Admin extends Admin_Controller {
 		$cum2	 = $this->ym->count_cum($finish,$thesis);
 		if($cum1 < $cum2): $ketcum ="NAIK"; elseif ($cum1 == $cum2) : $ketcum ="TETAP"; else : $ketcum ="TURUN"; endif;
 		$table  .= "<tr><td></td><td>DENGAN PUJIAN</td><td>$cum1</td><td>$cum2</td><td>$ketcum</td></tr>";
-		$v_good1 = $this->ym->count_verygood($start,$thesis);
-		$v_good2 = $this->ym->count_verygood($finish,$thesis);
+		$v_good1 = $this->ym->count_verygood($start,$thesis) - $cum1;
+		$v_good2 = $this->ym->count_verygood($finish,$thesis) - $cum2;
 		if($v_good1 < $v_good2) : $ketvgood = "NAIK"; elseif($v_good1 == $v_good2): $ketvgood ="TETAP"; else : $ketvgood = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>SANGAT MEMUASKAN</td><td>$v_good1</td><td>$v_good2</td><td>$ketvgood</td></tr>";
 		$good1	 = $this->ym->count_good($start,$thesis);
@@ -2032,4 +2038,34 @@ class Admin extends Admin_Controller {
 	date('d',$cd)+$day, date('Y',$cd)+$yr));
 	return $newdate;
     }
+    
+    public function get_real_sem($date,$thesis,$attr)
+	{
+	    $sem = $this->ym->get_semester($date,$thesis);
+	    $rec = count($sem);
+	    $real = array();
+	    $i= 0;
+	    foreach ($sem as $s)
+	    {
+		$real[$i]= $s->semester - $s->vacation;
+		//echo $s->semester."--".$s->vacation."--".$real."<br>";
+		$i++;
+		
+	    }
+	    switch($attr)
+	    {
+		case "max"	:
+		    $result	= max($real);
+		    break;
+		case "min"	:
+		    $result	= min($real);
+		    break;
+		default		:
+		    $result = array_sum($real) / $rec;
+		    break;
+	    }
+	  
+	  return $result;
+	    
+	}
 }
