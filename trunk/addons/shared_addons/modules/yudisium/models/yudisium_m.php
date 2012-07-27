@@ -89,7 +89,7 @@ class Yudisium_m extends MY_Model {
 	    $this->db->from('default_yudisium');
 	    $this->db->where('yudisium_date',$where);
 	    $this->db->where("thesis",$thesis);
-	    $this->db->where('ipk <=','3.50');
+	    //$this->db->where('ipk <=','3.50');
 	    $this->db->where('ipk >=','2.76');
 	    return $this->db->count_all_results();
 	}
@@ -111,7 +111,7 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('yudisium_date',$where);
 	   // $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=","10");
 	    $this->db->where("thesis","Skripsi");
-	    $this->db->where('ipk <=','3.51');
+	    $this->db->where('ipk <=','3.50');
 	    $this->db->where('ipk >=','2.76');
 	    return $this->db->count_all_results();
 	}
@@ -154,6 +154,12 @@ class Yudisium_m extends MY_Model {
 	    $query  = $this->db->query("SELECT MIN(( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) - vacation) AS minimum FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."' AND `thesis` = '".$thesis."'");
 	    $result = $query->row();
 	    return $result->minimum;
+	}
+    function get_semester($where,$thesis)
+	{
+	    $query  = $this->db->query("SELECT ( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) AS semester,vacation FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."' AND `thesis` = '".$thesis."'");
+	    $result = $query->result();
+	    return $result;
 	}
     
     function get_sem_max($where,$thesis)
