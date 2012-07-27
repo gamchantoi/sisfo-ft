@@ -150,7 +150,7 @@ class Admin extends Admin_Controller {
 		    array(
 			    'field' => 'email',
 			    'label' => 'lang:yudisium_email',
-			    'rules' => 'trim|required'
+			    'rules' => 'trim|email|required'
 		    )
 		);
     
