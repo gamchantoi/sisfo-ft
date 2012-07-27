@@ -99,14 +99,18 @@
 						<?php echo form_dropdown('parrental',array('0'=>'-PBU/UTUL/PKS-','PBU'=>'PBU','UTUL'=>'UTUL','PKS'=>'PKS')); ?>
 					</div>
 					<div>
-						<label for="soo"><?php echo lang('yudisium_soo')?></label>
-						<?php echo form_input('soo'); ?>
+						<label for="school">Asal Sekolah</label>
+						<?php echo form_dropdown('school',array('SMA'=>'SMA','SMK'=>'SMK','DIII'=>'DIII','MAN DLL' => 'MAN DLL')); ?>
 					</div>
 					<div>
-						<label for="sma">Jika SMA</label>
-						<?php echo form_dropdown('sma',array('0'=>'-IPA/IPS-','IPA'=>'SMA IPA','IPS'=>'SMA IPS')); ?>
+						<label for="soo">Nama Sekolah</label>
+						<?php echo form_input('soo'); ?>
 					</div>
 				</div>
+			</li>
+			<li>
+				<label for="sma">Jika SMA</label>
+				<?php echo form_dropdown('sma',array('0'=>'-IPA/IPS-','IPA'=>'SMA IPA','IPS'=>'SMA IPS')); ?>
 			</li>
 			
 			<li>
