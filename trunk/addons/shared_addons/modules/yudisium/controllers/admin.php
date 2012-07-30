@@ -749,7 +749,7 @@ class Admin extends Admin_Controller {
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\">";
 	    $table .= "<thead>";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA D3 BERDASARKAN PROGRAM STUDI<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
 	    $table .= "<tr><td colspan=3><br></td></tr>";
 	    $table .= "<thead>";
 	    $table .= "</tabel>";
@@ -806,7 +806,7 @@ class Admin extends Admin_Controller {
 	    $table  = "<table style=\"font-size:15px;\" align=\"center\" cellpadding=4>";
 	    $table .= "<thead>";
 	    $table .= "<tr><td align=\"right\"><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td align=\"left\"><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA S1<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>DAFTAR URUTAN IPK MAHASISWA S1 BERDASARKAN PROGRAM STUDI<br>YUDISIUM PERIODE ".strtoupper($bln)."  ".$thn."</td></tr>";
 	    $table .= "<tr><td colspan=3><br></td></tr>";
 	    $table .= "</thead>";
 	    $table .= "</tabel>";
