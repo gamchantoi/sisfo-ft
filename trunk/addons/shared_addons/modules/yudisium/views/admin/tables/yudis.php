@@ -37,7 +37,7 @@ $(document).ready(function()
 					<td class="collapse">
 						<?php echo tanggal($item->yudisium_date); ?>
 					</td>
-					<td><?php echo lang('yudisium_d_'.$item->department); ?></td>
+					<td><?php echo lang('yudisium_dp_'.$item->department); ?></td>
 					<td id="tool">
 					<?php if($item->printed == '2')
 					{
