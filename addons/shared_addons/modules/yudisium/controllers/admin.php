@@ -135,11 +135,11 @@ class Admin extends Admin_Controller {
 		    array(
 			    'field' => 'sma',
 			    'label' => 'lang:yudisium_sma',
-			    'rules' => 'trim'
-		    ),
+			    'rules' => 'trim|required'
+		    ), 
 		    array(
 			    'field' => 'school',
-			    'label' => 'lang:yudisium_sma',
+			    'label' => 'lang:yudisium_school',
 			    'rules' => 'trim|required'
 		    ),
 		    array(
@@ -931,20 +931,68 @@ class Admin extends Admin_Controller {
 	    $parrams = array('yudisium_date' => $date);
 	    $data   = $this->ym->get_many_by($parrams);
 	    $i =1;
-	    $table  = "<table  class='gridtable' border=\"1px\">";
-	    $table .= "<thead>";
-	    $table .= "<tr><th rowspan=\"2\">No</th><th rowspan=\"2\">NIM</th><th rowspan=\"2\">Nama</th><th  rowspan=\"2\">Prodi</th><th rowspan=\"2\">SKS</th><th rowspan=\"2\">IPK</th><th rowspan=\"2\">Predikat</th><th rowspan=\"2\">Mulai</th><th rowspan=\"2\">Yudisium</th><th rowspan=\"2\">Cuti</th><th colspan=\"2\">Masa Studi</th><th rowspan=\"2\">Lama TA</th><th rowspan=\"2\">Melalui</th><th rowspan=\"2\">Askol</th><th rowspan=\"2\">Tgl lahir</th><th rowspan=\"2\">Umur</th><th rowspan=\"2\">tmp lhr</th><th  rowspan=\"2\">tgl lhr</th><th  rowspan=\"2\">alamat</th><th  rowspan=\"2\">orangtua</th><th  rowspan=\"2\">Judul TA</th></tr>";
-	    $table .= "<tr><td>Sm</td><td>Th</td></tr>";
-	    $table .= "</thead>";
-	    $table .= "<tbody>";
-	    foreach ($data as $d)
+	    $table  = "<table class=\"gridtable\" border=\"1px\">";
+	    $table .= "<tr><td>nim</td>
+			    <td>nama</td>
+			    <td>program studi</td>
+			    <td>pembimbing akademik</td>
+			    <td>tempat lahir</td>
+			    <td>tanggal lahir</td>
+			    <td>agama</td>
+			    <td>jenis kelamin</td>
+			    <td>alamat</td>
+			    <td>orangtua</td>
+			    <td>alamat orangtua</td>
+			    <td>masuk Melalui</td>
+			    <td>asal sekolah</td>
+			    <td>nama sekolah</td>
+			    <td>alamat sekolah</td>
+			    <td>sma</td>
+			    <td>tanggal lulus</td>
+			    <td>sks</td>
+			    <td>ipk</td>
+			    <td>tugas akhir</td>
+			    <td>judul tugas akhir</td>
+			    <td>pembimbing tugas akhir</td>
+			    <td>mulai penulisan ta</td>
+			    <td>selesai penulisan ta</td>
+			    <td>cuti</td>
+			    <td>tanggal yudisium</td>
+			    <td>no telp</td></tr>";
+	    foreach($data as $d)
 	    {
-		//$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$d->yudisium_date."</td><td>".$d->nim."</td><td>".$d->yudisium_date."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".$d->date_of_birth."</td><td>".$d->date_of_birth."</td></tr>";
-		$table .= "<tr><td>$i</td><td>".$d->nim."</td><td>".$d->name."</td><td>".lang('yudisium_dp_'.$d->department)."</td><td>".$d->sks."</td><td>".$d->ipk."</td><td>".$this->predicate($d->nim,$d->yudisium_date,$d->ipk,$d->parrental)."</td><td>".tanggal($d->start)."</td><td>".tanggal($d->yudisium_date)."</td><td>".$d->vacation."</td><td>".$this->get_semester($d->nim,$d->yudisium_date)."</td><td>".$this->get_datediff($this->get_year($d->nim).'-09-01',$d->yudisium_date)."</td><td>".$this->get_datediff($d->start,$d->yudisium_date)."</td><td>".$d->parrental."</td><td>".$d->soo."</td><td>".tanggal($d->date_of_birth)."</td><td>".$this->cal_age($d->date_of_birth)."</td><td>".$d->place_of_birth."</td><td>".$d->date_of_birth."</td><td>".$d->address."</td><td>".$d->parrent."</td><td>".$d->thesis_title."</td></tr>";
-		$i++;
+		$table .= "<tr>
+			<td>".$d->nim."</td>
+			<td>".$d->name."</td>
+			<td>".lang("yudisium_dp_".$d->department)."</td>
+			<td>".$this->get_name($d->pa)."</td>
+			<td>".$d->place_of_birth."</td>
+			<td>".$d->date_of_birth."</td>
+			<td>".$d->religion."</td>
+			<td>".$d->sex."</td>
+			<td>".$d->address."</td>
+			<td>".$d->parrent."</td>
+			<td>".$d->parrent_address."</td>
+			<td>".$d->parrental."</td>
+			<td>".$d->school."</td>
+			<td>".$d->soo."</td>
+			<td>".$d->school_address."</td>
+			<td>".$d->sma."</td>
+			<td>".$d->graduation."</td>
+			<td>".$d->sks."</td>
+			<td>".$d->ipk."</td>
+			<td>".$d->thesis."</td>
+			<td>".$d->thesis_title."</td>
+			<td>".$this->get_name($d->lecture)."</td>
+			<td>".$d->start."</td>
+			<td>".$d->finish."</td>
+			<td>".$d->vacation."</td>
+			<td>".$d->yudisium_date."</td>
+			<td>".$d->phone."</td>
+			</tr>";
 	    }
-	    $table .= "</tbody>";
 	    $table .= "</table>";
+	 $table;
 	    $excel	= new ExportToExcel();
 	    $excel->exportWithPage($table,"Rekap-data-yudisium-all.xls");
 	}

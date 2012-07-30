@@ -6,15 +6,18 @@
 </script>
 
 <section class="title">
-	<h4>Antidatir</h4>
+	<h4>Lulusan</h4>
 </section>
 <section class="item">
   <div>
     <table>
       <thead>
 	<tr>
-	  <th>Periode</th>
+	  <th>Antidatir Periode</th>
 	  <th>Jumlah</th>
+	  <th>Yudisium periode Normal</th>
+	  <th>Jumlah</th>
+	  <th>Download</th>
 	</tr>
       </thead>
       <tbody>
@@ -22,7 +25,7 @@
 	  foreach ($yudisium as $yudi)
 	  {
 	    ?>
-	    <tr><td><?php echo tanggal($yudi->yudisium_date); ?></td><td><?php echo get_antidatir($yudi->yudisium_date);?></td></tr>
+	    <tr><td><?php echo tanggal($yudi->yudisium_date); ?></td><td><?php echo get_antidatir($yudi->yudisium_date);?></td><td><?php echo tanggal($yudi->yudisium_date); ?></td><td><?php echo get_yudis_normal($yudi->yudisium_date); ?></td><td><a href="admin/yudisium/export_all_data/<?php echo $yudi->yudisium_date; ?>" title="Download Lampiran SK Yudisium Mahasiswa D3"><img src="<?php echo base_url().$this->module_details['path'];?>/img/excel.png" width="30px" align="center"></a></td></tr>
 	<?php
 	  }
 	?>
