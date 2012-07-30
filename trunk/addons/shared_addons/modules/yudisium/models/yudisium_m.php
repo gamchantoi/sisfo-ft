@@ -15,6 +15,7 @@ class Yudisium_m extends MY_Model {
 	return $this->db->get('yudisium')->result();
     }
     
+    
     function get_prodies($nim){
     	return $get_major= $this->db->select('nim,name,x,department')->where('nim',$nim)->get('college')->row();
         //return $get_major->x;
@@ -53,6 +54,13 @@ class Yudisium_m extends MY_Model {
 	    $this->db->from('default_yudisium')
 	    ->where('yudisium_date',$date)
 	    ->where('antidatir','1');
+	    return $this->db->count_all_results();
+	}
+    function yudis_normal($date)
+	{
+	    $this->db->from('default_yudisium')
+	    ->where('yudisium_date',$date)
+	    ->where('antidatir','2');
 	    return $this->db->count_all_results();
 	}
     function error_data()

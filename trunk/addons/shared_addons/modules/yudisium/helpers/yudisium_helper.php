@@ -26,6 +26,13 @@ function get_antidatir($tgl)
         $result = $ci->yudisium_m->antidatir($tgl);
         return $result;
     }
+function get_yudis_normal($tgl)
+    {
+        $ci =& get_instance();
+        $ci->load->model('yudisium_m');
+        $result = $ci->yudisium_m->yudis_normal($tgl);
+        return $result;
+    }
 /**    
 function export_xls($date,$thesis)
     {

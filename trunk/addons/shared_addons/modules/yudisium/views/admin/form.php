@@ -99,8 +99,12 @@
 				<label for="parrental"><?php echo lang('yudisium_parental')?></label>
 				<div class="input"><?php echo form_dropdown('parrental',array('0'=>'-PBU/UTUL/PKS-','PBU'=>'PBU','UTUL'=>'UTUL','PKS'=>'PKS'),$data->parrental); ?></div>
 			</li>
+			<li>
+				<label for="school">Asal Sekolah</label>
+				<div class="input"><?php echo form_dropdown('school',array('SMA'=>'SMA','SMK'=>'SMK','DIII'=>'DIII','MAN DLL' => 'MAN DLL'),$data->school); ?></div>
+			</li>
 			<li class="even">
-				<label for="soo"><?php echo lang('yudisium_soo')?></label>
+				<label for="soo">Nama Sekolah</label>
 				<div class="input"><?php echo form_input('soo',$data->soo); ?></div>
 			</li>
 			<li>
