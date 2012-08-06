@@ -544,11 +544,18 @@ class Admin extends Admin_Controller
 		{
 			$post_data['keywords'] = $keywords;
 		}
-		$results = $this->blog_m->search($post_data);
+		$total_rows = $this->blog_m->count_by($post_data);
+		$pagination = create_pagination('admin/blog/index', $total_rows);
+
+		// Using this data, get the relevant results
+		//$blog = $this->blog_m->limit($pagination['limit'])->get_many_by($base_where);
+		
+		$results = $this->blog_m->limit($pagination['limit'])->search($post_data);
 
 		//set the layout to false and load the view
 		$this->template
 			->set_layout(FALSE)
+			->set('pagination',$pagination)
 			->set('blog', $results)
 			->build('admin/tables/posts');
 	}
