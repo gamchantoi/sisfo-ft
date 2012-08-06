@@ -125,6 +125,11 @@ class Yudisium extends Public_Controller {
 			    'rules' => 'trim|required'
 		    ),
 		    array(
+			    'field' => 'antidatir',
+			    'label' => 'lang:yudisium_antidatir',
+			    'rules' => 'trim|required'
+		    ),
+		    array(
 			    'field' => 'phone',
 			    'label' => 'lang:yudisium_phone',
 			    'rules' => 'trim|required'
@@ -225,7 +230,7 @@ class Yudisium extends Public_Controller {
                                                     'meriage'           => $this->input->post('merriage'),
                                                     'address'           => $this->input->post('address'),
                                                     'parrent'           => $this->input->post('parrent'),
-						    						'parrent_address'   => $this->input->post('parrent_address'),
+						    'parrent_address'   => $this->input->post('parrent_address'),
                                                     'parrental'         => $this->input->post('parrental'),
                                                     'soo'               => $this->input->post('soo'),
                                                     'school_address'    => $this->input->post('school_address'),
@@ -240,6 +245,7 @@ class Yudisium extends Public_Controller {
                                                     'finish'            => $this->input->post('finish'),
                                                     'vacation'          => $this->input->post('vacation'),
                                                     'yudisium_date'     => $this->input->post('yudisium_date'),
+						    'antidatir'		=> $this->input->post('antidatir'),
                                                     'phone'             => $this->input->post('phone'),
                                                     'email'             => $this->input->post('email')
 						    ));	

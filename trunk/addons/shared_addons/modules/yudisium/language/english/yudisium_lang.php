@@ -30,6 +30,7 @@ $lang['yudisium_finish']                = 'Selesai TA';
 $lang['yudisium_vacation']              = 'Cuti Kuliah';
 $lang['yudisium_date']                  = 'Tgl Yudisium';
 $lang['yudisium_pa']                    = 'Dosen PA';
+$lang['yudisium_antidatir']             = 'Habis Masa Studi';
 $lang['yudisium_phone']                 = 'No. Telp/HP';
 $lang['yudisium_email']                 = 'Email';
 

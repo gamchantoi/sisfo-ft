@@ -205,7 +205,9 @@ class Admin extends Admin_Controller {
 			//->set('pagination', $pagination)
 			->set('data', $data);
 
-		$this->input->is_ajax_request() ? $this->template->build('admin/tables/yudis', $this->data) : $this->template->build('admin/index', $this->data);
+		$this->input->is_ajax_request()
+		? $this->template->build('admin/tables/yudis')
+		: $this->template->build('admin/index');
 	}
     
     public function create()
@@ -1850,11 +1852,15 @@ class Admin extends Admin_Controller {
 		{
 			$post_data['keywords'] = $keywords;
 		}
-		$results = $this->ym->search($post_data);
+		$total_rows = $this->ym->count_by($post_data);
+		$pagination = create_pagination('admin/yudisium/index', $total_rows);
+		// Using this data, get the relevant results
+		$results = $this->ym->limit($pagination['limit'])->search($post_data);
 
 		//set the layout to false and load the view
 		$this->template
 			->set_layout(FALSE)
+			//->set('pagination',$pagination)
 			->set('data', $results)
 			->build('admin/tables/yudis');
 	}
