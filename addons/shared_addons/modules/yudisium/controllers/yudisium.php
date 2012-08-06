@@ -146,7 +146,7 @@ class Yudisium extends Public_Controller {
 		$this->data->prodies  = $this->prodies();
                 $this->data->lectures = $this->lectures();
 		$this->data->vacations= array(
-						'-' => '-',
+						'0' => '0',
 						'1' => '1',
 						'2' => '2',
 						'3' => '3',
