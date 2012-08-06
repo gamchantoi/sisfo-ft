@@ -1,6 +1,6 @@
 <?php
 //public
 //admin
-$route['yudicium/admin/yudicium(:any)?'] = 'admin_yudicium$1';
-$route['yudicium/admin/lecture(:any)?'] = 'admin_lecture$1';
+$route['yudisium/admin/college(:any)?'] = 'admin_student$1';
+$route['yudisium/admin/lecture(:any)?'] = 'admin_lecture$1';
 ?>
