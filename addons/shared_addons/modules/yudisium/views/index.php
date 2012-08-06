@@ -178,6 +178,10 @@
 				<label for="vacation"><?php echo lang('yudisium_vacation')?></label>
 				<?php echo form_dropdown('vacation',$vacations); ?>
 			</li>
+			<li>
+				<label for="antidatir"><?php echo "Habis Masa Studi /Antidatir"?></label>
+				<?php echo form_dropdown('antidatir',array('2'=>'Tidak','1'=>'Ya')); ?>
+			</li>
 		</ul>
 	</fieldset>
 	<fieldset>
