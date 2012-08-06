@@ -143,6 +143,16 @@ class Admin extends Admin_Controller {
 			    'rules' => 'trim|required'
 		    ),
 		    array(
+			    'field' => 'vacation',
+			    'label' => 'lang:yudisium_vacation',
+			    'rules' => 'trim|required'
+		    ),
+		    array(
+			    'field' => 'antidatir',
+			    'label' => 'lang:yudisium_antidatir',
+			    'rules' => 'trim|required'
+		    ),
+		    array(
 			    'field' => 'phone',
 			    'label' => 'lang:yudisium_phone',
 			    'rules' => 'trim|required'
@@ -242,6 +252,8 @@ class Admin extends Admin_Controller {
 			    'lecture'           => $this->input->post('lecture'),
 			    'start'             => $this->input->post('start'),
 			    'finish'            => $this->input->post('finish'),
+			    'vacation'		=> $this->input->post('vacation'),
+			    'antidatir'		=> $this->input->post('antidatir'),
 			    'yudisium_date'     => $this->input->post('yudisium_date'),
 			    'phone'             => $this->input->post('phone'),
 			    'email'             => $this->input->post('email')
@@ -314,6 +326,8 @@ class Admin extends Admin_Controller {
 			    'start'             => $this->input->post('start'),
 			    'finish'            => $this->input->post('finish'),
 			    'yudisium_date'     => $this->input->post('yudisium_date'),
+			    'vacation'		=> $this->input->post('vacation'),
+			    'antidatir'		=> $this->input->post('antidatir'),
 			    'phone'             => $this->input->post('phone'),
 			    'email'             => $this->input->post('email')
 							));
