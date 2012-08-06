@@ -159,6 +159,17 @@
 				<?php echo form_input('yudisium_date',$data->yudisium_date,'id="d_yudis"'); ?>
 				</div>
 			</li>
+			
+			<li>
+				<label for="vacation"><?php echo lang('yudisium_vacation');?></label>
+				<?php echo form_dropdown('vacation',array('0'=>'-','1'=>'1','2'=>'2','3'=>'3','4'=>'4'),$data->vacation); ?>
+			</li>
+			<li>
+				<label for="antidatir"><?php echo lang('yudisium_antidatir');?></label>
+				<?php echo form_dropdown('antidatir',array('2'=>'Tidak','1'=>'Ya'),$data->antidatir)?>
+			</li>
+			
+			
 			<li>
 				<label for="email_phone"><?php echo lang('yudisium_phone')?> & <?php echo lang('yudisium_email')?></label>
 				<div class="input">
