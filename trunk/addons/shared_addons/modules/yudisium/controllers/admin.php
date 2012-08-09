@@ -185,7 +185,7 @@ class Admin extends Admin_Controller {
 		$base_where = array('printed' => 'all');
 
 		//add post values to base_where if f_module is posted
-		$base_where = $this->input->post('f_category') ? $base_where + array('category' => $this->input->post('f_category')) : $base_where;
+		//$base_where = $this->input->post('f_category') ? $base_where + array('category' => $this->input->post('f_category')) : $base_where;
 
 		$base_where['printed'] = $this->input->post('f_printed') ? $this->input->post('f_printed') : $base_where['printed'];
 
@@ -1843,38 +1843,30 @@ class Admin extends Admin_Controller {
 	//filter ajax pd select box
     public function ajax_filter()
 	{
-		//$category = $this->input->post('f_category');
 		$status = $this->input->post('f_printed');
-		$keywords = $this->input->post('f_keywords');
+		$keywords = $this->input->post('f_name');
 		//$datein   = $this->input->post('f_datein');
+		$nim	= $this->input->post('f_nim');
 		$post_data = array();
-
+		if($nim){
+                    $post_data['nim'] = $nim;
+                }
 		if ($status == '1' OR $status == '2')
 		{
 			$post_data['printed'] = $status;
 		}
 		
-		/**
-		if($datein)
-		{
-		    $post_data['date'] = $datein;
-		}
-		**/
-		
-		//keywords, lets explode them out if they exist
 		if ($keywords)
 		{
-			$post_data['keywords'] = $keywords;
+			$post_data['name'] = $keywords;
 		}
 		$total_rows = $this->ym->count_by($post_data);
 		$pagination = create_pagination('admin/yudisium/index', $total_rows);
 		// Using this data, get the relevant results
 		$results = $this->ym->limit($pagination['limit'])->search($post_data);
-
 		//set the layout to false and load the view
 		$this->template
 			->set_layout(FALSE)
-			//->set('pagination',$pagination)
 			->set('data', $results)
 			->build('admin/tables/yudis');
 	}

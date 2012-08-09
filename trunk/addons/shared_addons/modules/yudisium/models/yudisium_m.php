@@ -15,7 +15,43 @@ class Yudisium_m extends MY_Model {
 	return $this->db->get('yudisium')->result();
     }
     
+    function get_college_all()
+    {
+	$this->db->select('id,nim,name,department,x,status')->order_by('id','DESC');
+	return $this->db->get('college')->result();
+    }
     
+    function get_college_by($parrams=array())
+    {
+	if(!empty($parrams['status']))
+	{
+	    $parrams['status'] = $parrams['status'] === 2 ? 0 : $parrams['status'] ;
+	    $this->db->where('status', $parrams['status']);
+	}
+	if(!empty($parrams['nim']))
+	{
+	    $this->db->where('nim',$parrams['nim']);
+	}
+	if(!empty($parrams['name']))
+	{
+	    $this->db->where('name',$parrams['name']);
+	}
+	if(!empty($parrams['department']))
+	{
+	    $this->db->where('department',$parrams['department']);
+	}
+	if(!empty($parrams['x']))
+	{
+	    $this->db->where('x',$parrams['x']);
+	}
+	// Limit the results based on 1 number or 2 (2nd is offset)
+	if (isset($params['limit']) && is_array($params['limit']))
+		$this->db->limit($params['limit'][0], $params['limit'][1]);
+	elseif (isset($params['limit']))
+	    $this->db->limit($params['limit']);
+	    $this->db->order_by('id','DESC');
+	return $this->db->get('college')->result();
+    }
     function get_prodies($nim){
     	return $get_major= $this->db->select('nim,name,x,department')->where('nim',$nim)->get('college')->row();
         //return $get_major->x;
@@ -395,6 +431,10 @@ class Yudisium_m extends MY_Model {
 		{
 		    $this->db->where('thesis',$params['thesis']);
 		}
+		if(!empty($params['name']))
+		{
+			$this->db->like('name',$params['like']);
+		}
 		if(!empty($params['yudisium_date']))
 		{
 		    $this->db->where('yudisium_date',$params['yudisium_date']);
@@ -461,19 +501,33 @@ class Yudisium_m extends MY_Model {
         
     public function search($data = array())
 	{
-		
-
+		if (array_key_exists('nim', $data))
+		{
+			$this->db->where('nim', $data['nim']);
+		}
 		if (array_key_exists('printed', $data))
 		{
 			$this->db->where('printed', $data['printed']);
 		}
+                
+                if (array_key_exists('name', $data))
+		{
+			$this->like('name',$data['name']);
+		}
+		return $this->get_all();
+	}
+	public function search_mhs($data = array())
+	{
+		
 
-                /**
-		if(array_key_exists('date',$data))
-                {
-                        $this->db->where(' DATE_FORMAT("data", "%Y-%m-%d")', $data['date']);
-                }
-                **/
+		if (array_key_exists('status', $data))
+		{
+			$this->db->where('status', $data['status']);
+		}
+		if (array_key_exists('nim', $data))
+		{
+			$this->db->where('nim', $data['nim']);
+		}
                 
                 if (array_key_exists('keywords', $data))
 		{
@@ -504,11 +558,11 @@ class Yudisium_m extends MY_Model {
 			{
 				if ($counter == 0)
 				{
-					$this->db->like('yudisium.name', $phrase);
+					$this->db->like('name', $phrase);
 				}
 				else
 				{
-					$this->db->or_like('yudisium.name', $phrase);
+					$this->db->or_like('name', $phrase);
 				}
 
 				//$this->db->or_like('blog.body', $phrase);
@@ -517,6 +571,32 @@ class Yudisium_m extends MY_Model {
 				$counter++;
 			}
 		}
-		return $this->get_all();
+		return $this->get_college_all();
+	}
+	
+	public function count_mhs_by($parrams=array())
+	{
+	    if(!empty($parrams['status']))
+	    {
+		$this->db->where('status',$parrams['status']);
+	    }
+	    if(!empty($parrams['nim']))
+	    {
+		$this->db->where('nim',$parrams['nim']);
+	    }
+	    if(!empty($parrams['name']))
+	    {
+		$this->db->where('name',$parrams['name']);
+	    }
+	    if(!empty($parrams['department']))
+	    {
+		$this->db->where('department',$parrams['department']);
+	    }
+	    if(!empty($parrams['x']))
+	    {
+		$this->db->where('x',$parrams['x']);
+	    }
+	    $this->db->from('college');
+	    return $this->db->count_all_results();
 	}
 }
