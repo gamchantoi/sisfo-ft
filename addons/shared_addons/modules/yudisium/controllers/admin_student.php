@@ -37,6 +37,7 @@ class Admin_Student extends Admin_Controller {
 		? $this->template->build('admin/tables/college')
 		: $this->template->build('admin/college_index');
 	}
+    
     public function ajax_filter()
 	{
 		//$category = $this->input->post('f_category');
