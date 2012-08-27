@@ -4,7 +4,27 @@
     $(".cetak").printPage();
   });
 </script>
-
+<section class="title">
+	<h4>Pendaftaran Yudisium</h4>
+</section>
+<section class="item">
+	<div>
+	  <table>
+	    <thead>
+	      <tr>
+		<th>Jumlah pendaftar bulan ini</th>
+		<th>Jumlah pendaftar hari ini</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr>
+		<td><h1><?php echo $this_month; ?></h1></td>
+		<td><h1>1234</h1></td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
+</section>
 <section class="title">
 	<h4>Lulusan</h4>
 </section>
