@@ -28,6 +28,11 @@ class Yudisium_m extends MY_Model {
 
 	    return $this->db->count_all_results('yudisium');
     }
+    function yudis_this_month($month)
+    {
+	$this->db->where("date_format(date_in,'%m-%y')",$month);
+	return $this->db->count_all_results('yudisium');
+    }
     function get_all()
     {
 	//$this->db->order_by('id', 'DESC');

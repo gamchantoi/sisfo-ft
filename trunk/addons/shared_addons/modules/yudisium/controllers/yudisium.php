@@ -220,6 +220,7 @@ class Yudisium extends Public_Controller {
 		$id=$this->yudisium_m->insert(array(
 						    'name'	        => $this->input->post('name'),
                                                     'date'              => date('Y-m-d H:i:s'),
+						    'date_in'           => date('Y-m-d H:i:s'),
 						    'nim'	        => $this->input->post('nim'),
 						    'department'        => $this->input->post('department'),
 						    'pa'	        => $this->input->post('pa'),

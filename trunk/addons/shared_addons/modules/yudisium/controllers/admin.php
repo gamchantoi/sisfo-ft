@@ -201,7 +201,9 @@ class Admin extends Admin_Controller {
 		$data = $this->ym->limit($pagination['limit'])->get_many_by($base_where);
 		
 		//do we need to unset the layout because the request is ajax?
-		
+		$month	    = date('m-Y');
+		$date       = date('d-m-Y');
+		$this_month = $this->ym->yudis_this_month($month);
 		$_error = $this->ym->error_data();
 		$this->input->is_ajax_request() ? $this->template->set_layout(FALSE) : '';
 		$yudis = $this->ym->get_yudisium();
@@ -211,6 +213,7 @@ class Admin extends Admin_Controller {
 			->append_js('module::jquery.printPage.js')
 			->append_js('module::jquery.qtip.js')
 			->append_css('module::jquery.qtip.css')
+			->set('this_month',$this_month)
 			->set('error_d',$_error)
 			->set('yudisium',$yudis)
 			->set('base_where',$base_where)
