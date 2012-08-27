@@ -550,8 +550,8 @@ class Admin extends Admin_Controller
 		// Using this data, get the relevant results
 		//$blog = $this->blog_m->limit($pagination['limit'])->get_many_by($base_where);
 		
-		$results = $this->blog_m->limit($pagination['limit'])->search($post_data);
-
+		//$results = $this->blog_m->limit($pagination['limit'])->search($post_data);
+		$results = $this->blog_m->search($post_data);
 		//set the layout to false and load the view
 		$this->template
 			->set_layout(FALSE)
