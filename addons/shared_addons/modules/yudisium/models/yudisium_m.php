@@ -9,9 +9,28 @@
 class Yudisium_m extends MY_Model {
     protected $_table = 'yudisium';
     
+    function count_by($parram= array())
+    {
+	if (!empty($parrams['printed']))
+	{
+			// If it's all, then show whatever the status
+	    if ($params['printed'] != 'all')
+	    {
+				// Otherwise, show only the specific status
+		$this->db->where('printed', $parrams['printed']);
+	    }
+	}
+		// Nothing mentioned, show live only (general frontend stuff)
+	    else
+	{
+	    $this->db->where('status', '1');
+	}
+
+	    return $this->db->count_all_results('yudisium');
+    }
     function get_all()
     {
-	$this->db->order_by('id', 'DESC');
+	//$this->db->order_by('id', 'DESC');
 	return $this->db->get('yudisium')->result();
     }
     
