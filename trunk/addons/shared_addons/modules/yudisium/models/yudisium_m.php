@@ -30,7 +30,7 @@ class Yudisium_m extends MY_Model {
     }
     function yudis_this_month($month)
     {
-	$this->db->where("date_format(date_in,'%m-%y')",$month);
+	$this->db->where("date_format(date_in,'%m-%Y')",$month);
 	return $this->db->count_all_results('yudisium');
     }
     function get_all()
