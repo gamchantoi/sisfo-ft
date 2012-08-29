@@ -763,7 +763,8 @@ class Admin extends Admin_Controller {
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'orderdesc' => 'ipk','orderasc'=>'department');
+	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'records'=>'2','orderdesc' => 'ipk','orderasc'=>'department');
+	    //print_r($basewhere);
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    $style  = $this->style_report($bln,$thn);
@@ -818,7 +819,7 @@ class Admin extends Admin_Controller {
 	{
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'orderdesc' => 'ipk','orderasc'=>'department');
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'records' =>'2','orderdesc' => 'ipk','orderasc'=>'department');
 	    //$basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
@@ -921,7 +922,7 @@ class Admin extends Admin_Controller {
     public function attach_table($date,$thesis,$logo)
 	{
 	    //$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'orderasc' => 'department', 'orderdesc' => 'ipk');
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'records'=>'2','orderasc' => 'department', 'orderdesc' => 'ipk');
 	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -1285,7 +1286,7 @@ class Admin extends Admin_Controller {
 	}
     public function present_table($date,$thesis)
 	{
-	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'orderasc' => 'department');
+	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'records'=>'2','orderasc' => 'department');
             $data       = $this->ym->get_many_by($parrams);
             $_tanggal   = tanggal($date);
             list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -1306,7 +1307,7 @@ class Admin extends Admin_Controller {
                 }
 		$table .= "</tbody>";
                 $table .= "</table>";
-		$table .= $this->sign("400");
+		$table .= $this->sign("350");
 		$table .= "<br>";
 		$table .= $this->legend();
             }else{
@@ -1317,7 +1318,7 @@ class Admin extends Admin_Controller {
 	
     public function present_receipt_table($date)
 	{
-	    $parrams 	= array('yudisium_date'=>$date ,'orderasc' => 'department');
+	    $parrams 	= array('yudisium_date'=>$date ,'records'=>'2','orderasc' => 'department');
             $data       = $this->ym->get_many_by($parrams);
             $_tanggal   = tanggal($date);
             list($tgl,$bln,$thn) = explode(" ",$_tanggal);
