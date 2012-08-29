@@ -463,6 +463,10 @@ class Yudisium_m extends MY_Model {
 		{
 		    $this->db->where('yudisium_date',$params['yudisium_date']);
 		}
+		if(!empty($params['records']))
+		{
+		    $this->db->where('records',$params['records']);
+		}
 		if(!empty($params['orderasc']))
 		{
 		    $this->db->order_by($params['orderasc'],'ASC');
@@ -475,6 +479,7 @@ class Yudisium_m extends MY_Model {
 		{
 		    $this->db->group_by($params['group']); 
 		}
+		
 		// Is a status set?
 		if (!empty($params['printed']))
 		{
@@ -536,8 +541,9 @@ class Yudisium_m extends MY_Model {
                 
                 if (array_key_exists('name', $data))
 		{
-			$this->like('name',$data['name']);
+			$this->db->like('name',$data['name']);
 		}
+		$this->db->order_by('id','DESC');
 		return $this->get_all();
 	}
 	public function search_mhs($data = array())
