@@ -19,7 +19,7 @@
 	    <tbody>
 	      <tr>
 		<td><h1><?php echo $this_month; ?></h1></td>
-		<td><h1>1234</h1></td>
+		<td><h1><?php echo $this_date; ?></h1></td>
 	      </tr>
 	    </tbody>
 	  </table>
