@@ -204,6 +204,7 @@ class Admin extends Admin_Controller {
 		$month	    = date('m-Y');
 		$date       = date('d-m-Y');
 		$this_month = $this->ym->yudis_this_month($month);
+		$this_date  = $this->ym->yudis_this_date($date);
 		$_error = $this->ym->error_data();
 		$this->input->is_ajax_request() ? $this->template->set_layout(FALSE) : '';
 		$yudis = $this->ym->get_yudisium();
@@ -213,6 +214,7 @@ class Admin extends Admin_Controller {
 			->append_js('module::jquery.printPage.js')
 			->append_js('module::jquery.qtip.js')
 			->append_css('module::jquery.qtip.css')
+			->set('this_date',$this_date)
 			->set('this_month',$this_month)
 			->set('error_d',$_error)
 			->set('yudisium',$yudis)
@@ -223,6 +225,21 @@ class Admin extends Admin_Controller {
 		$this->input->is_ajax_request()
 		? $this->template->build('admin/tables/yudis')
 		: $this->template->build('admin/index');
+	}
+    
+    public function delete($id= 0)
+	{
+	    if($id)
+	    {
+		if ($this->ym->delete($id))
+		{
+		    $this->pyrocache->delete('yudisium_m');
+		    $this->session->set_flashdata('success', 'Hapus Data Sukses');
+		}
+	    }else{
+		$this->session->set_flashdata('notice', 'Hapus data gagal');
+	    }
+	    redirect('admin/yudisium');
 	}
     
     public function create()
