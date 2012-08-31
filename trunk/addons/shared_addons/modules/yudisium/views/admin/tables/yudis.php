@@ -4,8 +4,6 @@ $(document).ready(function()
 	$('a[title]').qtip();
 });
 </script>
-	
-	
 	<table>
 		<thead>
 			<tr>

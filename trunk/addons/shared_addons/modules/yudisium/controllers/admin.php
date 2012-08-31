@@ -205,6 +205,11 @@ class Admin extends Admin_Controller {
 		$date       = date('d-m-Y');
 		$this_month = $this->ym->yudis_this_month($month);
 		$this_date  = $this->ym->yudis_this_date($date);
+		$normal_by_date = $this->ym->normal_by_datein($month);
+		$anti_by_date= $this->ym->anti_by_datein($month);
+		$anti_periode= $this->ym->get_anti_periode($month);
+		$min_d3	= round($this->ym->write_min_datein($month,'D3'),2);
+		$max_d3	= round($this->ym->write_max_datein($month,'D3'),2);
 		$_error = $this->ym->error_data();
 		$this->input->is_ajax_request() ? $this->template->set_layout(FALSE) : '';
 		$yudis = $this->ym->get_yudisium();
@@ -214,8 +219,13 @@ class Admin extends Admin_Controller {
 			->append_js('module::jquery.printPage.js')
 			->append_js('module::jquery.qtip.js')
 			->append_css('module::jquery.qtip.css')
+			->set('anti_periode',$anti_periode)
 			->set('this_date',$this_date)
 			->set('this_month',$this_month)
+			->set('anti_by_date',$anti_by_date)
+			->set('normal_by_date',$normal_by_date)
+			->set('min_d3',$min_d3)
+			->set('max_d3',$max_d3)
 			->set('error_d',$_error)
 			->set('yudisium',$yudis)
 			->set('base_where',$base_where)

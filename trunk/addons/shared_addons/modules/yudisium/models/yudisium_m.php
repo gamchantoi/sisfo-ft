@@ -114,13 +114,38 @@ class Yudisium_m extends MY_Model {
 	    return $row->stage;
 	}
 	
-    function antidatir($date)
+    function antidatir($date,$type)
 	{
+	    
 	    $this->db->from('default_yudisium')
-	    ->where('yudisium_date',$date)
-	    ->where('antidatir','1');
+	    ->where('yudisium_date',$date);
+	    if($type == '0')
+	    {
+		$this->db->where('antidatir <>','0');
+	    }else{
+		$this->db->where('antidatir',$type);
+	    }
+	    
 	    return $this->db->count_all_results();
 	}
+    function anti_by_datein($month)
+	{
+	    $this->db->from('default_yudisium')
+	    ->where('antidatir <>','0')
+	    ->where("date_format(date_in,'%m-%Y')",$month);
+	    return $this->db->count_all_results();
+	    
+	}
+    
+    function normal_by_datein($month)
+	{
+	    $this->db->from('default_yudisium')
+	    ->where('antidatir','0')
+	    ->where("date_format(date_in,'%m-%Y')",$month);
+	    return $this->db->count_all_results();
+	    
+	}
+    
     function yudis_normal($date)
 	{
 	    $this->db->from('default_yudisium')
@@ -263,6 +288,22 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('thesis',$prodi);
 	    $result = $this->db->get('yudisium')->row();
 	    return $result->minimal;
+	}
+    function write_min_datein($date,$prodi)
+	{
+	    $this->db->select("MIN( DATEDIFF(  `finish` ,  `start` ) /30 ) as minimal");
+	    $this->db->where("date_format(date_in,'%m-%Y')",$date);
+	    $this->db->where('thesis',$prodi);
+	    $result = $this->db->get('yudisium')->row();
+	    return $result->minimal;
+	}
+    function write_max_datein($date,$prodi)
+	{
+	    $this->db->select("MAX( DATEDIFF(  `finish` ,  `start` ) /30 ) as maximal");
+	    $this->db->where("date_format(date_in,'%m-%Y')",$date);
+	    $this->db->where('thesis',$prodi);
+	    $result = $this->db->get('yudisium')->row();
+	    return $result->maximal;
 	}
     function get_write_max($date,$prodi)
 	{
@@ -633,5 +674,22 @@ class Yudisium_m extends MY_Model {
 	    }
 	    $this->db->from('college');
 	    return $this->db->count_all_results();
+	}
+	
+	public function get_anti_periode($month)
+	{
+	    
+	    $this->db->select('DISTINCT(yudisium_date)');
+	    $this->db->where("date_format(date_in,'%m-%Y')",$month);
+	    $result = $this->db->get('yudisium')->result();
+	    return $result;
+	}
+	public function yudis_date_n_datein($date)
+	{
+	    $datein= date('m-Y');
+	    $this->db->where("date_format(date_in,'%m-%Y')",$datein);
+	    $this->db->where('yudisium_date',$date);
+	    $result = $this->db->from('yudisium')->count_all_results();
+	    return $result;
 	}
 }
