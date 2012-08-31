@@ -180,7 +180,7 @@
 			</li>
 			<li>
 				<label for="antidatir"><?php echo "Habis Masa Studi /Antidatir"?></label>
-				<?php echo form_dropdown('antidatir',array('2'=>'Tidak','1'=>'Ya')); ?>
+				<?php echo form_dropdown('antidatir',array('0'=>'Tidak','1'=>'Antidatir Bulan pertama','2'=>'Antidatir Bulan kedua','3'=>'Antidatir Bulan ketiga','4' => 'Antidatir Bulan keempat')); ?>
 			</li>
 		</ul>
 	</fieldset>
