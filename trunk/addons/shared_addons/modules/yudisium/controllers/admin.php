@@ -201,15 +201,68 @@ class Admin extends Admin_Controller {
 		$data = $this->ym->limit($pagination['limit'])->get_many_by($base_where);
 		
 		//do we need to unset the layout because the request is ajax?
-		$month	    = date('m-Y');
-		$date       = date('d-m-Y');
+		//$month	    = date('m-Y');
+		//$date       = date('d-m-Y');
+		$month = '08-2012';
+		$date  = '2012-08-20';
 		$this_month = $this->ym->yudis_this_month($month);
 		$this_date  = $this->ym->yudis_this_date($date);
 		$normal_by_date = $this->ym->normal_by_datein($month);
 		$anti_by_date= $this->ym->anti_by_datein($month);
 		$anti_periode= $this->ym->get_anti_periode($month);
-		$min_d3	= round($this->ym->write_min_datein($month,'D3'),2);
-		$max_d3	= round($this->ym->write_max_datein($month,'D3'),2);
+		$D3_datein = $this->ym->count_yudis_by(array('thesis' => 'D3', 'datein' => $month));
+		$S1_datein = $this->ym->count_yudis_by(array('thesis' => 'Skripsi', 'datein' => $month));
+		//$ta_avg_d3 	= round($this->ym->write_avg_datein($month,'D3'),2);
+		$write_ta = array(
+		    'ta_min_d3'	=> round($this->ym->write_min_datein($month,'D3'),2),
+		    'ta_max_d3'	=> round($this->ym->write_max_datein($month,'D3'),2),
+		    'ta_avg_d3'	=> round($this->ym->write_avg_datein($month,'D3'),2),
+		    'ta_min_s1'	=> round($this->ym->write_min_datein($month,'Skripsi'),2),
+		    'ta_max_s1'	=> round($this->ym->write_max_datein($month,'Skripsi'),2),
+		    'ta_avg_s1'	=> round($this->ym->write_avg_datein($month,'Skripsi'),2)
+		);
+		$semester = array(
+		    'sem_min_d3' => round($this->ym->sem_min_datein($month,'D3'),2),
+		    'sem_max_d3' => round($this->ym->sem_max_datein($month,'D3'),2),
+		    'sem_avg_d3' => round($this->ym->sem_avg_datein($month,'D3'),2),
+		    'sem_min_s1' => round($this->ym->sem_min_datein($month,'Skripsi'),2),
+		    'sem_max_s1' => round($this->ym->sem_max_datein($month,'Skripsi'),2),
+		    'sem_avg_s1' => round($this->ym->sem_avg_datein($month,'Skripsi'),2)
+		);
+		$ipk = array(
+		    'ipk_min_d3' => round($this->ym->ipk_min_datein($month,'D3'),2),
+		    'ipk_max_d3' => round($this->ym->ipk_max_datein($month,'D3'),2),
+		    'ipk_avg_d3' => round($this->ym->ipk_avg_datein($month,'D3'),2),
+		    'ipk_min_s1' => round($this->ym->ipk_min_datein($month,'Skripsi'),2),
+		    'ipk_max_s1' => round($this->ym->ipk_max_datein($month,'Skripsi'),2),
+		    'ipk_avg_s1' => round($this->ym->ipk_avg_datein($month,'Skripsi'),2)
+		);
+		$predicate = array(
+		    'cum_d3'	=> round($this->ym->cum_datein($month,'D3'),2),
+		    'vg_d3'	=> round($this->ym->verrygood_datein($month,'D3'),2),
+		    'good_d3'	=> round($this->ym->good_datein($month,'D3'),2),
+		    'cum_s1'	=> round($this->ym->cum_datein($month,'Skripsi'),2),
+		    'vg_s1'	=> round($this->ym->verrygood_datein($month,'Skripsi'),2),
+		    'good_s1'	=> round($this->ym->good_datein($month,'Skripsi'),2)
+		);
+		$askol = array(
+		    'SMA_d3'	=> $this->ym->count_yudis_by(array('school' => 'SMA','thesis' => 'D3','datein' => $month )),
+		    'SMK_d3'	=> $this->ym->count_yudis_by(array('school' => 'SMK','thesis' => 'D3','datein' => $month )),
+		    'DIII_d3'	=> $this->ym->count_yudis_by(array('school' => 'DIII','thesis' => 'D3','datein' => $month )),
+		    'MAN_d3'	=> $this->ym->count_yudis_by(array('school' => 'MAN DLL','thesis' => 'D3','datein' => $month )),
+		    'SMA_s1'	=> $this->ym->count_yudis_by(array('school' => 'SMA','thesis' => 'Skripsi','datein' => $month )),
+		    'SMK_s1'	=> $this->ym->count_yudis_by(array('school' => 'SMK','thesis' => 'Skripsi','datein' => $month )),
+		    'DIII_s1'	=> $this->ym->count_yudis_by(array('school' => 'DIII','thesis' => 'Skripsi','datein' => $month )),
+		    'MAN_s1'	=> $this->ym->count_yudis_by(array('school' => 'MAN DLL','thesis' => 'Skripsi','datein' => $month ))
+		);
+		$ft_in= array(
+		    'PBU_d3'	=> $this->ym->count_yudis_by(array('parrental' => 'PBU','thesis' => 'D3','datein' => $month )),
+		    'UTUL_d3'	=> $this->ym->count_yudis_by(array('parrental' => 'UTUL','thesis' => 'D3','datein' => $month )),
+		    'PKS_d3'	=> $this->ym->count_yudis_by(array('parrental' => 'PKS','thesis' => 'D3','datein' => $month )),
+		    'PBU_s1'	=> $this->ym->count_yudis_by(array('parrental' => 'PBU','thesis' => 'Skripsi','datein' => $month )),
+		    'UTUL_s1'	=> $this->ym->count_yudis_by(array('parrental' => 'UTUL','thesis' => 'Skripsi','datein' => $month )),
+		    'PKS_s1'	=> $this->ym->count_yudis_by(array('parrental' => 'PKS','thesis' => 'Skripsi','datein' => $month ))
+		);
 		$_error = $this->ym->error_data();
 		$this->input->is_ajax_request() ? $this->template->set_layout(FALSE) : '';
 		$yudis = $this->ym->get_yudisium();
@@ -224,8 +277,14 @@ class Admin extends Admin_Controller {
 			->set('this_month',$this_month)
 			->set('anti_by_date',$anti_by_date)
 			->set('normal_by_date',$normal_by_date)
-			->set('min_d3',$min_d3)
-			->set('max_d3',$max_d3)
+			->set('write_ta',$write_ta)
+			->set('semester',$semester)
+			->set('predicate',$predicate)
+			->set('ipk',$ipk)
+			->set('askol',$askol)
+			->set('D3_datein',$D3_datein)
+			->set('S1_datein',$S1_datein)
+			->set('ft_in',$ft_in)
 			->set('error_d',$_error)
 			->set('yudisium',$yudis)
 			->set('base_where',$base_where)

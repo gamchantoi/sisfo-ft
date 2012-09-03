@@ -150,7 +150,7 @@ class Yudisium_m extends MY_Model {
 	{
 	    $this->db->from('default_yudisium')
 	    ->where('yudisium_date',$date)
-	    ->where('antidatir','2');
+	    ->where('antidatir','0');
 	    return $this->db->count_all_results();
 	}
     function error_data()
@@ -305,6 +305,81 @@ class Yudisium_m extends MY_Model {
 	    $result = $this->db->get('yudisium')->row();
 	    return $result->maximal;
 	}
+    function write_avg_datein($date,$prodi)
+	{
+	    $this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
+	    //$this->db->where('yudisium_date',$date);
+	    $this->db->where("date_format(date_in,'%m-%Y')",$date);
+	    $this->db->where('thesis',$prodi);
+	    $result = $this->db->get('yudisium')->row();
+	    return $result->rerata;
+	}
+    function sem_min_datein($date,$prodi)
+	{
+	    $query  = $this->db->query("SELECT MIN(( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) - vacation) AS minimum FROM (`default_yudisium`) WHERE  date_format(date_in,'%m-%Y') =  '".$date."' AND `thesis` = '".$prodi."'");
+            $result = $query->row();
+            return $result->minimum;
+	}
+    function sem_max_datein($date,$prodi)
+	{
+	    $query  = $this->db->query("SELECT MAX( (DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) - vacation) AS maksimum FROM (`default_yudisium`) WHERE  date_format(date_in,'%m-%Y') =  '".$date."' AND `thesis` = '".$prodi."'");
+            $result = $query->row();
+            return $result->maksimum;
+
+	}
+    function sem_avg_datein($date,$prodi)
+	{
+	    $query  = $this->db->query("SELECT AVG(( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) - vacation) AS semester FROM (`default_yudisium`) WHERE  date_format(date_in,'%m-%Y') =  '".$date."' AND `thesis` = '".$prodi."'");
+            $result = $query->row();
+            return $result->semester;
+	}
+    function ipk_min_datein($date,$prodi)
+	{
+	    $query  = $this->db->query("SELECT MIN(ipk) AS minimum FROM `default_yudisium` WHERE date_format(date_in,'%m-%Y') =  '".$date."' AND thesis ='".$prodi."'");
+            $result = $query->row();
+            return $result->minimum;
+	}
+    function ipk_max_datein($date,$prodi)
+	{
+	    $query  = $this->db->query("SELECT MAX(ipk) AS maksimum FROM `default_yudisium` WHERE date_format(date_in,'%m-%Y') =  '".$date."' AND thesis ='".$prodi."'");
+            $result = $query->row();
+            return $result->maksimum;
+	}
+    function ipk_avg_datein($date,$prodi)
+	{
+	    $query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE date_format(date_in,'%m-%Y') =  '".$date."' AND thesis ='".$prodi."'");
+            $result = $query->row();
+            return $result->rerata;
+	}
+    function cum_datein($date,$prodi)
+	{
+	    if ($prodi == 'Skripsi') : $sem ="10"; else : $sem ="8"; endif;
+            $this->db->from('default_yudisium');
+            $this->db->where("date_format(date_in,'%m-%Y')",$date);
+            $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=",$sem);
+            $this->db->where("thesis",$prodi);
+            $this->db->where("parrental <> ","PKS");
+            $this->db->where('ipk >=','3.51');
+            return $this->db->count_all_results();
+	}
+    function verrygood_datein($date,$prodi)
+	{
+	    $this->db->from('default_yudisium');
+            $this->db->where("date_format(date_in,'%m-%Y')",$date);
+            $this->db->where("thesis",$prodi);
+            //$this->db->where('ipk <=','3.50');
+            $this->db->where('ipk >=','2.76');
+            return $this->db->count_all_results();
+	}
+    function good_datein($date,$prodi)
+	{
+	    $this->db->from('default_yudisium');
+            $this->db->where("date_format(date_in,'%m-%Y')",$date);
+            $this->db->where("thesis",$prodi);
+            $this->db->where('ipk <=','2.75');
+            $this->db->where('ipk >=','2.00');
+            return $this->db->count_all_results(); 
+	}
     function get_write_max($date,$prodi)
 	{
 	    $this->db->select("MAX( DATEDIFF(  `finish` ,  `start` ) /30 ) as maximal");
@@ -357,6 +432,10 @@ class Yudisium_m extends MY_Model {
 	    if(!empty($parrams['date']))
 	    {
 		$this->db->where('yudisium_date',$parrams['date']);
+	    }
+	    if(!empty($parrams['datein']))
+	    {
+		$this->db->where("date_format(date_in,'%m-%Y')",$parrams['datein']);
 	    }
 	    return $this->db->count_all_results('yudisium');
 	}
@@ -686,7 +765,8 @@ class Yudisium_m extends MY_Model {
 	}
 	public function yudis_date_n_datein($date)
 	{
-	    $datein= date('m-Y');
+	    //$datein= date('m-Y');
+	    $datein='08-2012';
 	    $this->db->where("date_format(date_in,'%m-%Y')",$datein);
 	    $this->db->where('yudisium_date',$date);
 	    $result = $this->db->from('yudisium')->count_all_results();

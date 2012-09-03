@@ -19,30 +19,71 @@ $(document).ready(function()
 	    <thead>
 	      <tr>
 		<th>Jumlah pendaftar bulan ini</th>
-		<th>penulisan MIN (D3)</th>
-		<th>penulisan MAX (D3)</th>
-		<th>Studi Min (D3)</th>
-		<th>Studi Max (D3)</th>
-		<th>IPK MIN (D3)</th>
-		<th>IPK MAX (D3)</th>
-		<th>Dengan Pujian (D3)</th>
-		<th>Sangat Memuaskan (D3)</th>
-		<th>penulisan MIN (S1)</th>
-		<th>penulisan MAX (S1)</th>
-		<th>Studi Min (S1)</th>
-		<th>Studi Max (S1)</th>
-		<th>IPK MIN (S1)</th>
-		<th>IPK MAX (S1)</th>
-		<th>Dengan Pujian (S1)</th>
-		<th>Sangat Memuaskan (S1)</th>
+		<th>Jumlah Pendaftar D3 Bulan ini</th>
+		<th>Jumlah Pendaftar S1 Bulan ini</th>
 		<th>Jumlah pendaftar hari ini</th>
 	      </tr>
 	    </thead>
 	    <tbody>
 	      <tr>
 		<td><h1><a href="#" title="<?php foreach ($anti_periode as $ap) { echo "Yudisium tanggal " .tanggal($ap->yudisium_date)."<br>Jumlah Peserta: ".yudis_date_n_datein($ap->yudisium_date)."<br>" ; }; ?>"><?php echo $this_month; ?></a></h1></td>
-		<td><?php echo $min_d3; ?></td>
-		<td><?php echo $max_d3; ?></td>
+		<td>
+		    <h1>
+		      <a href="#" title=" RERATA LAMA PENULISAN TA : <b><?php echo $write_ta['ta_avg_d3']; ?></b> <br>
+		      LAMA MINIMUM PENULISAN TA: <b><?php echo $write_ta['ta_min_d3']; ?></b> <br>
+		      LAMA MAKSIMUM PENULISAN TA : <b><?php echo $write_ta['ta_max_d3']; ?></b> <br>
+		      <b>MASA STUDI</b><br>
+		      RERATA Masa Studi  : <b><?php echo $semester['sem_avg_d3']; ?></b> <br>
+		      Masa Studi MINIMUM : <b><?php echo $semester['sem_min_d3']; ?></b> <br>
+		      Masa Studi MAKSIMUM: <b><?php echo $semester['sem_max_d3']; ?></b> <br>
+		      <b>IPK</b><br>
+		      RERATA IPK	 : <b><?php echo $ipk['ipk_avg_d3']; ?></b> <br>
+		      IPK MINIMUM	 : <b><?php echo $ipk['ipk_min_d3']; ?></b> <br>
+		      IPK MAKSIMUM	 : <b><?php echo $ipk['ipk_max_d3']; ?></b> <br>
+		      <b>PREDIKAT</b><br>
+		      DENGAN PUJIAN	 : <b><?php echo $predicate['cum_d3']; ?></b> <br>
+		      SANGAT MEMUASKAN	 : <b><?php echo $predicate['vg_d3']; ?></b> <br>
+		      MEMUASKAN		 : <b><?php echo $predicate['good_d3']; ?></b> <br>
+		      <b>MASUK FT MELALUI</b><br>
+		      PBU		 : <b><?php echo $ft_in['PBU_d3']; ?></b> <br>
+		      UTUL		 : <b><?php echo $ft_in['UTUL_d3']; ?></b> <br>
+		      PKS		 : <b><?php echo $ft_in['PKS_d3']; ?></b> <br>
+		      <b>ASAL SEKOLAH</b><br>
+		      SMA		 : <b><?php echo $askol['SMA_d3']; ?></b> <br>
+		      SMK		 : <b><?php echo $askol['SMK_d3']; ?></b> <br>
+		      DIII		 : <b><?php echo $askol['DIII_d3']; ?></b> <br>
+		      MAN DLL		 : <b><?php echo $askol['MAN_d3']; ?></b> <br>
+		      "><?php echo $D3_datein; ?></a>
+		    </h1>
+		</td>
+		<td>
+		  <h1>
+		    <a href="#" title=" RERATA LAMA PENULISAN TA : <b><?php echo $write_ta['ta_avg_s1']; ?></b> <br>
+		      LAMA MINIMUM PENULISAN TA: <b><?php echo $write_ta['ta_min_s1']; ?></b> <br>
+		      LAMA MAKSIMUM PENULISAN TA : <b><?php echo $write_ta['ta_max_s1']; ?></b> <br>
+		      <b>MASA STUDI</b><br>
+		      RERATA Masa Studi  : <b><?php echo $semester['sem_avg_s1']; ?></b> <br>
+		      Masa Studi MINIMUM : <b><?php echo $semester['sem_min_s1']; ?></b> <br>
+		      Masa Studi MAKSIMUM: <b><?php echo $semester['sem_max_s1']; ?></b> <br>
+		      <b>IPK</b><br>
+		      RERATA IPK	 : <b><?php echo $ipk['ipk_avg_s1']; ?></b> <br>
+		      IPK MINIMUM	 : <b><?php echo $ipk['ipk_min_s1']; ?></b> <br>
+		      IPK MAKSIMUM	 : <b><?php echo $ipk['ipk_max_s1']; ?></b> <br>
+		      <b>PREDIKAT</b><br>
+		      DENGAN PUJIAN	 : <b><?php echo $predicate['cum_s1']; ?></b> <br>
+		      SANGAT MEMUASKAN	 : <b><?php echo $predicate['vg_s1']; ?></b> <br>
+		      MEMUASKAN		 : <b><?php echo $predicate['good_s1']; ?></b> <br>
+		      <b>MASUK FT MELALUI</b><br>
+		      PBU		 : <b><?php echo $ft_in['PBU_s1']; ?></b> <br>
+		      UTUL		 : <b><?php echo $ft_in['UTUL_s1']; ?></b> <br>
+		      PKS		 : <b><?php echo $ft_in['PKS_s1']; ?></b> <br>
+		      <b>ASAL SEKOLAH</b><br>
+		      SMA		 : <b><?php echo $askol['SMA_s1']; ?></b> <br>
+		      SMK		 : <b><?php echo $askol['SMK_s1']; ?></b> <br>
+		      DIII		 : <b><?php echo $askol['DIII_s1']; ?></b> <br>
+		      MAN DLL		 : <b><?php echo $askol['MAN_s1']; ?></b> <br>
+		      "><?php echo $S1_datein; ?></a>
+		  </h1></td>
 		<td><h1><?php echo $this_date; ?></h1></td>
 	      </tr>
 	    </tbody>
