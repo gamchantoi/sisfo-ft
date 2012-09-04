@@ -565,6 +565,11 @@ class Yudisium_m extends MY_Model {
 	    $result = $this->db->where('date',$date)->get('decree')->row();
 	    return $result->number;  
 	}
+    function decree_num($date)
+	{
+	    $result = $this->db->where('date',$date)->get('decree')->result();
+	    return $result;
+	}
     function get_decree_dy($bln,$thn)
 	{
 	    $bt= $bln."-".$thn;
@@ -587,6 +592,10 @@ class Yudisium_m extends MY_Model {
 		if(!empty($params['yudisium_date']))
 		{
 		    $this->db->where('yudisium_date',$params['yudisium_date']);
+		}
+		if(!empty($params['antidatir']))
+		{
+		    $this->db->where('antidatir',$params['antidatir']);
 		}
 		if(!empty($params['records']))
 		{
@@ -765,8 +774,8 @@ class Yudisium_m extends MY_Model {
 	}
 	public function yudis_date_n_datein($date)
 	{
-	    //$datein= date('m-Y');
-	    $datein='08-2012';
+	    $datein= date('m-Y');
+	    //$datein='08-2012';
 	    $this->db->where("date_format(date_in,'%m-%Y')",$datein);
 	    $this->db->where('yudisium_date',$date);
 	    $result = $this->db->from('yudisium')->count_all_results();

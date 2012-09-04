@@ -201,10 +201,10 @@ class Admin extends Admin_Controller {
 		$data = $this->ym->limit($pagination['limit'])->get_many_by($base_where);
 		
 		//do we need to unset the layout because the request is ajax?
-		//$month	    = date('m-Y');
-		//$date       = date('d-m-Y');
-		$month = '08-2012';
-		$date  = '2012-08-20';
+		$month	    = date('m-Y');
+		$date       = date('d-m-Y');
+		//$month = '08-2012';
+		//$date  = '2012-08-20';
 		$this_month = $this->ym->yudis_this_month($month);
 		$this_date  = $this->ym->yudis_this_date($date);
 		$normal_by_date = $this->ym->normal_by_datein($month);
@@ -484,7 +484,6 @@ class Admin extends Admin_Controller {
     public function decree()
 	{
 	    $data	= $this->ym->get_yudisium();
-	    
 	    $this->template
 			->title($this->module_details['name'], lang('yudisium_decree'))
 			->append_js('module::jquery.printPage.js')
@@ -1005,10 +1004,28 @@ class Admin extends Admin_Controller {
 	}
 	
 	//function view attch table
-    public function attach_table($date,$thesis,$logo)
+    public function attach_table($date,$thesis,$logo,$ant)
 	{
 	    //$parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'order' => 'ipk','group' => 'department');
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'records'=>'2','orderasc' => 'department', 'orderdesc' => 'ipk');
+	    switch($ant)
+	    {
+		case "a" :
+		    $anti= "1";
+		    break;
+		case "b" :
+		    $anti= "2";
+		    break;
+		case "c" :
+		    $anti= "3";
+		    break;
+		case "d" :
+		    $anti= "4";
+		    break;
+		default  :
+		    $anti= "0";
+		    break;
+	    }
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'antidatir' => $anti,'records'=>'1','orderasc' => 'department', 'orderdesc' => 'ipk');
 	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -1191,10 +1208,10 @@ class Admin extends Admin_Controller {
 	}
 	
 	//fungsi cetak lampiran sk dekan
-    public function print_attch($date,$thesis)
+    public function print_attch($date,$thesis,$ant)
 	{
 	    list($thn,$bln,$tgl) = explode("-",$date);
-	    $table = $this->attach_table($date,$thesis,'yes');
+	    $table = $this->attach_table($date,$thesis,'yes',$ant);
 	    $style = $this->style_table('Cetak Lampiran SK Dekan Yudisium',$bln,$thn);
 	    $legend= $this->legend();
 	    $dekan = $this->dekan();
@@ -1207,7 +1224,9 @@ class Admin extends Admin_Controller {
 	//fungsi cetak lampiran sk dekan mahasiswa d3
     public function pattch_d3($date)
 	{
-	    return $this->print_attch($date,'D3');
+	    $dates=explode("-",$date);
+	    $xdate= $dates[0]."-".$dates[1]."-".$dates[2];
+	    return $this->print_attch($xdate,'D3',$dates[3]);
 	}
 	
 	//fungsi cetak lampiran sk dekan mahasiswa s1

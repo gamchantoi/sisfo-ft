@@ -58,7 +58,7 @@ $(document).ready(function()
 		</td>
 		<td>
 		  <h1>
-		    <a href="#" title=" RERATA LAMA PENULISAN TA : <b><?php echo $write_ta['ta_avg_s1']; ?></b> <br>
+		    <a href="#" title="RERATA LAMA PENULISAN TA : <b><?php echo $write_ta['ta_avg_s1']; ?></b> <br>
 		      LAMA MINIMUM PENULISAN TA: <b><?php echo $write_ta['ta_min_s1']; ?></b> <br>
 		      LAMA MAKSIMUM PENULISAN TA : <b><?php echo $write_ta['ta_max_s1']; ?></b> <br>
 		      <b>MASA STUDI</b><br>
