@@ -82,6 +82,13 @@ function yudis_date_n_datein($date)
         $result = $ci->yudisium_m->yudis_date_n_datein($date);
         return $result;
     }
+function get_decree_num($date)
+    {
+        $ci =& get_instance();
+        $ci->load->model('yudisium_m');
+        $result = $ci->yudisium_m->decree_num($date);
+        return $result;
+    }
 /**    
 function export_xls($date,$thesis)
     {
