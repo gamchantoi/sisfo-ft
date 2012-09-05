@@ -1027,7 +1027,7 @@ class Admin extends Admin_Controller {
 		    $anti= "0";
 		    break;
 	    }
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'antidatir' => $anti,'records'=>'2','orderasc' => 'department', 'orderdesc' => 'ipk');
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'antidatir' => $anti,'records'=>'1','orderasc' => 'department', 'orderdesc' => 'ipk');
 	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
