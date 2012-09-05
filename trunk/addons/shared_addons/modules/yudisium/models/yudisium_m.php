@@ -565,6 +565,11 @@ class Yudisium_m extends MY_Model {
 	    $result = $this->db->where('date',$date)->get('decree')->row();
 	    return $result->number;  
 	}
+    function get_decree_ant($date,$ant)
+	{
+	    $result = $this->db->where('date',$date)->where('ant',$ant)->get('decree')->row();
+	    return $result->number;
+	}
     function decree_num($date)
 	{
 	    $result = $this->db->where('date',$date)->get('decree')->result();
