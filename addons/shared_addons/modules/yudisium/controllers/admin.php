@@ -763,6 +763,8 @@ class Admin extends Admin_Controller {
     
     public function cetak_sk($date)
 	{
+	    $xdate	= explode("-",$date);
+	    $ant	= $xdate[3];
 	    $_tanggal 		= tanggal($date);
 	    list($tgl,$bln,$thn)	= explode(" ",$_tanggal);
 	    $style  = "<title>Surat Keputusan Dekan Yudisium ".$bln." ".$thn."</title>
@@ -801,7 +803,7 @@ class Admin extends Admin_Controller {
 			</style>";
 	    $table  = "<table style=\"font-size:15px;\">";
 	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"60px\"><td  align=\"center\" width=\"475px\"><b>FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"60px\"></td></tr>";
-	    $table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR : ".$this->ym->get_decree_num($date)." TAHUN  ".$thn."<br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
+	    $table .= "<tr><td align=\"center\" colspan=3><b>KEPUTUSAN DEKAN FAKULTAS TEKNIK <br>UNIVERSITAS NEGERI YOGYAKARTA <br> NOMOR : ".$this->ym->get_decree_ant($date,$ant)." TAHUN  ".$thn."<br> TENTANG <br> YUDISIUM PROGRAM DIPLOMA-3 (D-3) DAN STRATA-1 (S-1) <br> MAHASISWA FAKULTAS TEKNIK UNIVERSITAS NEGERI YOGYAKARTA<br>";
 	    $table .= "PERIODE ".strtoupper($bln)." ".$thn."<br><br> DEKAN FAKULTAS TEKNIK <br> UNIVERSITAS NEGERI YOGYAKARTA</b></td></tr>";    
 	    $table .= "</tabel>";
 	    $table .= "<table>";
@@ -956,7 +958,7 @@ class Admin extends Admin_Controller {
 	    echo $legend;
 	}
 	
-    public function attch_header($date,$thesis,$logo)
+    public function attch_header($date,$thesis,$logo,$ant)
 	{
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -983,7 +985,7 @@ class Admin extends Admin_Controller {
 		}
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Lampiran $lamp Keputusan Dekan</td></tr>";
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Fakultas Teknik Universitas Negeri Yogyakarta</td></tr>";
-	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Nomor: ".$this->ym->get_decree_num($date)." Tahun $thn</td></tr>";
+	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Nomor: ".$this->ym->get_decree_ant($date,$ant)." Tahun $thn</td></tr>";
 	    $header .= "<tr><td colspan=3 style=\"padding-left: 350px;\">Tanggal ".$_tanggal."</td></tr>";
 	    $header .= "<tr><td colspan=3><br /></td></tr>";
 	    $header .= "<tr><th align=\"center\" colspan=3><b>DAFTAR NAMA PESERTA YUDISIUM MAHASISWA $stage </b></th></tr>";
@@ -1025,14 +1027,14 @@ class Admin extends Admin_Controller {
 		    $anti= "0";
 		    break;
 	    }
-	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'antidatir' => $anti,'records'=>'1','orderasc' => 'department', 'orderdesc' => 'ipk');
+	    $parrams = array('yudisium_date'=>$date , 'thesis' => $thesis,'antidatir' => $anti,'records'=>'2','orderasc' => 'department', 'orderdesc' => 'ipk');
 	    $data	 = $this->ym->get_many_by($parrams);
 	    $_tanggal	= tanggal($date);
 	    list($tgl,$bln,$thn) = explode(" ",$_tanggal);
 	    if($data)
 	    {
 		$i      = 1;
-		$table  = $this->attch_header($date,$thesis,$logo);
+		$table  = $this->attch_header($date,$thesis,$logo,$ant);
 		$table .= "<table class='gridtable' border=\"1px\">";
 		$table .= "<thead>";
 		$table .= "<tr><th>NO</th><th>NIM</th><th>NAMA</th><th>PROGRAM STUDI</th><th>SKS</th><th>IPK</th><th>PREDIKAT</th></tr>";
@@ -1232,7 +1234,10 @@ class Admin extends Admin_Controller {
 	//fungsi cetak lampiran sk dekan mahasiswa s1
     public function pattch_s1($date)
 	{
-	    return $this->print_attch($date,'Skripsi');
+	    //return $this->print_attch($date,'Skripsi');
+	    $dates=explode("-",$date);
+	    $xdate= $dates[0]."-".$dates[1]."-".$dates[2];
+	    return $this->print_attch($xdate,'Skripsi',$dates[3]);
 	}
 	
 	//fungsi export excel lampiran sk dekan mahasiswa D3   
