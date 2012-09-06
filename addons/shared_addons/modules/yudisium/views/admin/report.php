@@ -38,9 +38,14 @@
 		<?php foreach ($data as $item) : ?>
 				<tr>
 					<td><?php echo tanggal($item->yudisium_date); ?></td>
-					
+					<?php $decrees = get_decree_num($item->yudisium_date);?>
 					<td><b><?php echo count_yudisium_by($item->yudisium_date,'D3'); ?></b>  <img src="<?php echo base_url().$this->module_details['path'];?>/img/graduate.png" width="20px" align="center"></td>
 					<td><a href="admin/yudisium/report_d3/<?php echo $item->yudisium_date; ?>" class="cetak" title="cetak Urutan Yudisium Mahasiswa D3"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a></td>
+					<td>
+					    <?php foreach($decrees as $dc):?>
+					    <a href="#"><b><a href="admin/yudisium/cetak_sk/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |</a>
+					    <?php endforeach; ?>
+					</td>
 					<td><a href="admin/yudisium/export_d3/<?php echo $item->yudisium_date; ?>"><img src="<?php echo base_url().$this->module_details['path'];?>/img/excel.png" width="30px" align="center"></a></td>
 					<td><a href="admin/yudisium/present_d3/<?php echo $item->yudisium_date; ?>" class="cetak"></?php><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png" width="30px" align="center"></a></td>
 					<td><b><?php echo count_yudisium_by($item->yudisium_date,'Skripsi'); ?></b>  <img src="<?php echo base_url().$this->module_details['path'];?>/img/graduate.png" width="20px" align="center"></td>
