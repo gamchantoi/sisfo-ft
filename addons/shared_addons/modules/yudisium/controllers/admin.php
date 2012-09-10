@@ -869,7 +869,7 @@ class Admin extends Admin_Controller {
 			$anti	= "4";
 			break;
 		    default	:
-			$anti	= "0";
+			$anti	= "N";
 			break;
 		}
 	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$dates,'antidatir' => $anti,'orderdesc' => 'ipk','orderasc'=>'department');
@@ -946,11 +946,11 @@ class Admin extends Admin_Controller {
 			$anti	= "4";
 			break;
 		    default	:
-			$anti	= "0";
+			$anti	= "N";
 			break;
 		}
-	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$dates,'antidatir' => $anti,'orderdesc' => 'ipk','orderasc'=>'department');
-	    //$basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$dates,'antidatir' => $anti, 'records' => '1','orderdesc' => 'ipk','orderasc'=>'department');
+    
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
 	    
@@ -1454,7 +1454,7 @@ class Admin extends Admin_Controller {
 		    $anti= "4";
 		    break;
 		default  :
-		    $anti= "0";
+		    $anti= "N";
 		    break;
 	    }
 	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'antidatir' => $anti,'records'=>'1','orderasc' => 'department');
