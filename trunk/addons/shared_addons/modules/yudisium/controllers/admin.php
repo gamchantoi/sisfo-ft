@@ -676,7 +676,7 @@ class Admin extends Admin_Controller {
 	    $table .= "<tr><td>6.</td><td>Jenis Kelamin</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".lang('yudisium_sex_'.$item->sex)."</td></tr>";
 	    $table .= "<tr><td>7.</td><td>Status</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->meriage."</td></tr>";
 	    $table .= "<tr><td>8.</td><td>Alamat Sekarang</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->address."</td></tr>";
-      $table .= "<tr><td>9.</td><td>No. Telp</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->phone."</td></tr>";
+	    $table .= "<tr><td>9.</td><td>No. Telp</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->phone."</td></tr>";
 	    $table .= "<tr><td>10.</td><td>Nama Orang Tua</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrent."</td></tr>";
 	    $table .= "<tr><td>11.</td><td>Alamat Orang Tua</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrent_address."</td></tr>";
 	    $table .= "<tr><td>12.</td><td>Diterima di FT Melalui</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> ".$item->parrental."</td></tr>";
@@ -849,9 +849,30 @@ class Admin extends Admin_Controller {
 	//fungsi cetak rekap peserta yudisium D3
     public function report_d3($date)
 	{
-	    $_tanggal 		= tanggal($date);
+	    $exp		= explode("-",$date);
+	    $dates		= $exp[0]."-".$exp[1]."-".$exp[2];
+	    $ant		= $exp[3];
+	    $_tanggal 		= tanggal($dates);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$date,'records'=>'2','orderdesc' => 'ipk','orderasc'=>'department');
+	    switch($ant)
+		{
+		    case "a"	:
+			$anti	= "1";
+			break;
+		    case "b"	:
+			$anti	= "2";
+			break;
+		    case "c"	:
+			$anti	= "3";
+			break;
+		    case "d"	:
+			$anti	= "4";
+			break;
+		    default	:
+			$anti	= "0";
+			break;
+		}
+	    $basewhere		= array('thesis' => 'D3','yudisium_date'=>$dates,'antidatir' => $anti,'orderdesc' => 'ipk','orderasc'=>'department');
 	    //print_r($basewhere);
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
@@ -905,9 +926,30 @@ class Admin extends Admin_Controller {
 	//fungsi cetak rekap peserta yudisium S1
     public function report_s1($date)
 	{
-	    $_tanggal 		= tanggal($date);
+	    $exp		= explode("-",$date);
+	    $dates		= $exp[0]."-".$exp[1]."-".$exp[2];
+	    $ant		= $exp[3];
+	    $_tanggal 		= tanggal($dates);
 	    list($tgl,$bln,$thn)= explode(" ",$_tanggal);
-	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date,'records' =>'2','orderdesc' => 'ipk','orderasc'=>'department');
+	    switch($ant)
+		{
+		    case "a"	:
+			$anti	= "1";
+			break;
+		    case "b"	:
+			$anti	= "2";
+			break;
+		    case "c"	:
+			$anti	= "3";
+			break;
+		    case "d"	:
+			$anti	= "4";
+			break;
+		    default	:
+			$anti	= "0";
+			break;
+		}
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$dates,'antidatir' => $anti,'orderdesc' => 'ipk','orderasc'=>'department');
 	    //$basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$date);
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
@@ -1395,9 +1437,27 @@ class Admin extends Admin_Controller {
                 </style>";
                 return $style;
 	}
-    public function present_table($date,$thesis)
+    public function present_table($date,$thesis,$ant)
 	{
-	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'records'=>'2','orderasc' => 'department');
+	    switch($ant)
+	    {
+		case "a" :
+		    $anti= "1";
+		    break;
+		case "b" :
+		    $anti= "2";
+		    break;
+		case "c" :
+		    $anti= "3";
+		    break;
+		case "d" :
+		    $anti= "4";
+		    break;
+		default  :
+		    $anti= "0";
+		    break;
+	    }
+	    $parrams 	= array('yudisium_date'=>$date , 'thesis' => $thesis,'antidatir' => $anti,'records'=>'1','orderasc' => 'department');
             $data       = $this->ym->get_many_by($parrams);
             $_tanggal   = tanggal($date);
             list($tgl,$bln,$thn) = explode(" ",$_tanggal);
@@ -1462,7 +1522,9 @@ class Admin extends Admin_Controller {
     
     public function present_xls($date,$thesis)
 	{
-	    $present= $this->present_table($date,$thesis);
+	    $exp= explode("-",$date);
+	    $ant= $exp[3];
+	    $present= $this->present_table($date,$thesis,$ant);
 	    echo $present;
 	    /**
 	    $excel= new ExportToExcel();
