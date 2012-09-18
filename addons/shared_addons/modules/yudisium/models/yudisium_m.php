@@ -150,7 +150,7 @@ class Yudisium_m extends MY_Model {
 	{
 	    $this->db->from('default_yudisium')
 	    ->where('yudisium_date',$date)
-	    ->where('antidatir','0');
+	    ->where('antidatir','N');
 	    return $this->db->count_all_results();
 	}
     function error_data()
