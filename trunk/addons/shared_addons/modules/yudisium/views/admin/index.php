@@ -26,7 +26,7 @@ $(document).ready(function()
 	    </thead>
 	    <tbody>
 	      <tr>
-		<td><h1><a href="#" title="<?php foreach ($anti_periode as $ap) { echo "Yudisium tanggal " .tanggal($ap->yudisium_date)."<br>Jumlah Peserta: ".yudis_date_n_datein($ap->yudisium_date)."<br>" ; }; ?>"><?php echo $this_month; ?></a></h1></td>
+		<td><h1><a href="#" title="<?php foreach ($anti_periode as $ap) { echo "Yudisium tanggal " .tanggal($ap->yudisium_date)."<br>Jumlah Peserta: ".yudis_date_n_datein($ap->yudisium_date)."<br>" ; }; ?>"><?php echo $this_date; ?></a></h1></td>
 		<td>
 		    <h1>
 		      <a href="#" title=" RERATA LAMA PENULISAN TA : <b><?php echo $write_ta['ta_avg_d3']; ?></b> <br>
