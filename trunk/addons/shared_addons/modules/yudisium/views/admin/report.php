@@ -4,7 +4,7 @@
   });
 </script>
 <section class="title">
-	<h4><?php echo lang('yudisium_decree'); ?></h4>
+	<h4>Rekap Yudisium</h4>
 </section>
 <section class="item">
 	<?php if ($data) : ?>
@@ -14,8 +14,7 @@
 			<tr>
 				
 				<th class="collapse"><?php echo lang('yudisium_date'); ?></th>				
-				<!--<th class="collapse"><?php echo lang('yudisium_count_d3'); ?></th>	 -->
-				<th class="collapse"><?php echo lang('yudisium_decree'); ?></th>
+				<!--<th class="collapse"><?php echo lang('yudisium_count_d3'); ?></th>	 -->			    
 				<th class="collapse"><?php echo lang('yudisium_print_d3'); ?></th>
 				<!--<th class="collapse"><?php echo lang('yudisium_export_d3'); ?></th> -->
 				<th class="collapse"><?php echo lang('yudisium_present_d3'); ?></th>
@@ -42,11 +41,7 @@
 					<?php $decrees = get_decree_num($item->yudisium_date);?>
 					<!--<td><b><?php echo count_yudisium_by($item->yudisium_date,'D3'); ?></b>  <img src="<?php echo base_url().$this->module_details['path'];?>/img/graduate.png" width="20px" align="center"></td> -->
 					<!-- <td><a href="admin/yudisium/report_d3/<?php echo $item->yudisium_date; ?>" class="cetak" title="cetak Urutan Yudisium Mahasiswa D3"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a></td> -->
-					<td>
-					    <?php foreach($decrees as $dc):?>
-					    <b><a href="admin/yudisium/cetak_sk/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |
-					    <?php endforeach; ?>
-					</td>
+					
 					<!--<td><a href="admin/yudisium/export_d3/<?php echo $item->yudisium_date; ?>"><img src="<?php echo base_url().$this->module_details['path'];?>/img/excel.png" width="30px" align="center"></a></td>-->
 					<td>
 					  <?php foreach($decrees as $dc):?>
