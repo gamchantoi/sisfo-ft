@@ -501,6 +501,13 @@ class Admin extends Admin_Controller {
 			margin-left: auto;
 			margin-right: auto;
 			}
+			@media print {
+    .noprint {
+        font-color : #fff;
+    }
+}
+
+
 			</style>";
 	    return $style;
 	}
@@ -708,6 +715,61 @@ class Admin extends Admin_Controller {
 	    echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
 	    $this->ym->update($id,array('printed' => '1'));
 	    $this->ym->add_print($id,'4');
+	}
+    public function cetak_kosong()
+	{
+	    $style  = $this->style_print('Cetak Isian Kelulusan');
+	    $table  = "<table style=\"font-size:14px;\">";
+	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\" width=\"435px\"><b>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><br>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM ";
+	    
+		    
+	   
+	    $table .= "KKT";
+	    
+		    
+	    $table .= "</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
+	    //$table .= "<tr><td width=\"80px\"><td  align=\"center\" width=\"435px\"><b>DAFTAR ISIAN KELULUSAN<br>PESERTA YUDISIUM SARJANA/DIPLOMA 3</b></td><td  width=\"80px\"></td></tr>";
+	    $table .= "<tr><td colspan=3 align=\"right\" ><font size=1.5>FRM/TKF/21-00 <br>02 Juli 2007</font></td></tr>";
+	    $table .= "<tr><td colspan=3><hr></td></tr>";
+	    $table .= "</table><table>";
+	    $table .= "<tr><td>1.</td><td>Nama</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>2.</td><td>No. Mahasiswa</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>3.</td><td>Program Studi</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>4.</td><td width=\"160px\">Tempat, Tanggal Lahir</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>5.</td><td>Agama</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>6.</td><td>Jenis Kelamin</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>7.</td><td>Status</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>8.</td><td>Alamat Sekarang</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>9.</td><td>No. Telp</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>10.</td><td>email</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>11.</td><td>Nama Orang Tua</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>12.</td><td>Alamat Orang Tua</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>13.</td><td>Diterima di FT Melalui</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>14.</td><td>Sekolah Asal</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";
+	    $table .= "<tr><td>15.</td><td>Alamat Sekolah</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp;</td></tr>";	    
+	    $table .= "<tr><td>16.</td><td width=\"170px\">IPK/SKS</td><td>:</td><td>&nbsp;&nbsp;</td><td colspan=2> &nbsp;&nbsp; &nbsp; <b>IPK:</b> &nbsp;&nbsp; &nbsp; <b>Total SKS:</b> &nbsp;&nbsp;</td></tr>";
+	    $table .= "</table>";
+	    $table .= "<table>";
+	    $table .= "<tr><td align=\"center\">Mengetahui</td><td width=\"350px\" style=\"padding-right: 100px; \" align=\"right\">Yogyakarta </font></td></tr>";
+	    $table .= "<tr><td align=\"center\">Kaprodi Pend Teknik Informatika</td><td width=\"350px\" align=\"right\">Mahasiswa yang Bersangkutan</td></tr>";
+	    $table .= "<tr><td colspan=2><br /></td></tr>";
+	    $table .= "<tr><td colspan=2><br /></td></tr>";
+	    $table .= "<tr><td colspan=2><br /></td></tr>";
+	    $table .= "<tr><td colspan=2><br /></td></tr>";
+	    $table .= "<tr><td colspan=2><br /></td></tr>";
+	    $table .= "<tr><td align=\"center\" width=\"170px\">(......................................................)</td><td align=\"center\"  style=\"padding-left: 100px; \" width=\"170px\">(......................................................)</td></tr>";
+	    $table .= "<tr><td align=\"center\" width=\"170px\">NIP....................................................</font></td><td align=\"center\"  style=\"padding-left: 100px; \" width=\"170px\">NIM...............................................</td></tr>";
+	    $table .= "<tr><td colspan=2 align=\"center\">Mengetahui, <br />Wakil Dekan I</td></tr>";
+	    //$table .= "<tr><td colspan=4 align=\"center\"><img src=\"".base_url().$this->module_details['path']."/img/sunar-ttd.png\" width=\"100\"></td></tr>";
+	    $table .= "<tr><td colspan=2 align=\"center\"><br /></td></tr>";
+	    $table .= "<tr><td colspan=2 align=\"center\">Dr. Sunaryo Soenarto <br />NIP. 19580630 198601 1 001</td></tr>";
+	    $table .= "</table>";
+	    echo $style;
+	    echo $table;
+	    echo "<hr>";
+	    echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani Wakil Dekan I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES / OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
+	    echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
+	    
 	}
 	
 	//fungsi cetak tanda terima Penyerahan CD Tugas Akhir
@@ -949,7 +1011,7 @@ class Admin extends Admin_Controller {
 			$anti	= "N";
 			break;
 		}
-	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$dates,'antidatir' => $anti, 'records' => '1','orderdesc' => 'ipk','orderasc'=>'department');
+	    $basewhere		= array('thesis' => 'Skripsi','yudisium_date'=>$dates,'antidatir' => $anti,'orderdesc' => 'ipk','orderasc'=>'department');
     
 	    $data		= $this->ym->get_many_by($basewhere);
 	    $i			= 1;
@@ -1489,7 +1551,13 @@ class Admin extends Admin_Controller {
 	
     public function present_receipt_table($date)
 	{
-	    $parrams 	= array('yudisium_date'=>$date ,'records'=>'2','orderasc' => 'department');
+	     $exp= explode("-",$date);
+	    $x_thn = $exp[0];
+	    $x_bln = $exp[1];
+	    $x_tgl = $exp[2]
+	    $ant   = $exp[3];
+	    $x_date= $x_thn."-".$x_bln."-".$x_tgl;
+	    $parrams 	= array('yudisium_date'=>$x_date ,'antidatir' => $ant,'records'=>'1','orderasc' => 'department');
             $data       = $this->ym->get_many_by($parrams);
             $_tanggal   = tanggal($date);
             list($tgl,$bln,$thn) = explode(" ",$_tanggal);
