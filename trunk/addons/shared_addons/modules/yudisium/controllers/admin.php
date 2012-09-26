@@ -1554,7 +1554,7 @@ class Admin extends Admin_Controller {
 	     $exp= explode("-",$date);
 	    $x_thn = $exp[0];
 	    $x_bln = $exp[1];
-	    $x_tgl = $exp[2]
+	    $x_tgl = $exp[2];
 	    $ant   = $exp[3];
 	    $x_date= $x_thn."-".$x_bln."-".$x_tgl;
 	    $parrams 	= array('yudisium_date'=>$x_date ,'antidatir' => $ant,'records'=>'1','orderasc' => 'department');
