@@ -42,7 +42,12 @@ $(document).ready(function()
 		      IPK MAKSIMUM	 : <b><?php echo $ipk['ipk_max_d3']; ?></b> <br>
 		      <b>PREDIKAT</b><br>
 		      DENGAN PUJIAN	 : <b><?php echo $predicate['cum_d3']; ?></b> <br>
+		      <?php if ($predicate['cum_d3'] > 0) :?>
+		      <?php $verygood= $predicate['vg_d3'] - $predicate['cum_d3'];?>
+		      SANGAT MEMUASKAN	 : <b><?php echo $verygood; ?></b> <br>
+		      <?php else : ?>
 		      SANGAT MEMUASKAN	 : <b><?php echo $predicate['vg_d3']; ?></b> <br>
+		      <?php endif; ?>		      
 		      MEMUASKAN		 : <b><?php echo $predicate['good_d3']; ?></b> <br>
 		      <b>MASUK FT MELALUI</b><br>
 		      PBU		 : <b><?php echo $ft_in['PBU_d3']; ?></b> <br>
@@ -71,7 +76,12 @@ $(document).ready(function()
 		      IPK MAKSIMUM	 : <b><?php echo $ipk['ipk_max_s1']; ?></b> <br>
 		      <b>PREDIKAT</b><br>
 		      DENGAN PUJIAN	 : <b><?php echo $predicate['cum_s1']; ?></b> <br>
+		      <?php if ($predicate['cum_s1'] > 0) :?>
+		      <?php $vg_s1= $predicate['vg_s1'] - $predicate['cum_s1'];?>
+		      SANGAT MEMUASKAN	 : <b><?php echo $vg_s1; ?></b> <br>
+		      <?php else : ?>
 		      SANGAT MEMUASKAN	 : <b><?php echo $predicate['vg_s1']; ?></b> <br>
+		      <?php endif; ?>		      
 		      MEMUASKAN		 : <b><?php echo $predicate['good_s1']; ?></b> <br>
 		      <b>MASUK FT MELALUI</b><br>
 		      PBU		 : <b><?php echo $ft_in['PBU_s1']; ?></b> <br>
