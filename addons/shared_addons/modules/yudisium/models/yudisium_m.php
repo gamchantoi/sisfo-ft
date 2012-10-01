@@ -9,6 +9,10 @@
 class Yudisium_m extends MY_Model {
     protected $_table = 'yudisium';
     
+    function insert_college($data)
+    {
+	return $this->db->insert('college', $data); 
+    }
     function count_by($parram= array())
     {
 	if (!empty($parrams['printed']))
@@ -28,11 +32,35 @@ class Yudisium_m extends MY_Model {
 
 	    return $this->db->count_all_results('yudisium');
     }
+    
+    function count_college_by($parrams= array())
+    {
+	if(!empty($parrams['nim']))
+	   {
+		$this->db->where('nim',$parrams['nim']);
+	   }
+	if(!empty($parrams['department']))
+	    {
+		$this->db->where('department',$parrams['department']);
+	    }
+	if(!empty($parrams['id']))
+	    {
+		$this->db->where('id',$parrams['id']);
+	    }
+	if(!empty($parrams['x']))
+	    {
+		$this->db->where('x',$parrams['x']);
+	    }
+
+	return $this->db->count_all_results('college');
+    }
+    
     function yudis_this_month($month)
     {
 	$this->db->where("date_format(date_in,'%m-%Y')",$month);
 	return $this->db->count_all_results('yudisium');
     }
+    
     function yudis_this_date($date)
     {
 	$this->db->where("date_format(date_in,'%m-%Y')",$date);
@@ -46,7 +74,7 @@ class Yudisium_m extends MY_Model {
     
     function get_college_all()
     {
-	$this->db->select('id,nim,name,department,x,status')->order_by('id','DESC');
+	$this->db->select('id,nim,name,department,x')->order_by('id','DESC');
 	return $this->db->get('college')->result();
     }
     
@@ -469,7 +497,12 @@ class Yudisium_m extends MY_Model {
         return $this->db->get('department')->result();
     }
 	
-	function get_dept_id($name){
+    function get_dpt_name($id)
+    {
+	$dpt= $this->db->select('id,name,major')->where('id',$id)->get('department')->row();
+	return $dpt->name;
+    }
+    function get_dept_id($name){
         return $this->db->select('id,name')->where('name',$name)->get('department')->result();
     }
     
@@ -501,6 +534,7 @@ class Yudisium_m extends MY_Model {
     
     }
     
+     
     function get_major($id)
     {
         $get_major= $this->db->select('id,major')->where('id',$id)->get('department')->row();
@@ -666,6 +700,22 @@ class Yudisium_m extends MY_Model {
 
 		return parent::count_by($params) == 0;
 	}
+	
+    function check_nim_exists($field, $value = '', $id = 0)
+	{
+		if (is_array($field))
+		{
+			$params = $field;
+			$id = $value;
+		}
+		else
+		{
+			$params[$field] = $value;
+		}
+		$params['id !='] = (int) $id;
+
+		return parent::count_by($params) == 0;
+	}
         
     public function search($data = array())
 	{
@@ -743,6 +793,27 @@ class Yudisium_m extends MY_Model {
 		return $this->get_college_all();
 	}
 	
+	public function get_mhs_by($parrams=array())
+	{
+	    if(!empty($parrams['id']))
+	    {
+		$this->db->where('id',$parrams['id']);
+	    }
+	    if(!empty($parrams['nim']))
+	    {
+		$this->db->where('nim',$parrams['nim']);
+	    }
+	    if(!empty($parrams['name']))
+	    {
+		$this->db->where('name',$parrams['name']);
+	    }
+	    if(!empty($parrams['x']))
+	    {
+		$this->db->where('x',$parrams['x']);
+	    }
+	    return $this->db->get('college')->row();
+	}
+	
 	public function count_mhs_by($parrams=array())
 	{
 	    if(!empty($parrams['status']))
@@ -785,5 +856,10 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('yudisium_date',$date);
 	    $result = $this->db->from('yudisium')->count_all_results();
 	    return $result;
+	}
+	public function update_mhs($id,$data)
+	{
+	    $this->db->where('id', $id);
+	    return $this->db->update('college', $data); 
 	}
 }
