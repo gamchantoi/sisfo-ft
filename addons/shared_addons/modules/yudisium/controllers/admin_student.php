@@ -37,9 +37,11 @@ class Admin_Student extends Admin_Controller {
     
     public function index()
 	{
-            $base_where = array('status' => 0);
-            $base_where['status'] = $this->input->post('f_module') ? (int)$this->input->post('f_status') : $base_where['status'];
-            $base_where = $this->input->post('f_keywords') ? $base_where + array('name' => $this->input->post('f_keywords')) : $base_where;
+            $base_where = array();
+            //$base_where['status'] = $this->input->post('f_module') ? (int)$this->input->post('f_status') : $base_where['status'];
+            //$base_where = $this->input->post('f_keywords') ? $base_where + array('name' => $this->input->post('f_keywords')) : $base_where;
+            if ($this->input->post('f_keywords')) 	$base_where['name'] = $this->input->post('f_keywords');
+            if ($this->input->post('f_nim')) 	        $base_where['nim'] = $this->input->post('f_nim');
             $total_rows = $this->ym->count_mhs_by($base_where);
 	    $pagination = create_pagination('admin/yudisium/college/index', $total_rows);		
 		// Using this data, get the relevant results
@@ -130,16 +132,10 @@ class Admin_Student extends Admin_Controller {
         }
     public function ajax_filter()
 	{
-		//$category = $this->input->post('f_category');
-		$status = $this->input->post('f_status');
 		$keywords = $this->input->post('f_keywords');
 		$nim   = $this->input->post('f_nim');
 		$post_data = array();
 
-		if ($status == '1' OR $status == '2')
-		{
-			$post_data['status'] = $status;
-		}
 		if($nim){
                     $post_data['nim'] = $nim;
                 }
