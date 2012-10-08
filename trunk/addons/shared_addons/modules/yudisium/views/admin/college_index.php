@@ -8,7 +8,7 @@
 
 <div id="filter-stage">
 
-	<?php echo form_open('admin/yudisium/mahasiswa/action'); ?>
+	<?php echo form_open('admin/yudisium/college/action'); ?>
 
 		<?php echo $this->load->view('admin/tables/college'); ?>
       
