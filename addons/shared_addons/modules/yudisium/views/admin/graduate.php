@@ -4,7 +4,7 @@
   });
 </script>
 <section class="title">
-	<h4><?php echo lang('yudisium_graduate'); ?></h4>
+	<h4><?php echo lang('yudisium_graduate'); ?> Berdasarkan Periode Yudisium</h4>
 </section>
 <section class="item">
 <fieldset id="filters">
