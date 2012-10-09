@@ -507,10 +507,10 @@ class Admin extends Admin_Controller {
 			margin-right: auto;
 			}
 			@media print {
-    .noprint {
-        font-color : #fff;
-    }
-}
+			.noprint {
+			    font-color : #fff;
+			}
+		    }
 
 
 			</style>";
@@ -721,6 +721,7 @@ class Admin extends Admin_Controller {
 	    $this->ym->update($id,array('printed' => '1'));
 	    $this->ym->add_print($id,'4');
 	}
+	
     public function cetak_kosong()
 	{
 	    $style  = $this->style_print('Cetak Isian Kelulusan');
@@ -1677,14 +1678,17 @@ class Admin extends Admin_Controller {
 		$start	= $this->input->post('d_start');
 		$finish	= $this->input->post('d_finish');
 		$thesis	= $this->input->post('prodi');
+		list($s_thn,$s_bln,$s_tgl) = explode("-",$start);
+		list($f_thn,$f_bln,$f_tgl) = explode("-",$finish);
 		list($tgl1,$bln1,$thn1) = explode(" ",tanggal($start));
 		list($tgl2,$bln2,$thn2) = explode(" ",tanggal($finish));
-		
-		if($thesis == 'Skripsi')
+		$start_date	= $s_bln."-".$s_thn;
+		$finish_date	= $f_bln."-".$f_thn;
+		if($thesis 	== 'Skripsi')
 		{
-		    $prodi = "S1";
+		    $prodi 	= "S1";
 		}else{
-		    $prodi = "D3";
+		    $prodi 	= "D3";
 		}
 		$style 	 = $this->style_present("Data Lulusan","","");
 		$header  = "<table align=\"center\">";
@@ -1706,48 +1710,83 @@ class Admin extends Admin_Controller {
 		$table  .= "<tr><td><b>1</b></td><td><b>PESERTA</b></td><td></td><td></td><td></td></tr>";
 		$table  .= "<tr><td></td><td>JUMLAH PESERTA YUDISIUM</td><td>".$jml1."</td><td>".$jml2."</td><td>".$ketjml."</td></tr>";
 		$table  .= "<tr><td><b>2</b></td><td><b>PENULISAN TA</b></td><td></td><td></td><td></td></tr>";
-		$avg1	 = round($this->ym->get_write_avg($start,$thesis),2);
-		$avg2    = round($this->ym->get_write_avg($finish,$thesis),2);
+		// format penghitungan data lama
+		//$avg1	 = round($this->ym->get_write_avg($start,$thesis),2);
+		//$avg2    = round($this->ym->get_write_avg($finish,$thesis),2);
+		// format penghitungan data baru
+		$avg1	 = round($this->ym->write_avg_datein($start_date,$thesis),2);
+		$avg2	 = round($this->ym->write_avg_datein($finish_date,$thesis),2);
 		if($avg1 < $avg2) : $ketavg ="LEBIH LAMA"; else : $ketavg = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>RERATA LAMA PENULISAN TA</td><td>".$avg1."</td><td>".$avg2."</td><td>$ketavg</td></tr>";
-		$max1	 = round($this->ym->get_write_max($start,$thesis),2);
-		$max2	 = round($this->ym->get_write_max($finish,$thesis),2);
+		//format penghitungan lama
+		//$max1	 = round($this->ym->get_write_max($start,$thesis),2);
+		//$max2	 = round($this->ym->get_write_max($finish,$thesis),2);
+		//format penghitungan baru
+		$max1	 = round($this->ym->write_max_datein($start_date,$thesis),2);
+		$max2	 = round($this->ym->write_max_datein($finish_date,$thesis),2);
 		if($max1 < $max2) : $ketmax = "LEBIH LAMA"; else : $ketmax = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>LAMA MAKSIMUM PENULISAN TA</td><td>".$max1."</td><td>".$max2."</td><td>$ketmax</td></tr>";
-		$min1	 = round($this->ym->get_write_min($start,$thesis),2);
-		$min2	 = round($this->ym->get_write_min($finish,$thesis),2);
+		// format penghitungan masa penulisan minimal lama
+		//$min1	 = round($this->ym->get_write_min($start,$thesis),2);
+		//$min2	 = round($this->ym->get_write_min($finish,$thesis),2);
+		//
+		//format baru
+		$min1	 = round($this->ym->write_min_datein($start_date,$thesis),2);
+		$min2	 = round($this->ym->write_min_datein($finish_date,$thesis),2);
 		if($min1 < $min2) : $ketmin = "LEBIH LAMA"; else : $ketmin = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>LAMA MINIMUM PENULISAN TA</td><td>".$min1."</td><td>".$min2."</td><td>$ketmin</td></tr>";
 		$table  .= "<tr><td><b>3</b></td><td><b>MASA STUDI</b></td><td></td><td></td><td></td></tr>";
 		//$avgsem1 = ceil ($this->ym->get_sem_avg($start,$thesis));
 		//$avgsem2 = ceil ($this->ym->get_sem_avg($finish,$thesis));
-		$avgsem1 = round($this->get_real_sem($start,$thesis,"avg"),2);
-		$avgsem2 = round($this->get_real_sem($finish,$thesis,"avg"),2);
+		//format lama
+		//$avgsem1 = round($this->get_real_sem($start,$thesis,"avg"),2);
+		//$avgsem2 = round($this->get_real_sem($finish,$thesis,"avg"),2);
+		$avgsem1 = round($this->ym->sem_avg_datein($start_date,$thesis),2);
+		$avgsem2 = round($this->ym->sem_avg_datein($finish_date,$thesis),2);
 		if($avgsem1 < $avgsem2) : $ketavgsem = "LEBIH LAMA"; else : $ketavgsem = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>RERATA MASA STUDI</td><td>$avgsem1</td><td>$avgsem2</td><td>$ketavgsem</td></tr>";
 		//$semmax1 = round ($this->ym->get_sem_max($start,$thesis),2);
 		//$semmax2 = round ($this->ym->get_sem_max($finish,$thesis),2);
-		$semmax1 = round($this->get_real_sem($start,$thesis,"max"),2);
-		$semmax2 = round($this->get_real_sem($finish,$thesis,"max",2));
+		//format lama
+		//$semmax1 = round($this->get_real_sem($start,$thesis,"max"),2);
+		//$semmax2 = round($this->get_real_sem($finish,$thesis,"max",2));
+		$semmax1 = round($this->ym->sem_max_datein($start_date,$thesis),2);
+		$semmax2 = round($this->ym->sem_max_datein($finish_date,$thesis),2);
 		if($semmax1 < $semmax2) : $ketsemmax = "LEBIH LAMA"; else : $ketsemmax = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>MASA STUDI MAKSIMUM</td><td>$semmax1</td><td>$semmax2</td><td>$ketsemmax</td></tr>";
 		//$semmin1 = round ($this->ym->get_sem_min($start,$thesis),2);
 		//$semmin2 = round ($this->ym->get_sem_min($finish,$thesis),2);
-		$semmin1 = round($this->get_real_sem($start,$thesis,"min"),2);
-		$semmin2 = round($this->get_real_sem($finish,$thesis,"min",2));
+		//format lama
+		//$semmin1 = round($this->get_real_sem($start,$thesis,"min"),2);
+		//$semmin2 = round($this->get_real_sem($finish,$thesis,"min",2));
+		//format baru
+		$semmin1 = round($this->ym->sem_min_datein($start_date,$thesis),2);
+		$semmin2 = round($this->ym->sem_min-datein($finish_date,$thesis),2);
 		if($semmin1 < $semmin2) : $ketsemmin = "LEBIH LAMA"; else : $ketsemmin = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>MASA STUDI MINIMUM</td><td>$semmin1</td><td>$semmin2</td><td>$ketsemmin</td></tr>";
 		$table  .= "<tr><td><b>4</b></td><td><b>IPK</b></td><td></td><td></td><td></td></tr>";
-		$avgipk1 = round ($this->ym->get_avg_ipk($start,$thesis),2);
-		$avgipk2 = round ($this->ym->get_avg_ipk($finish,$thesis),2);
+		//format lama
+		//$avgipk1 = round ($this->ym->get_avg_ipk($start,$thesis),2);
+		//$avgipk2 = round ($this->ym->get_avg_ipk($finish,$thesis),2);
+		//format baru
+		$avgipk1 = round($this->ym->ipk_avg_datein($start_date,$thesis),2);
+		$avgipk2 = round($this->ym->ipk_avg_datein($finish_date,$thesis),2);
 		if($avgipk1 < $avgipk2) : $ketavgipk = "NAIK"; else : $ketavgipk = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>RERATA IPK</td><td>$avgipk1</td><td>$avgipk2</td><td>$ketavgipk</td></tr>";
-		$ipkmax1 = round ($this->ym->get_max_ipk($start,$thesis),2);
-		$ipkmax2 = round ($this->ym->get_max_ipk($finish,$thesis),2);
+		//format lama
+		//$ipkmax1 = round ($this->ym->get_max_ipk($start,$thesis),2);
+		//$ipkmax2 = round ($this->ym->get_max_ipk($finish,$thesis),2);
+		//format baru
+		$ipkmax1 = round($this->ym->ipk_max_datein($start_date,$thesis),2);
+		$ipkmax2 = round($this->ym->ipk_max_datein($finish_date,$thesis),2);
 		if($ipkmax1 < $ipkmax2) : $ketipkmax = "NAIK"; else : $ketipkmax = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>IPK MAKSIMUM</td><td>$ipkmax1</td><td>$ipkmax2</td><td>$ketipkmax</td></tr>";
-		$ipkmin1 = round ($this->ym->get_min_ipk($start,$thesis),2);
-		$ipkmin2 = round ($this->ym->get_min_ipk($finish,$thesis),2);
+		//format lama
+		//$ipkmin1 = round ($this->ym->get_min_ipk($start,$thesis),2);
+		//$ipkmin2 = round ($this->ym->get_min_ipk($finish,$thesis),2);
+		//format baru
+		$ipkmin1 = round($this->ym->ipk_min_datein($start_date,$thesis),2);
+		$ipkmin2 = round($this->ym->ipk_min_datein($finish_date),2);
 		if($ipkmin1 < $ipkmin2) : $ketipkmin = "NAIK"; else : $ketipkmin = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>IPK MINIMUM</td><td>$ipkmin1</td><td>$ipkmin2</td><td>$ketipkmin</td></tr>";
 		$table  .= "<tr><td><b>5</b></td><td><b>PREDIKAT</b></td><td></td><td></td><td></td></tr>";
