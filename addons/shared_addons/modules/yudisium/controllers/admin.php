@@ -1699,8 +1699,8 @@ class Admin extends Admin_Controller {
 		$header .= "</table>";
 		$table 	 = "<table class=\"gridtable\" border=\"1px\">";
 		$table	.= "<tr><th>No</th><th>DATA LULUSAN ".$prodi."</th><th>".tanggal($start)."</th><th>".tanggal($finish)."</th><th>KETERANGAN</th></tr>";
-		$jml1	 = $this->ym->count_yudis_by(array('date_in'=>$start,'thesis' => $thesis));
-		$jml2	 = $this->ym->count_yudis_by(array('date_in'=>$finish,'thesis' => $thesis));
+		$jml1	 = $this->ym->count_yudis_by(array('datein'=>$start_date,'thesis' => $thesis));
+		$jml2	 = $this->ym->count_yudis_by(array('datein'=>$finish_date,'thesis' => $thesis));
 		if($jml1 < $jml2)
 		{
 		    $ketjml = "NAIK";
@@ -1710,128 +1710,105 @@ class Admin extends Admin_Controller {
 		$table  .= "<tr><td><b>1</b></td><td><b>PESERTA</b></td><td></td><td></td><td></td></tr>";
 		$table  .= "<tr><td></td><td>JUMLAH PESERTA YUDISIUM</td><td>".$jml1."</td><td>".$jml2."</td><td>".$ketjml."</td></tr>";
 		$table  .= "<tr><td><b>2</b></td><td><b>PENULISAN TA</b></td><td></td><td></td><td></td></tr>";
-		// format penghitungan data lama
-		//$avg1	 = round($this->ym->get_write_avg($start,$thesis),2);
-		//$avg2    = round($this->ym->get_write_avg($finish,$thesis),2);
-		// format penghitungan data baru
+		//avg rerata
 		$avg1	 = round($this->ym->write_avg_datein($start_date,$thesis),2);
 		$avg2	 = round($this->ym->write_avg_datein($finish_date,$thesis),2);
 		if($avg1 < $avg2) : $ketavg ="LEBIH LAMA"; else : $ketavg = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>RERATA LAMA PENULISAN TA</td><td>".$avg1."</td><td>".$avg2."</td><td>$ketavg</td></tr>";
-		//format penghitungan lama
-		//$max1	 = round($this->ym->get_write_max($start,$thesis),2);
-		//$max2	 = round($this->ym->get_write_max($finish,$thesis),2);
-		//format penghitungan baru
+		//max
 		$max1	 = round($this->ym->write_max_datein($start_date,$thesis),2);
 		$max2	 = round($this->ym->write_max_datein($finish_date,$thesis),2);
 		if($max1 < $max2) : $ketmax = "LEBIH LAMA"; else : $ketmax = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>LAMA MAKSIMUM PENULISAN TA</td><td>".$max1."</td><td>".$max2."</td><td>$ketmax</td></tr>";
-		// format penghitungan masa penulisan minimal lama
-		//$min1	 = round($this->ym->get_write_min($start,$thesis),2);
-		//$min2	 = round($this->ym->get_write_min($finish,$thesis),2);
-		//
-		//format baru
+		//min
 		$min1	 = round($this->ym->write_min_datein($start_date,$thesis),2);
 		$min2	 = round($this->ym->write_min_datein($finish_date,$thesis),2);
 		if($min1 < $min2) : $ketmin = "LEBIH LAMA"; else : $ketmin = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>LAMA MINIMUM PENULISAN TA</td><td>".$min1."</td><td>".$min2."</td><td>$ketmin</td></tr>";
 		$table  .= "<tr><td><b>3</b></td><td><b>MASA STUDI</b></td><td></td><td></td><td></td></tr>";
-		//$avgsem1 = ceil ($this->ym->get_sem_avg($start,$thesis));
-		//$avgsem2 = ceil ($this->ym->get_sem_avg($finish,$thesis));
-		//format lama
-		//$avgsem1 = round($this->get_real_sem($start,$thesis,"avg"),2);
-		//$avgsem2 = round($this->get_real_sem($finish,$thesis,"avg"),2);
+		//rerata masa studi
 		$avgsem1 = round($this->ym->sem_avg_datein($start_date,$thesis),2);
 		$avgsem2 = round($this->ym->sem_avg_datein($finish_date,$thesis),2);
 		if($avgsem1 < $avgsem2) : $ketavgsem = "LEBIH LAMA"; else : $ketavgsem = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>RERATA MASA STUDI</td><td>$avgsem1</td><td>$avgsem2</td><td>$ketavgsem</td></tr>";
-		//$semmax1 = round ($this->ym->get_sem_max($start,$thesis),2);
-		//$semmax2 = round ($this->ym->get_sem_max($finish,$thesis),2);
-		//format lama
-		//$semmax1 = round($this->get_real_sem($start,$thesis,"max"),2);
-		//$semmax2 = round($this->get_real_sem($finish,$thesis,"max",2));
+		//masa studi maximum
 		$semmax1 = round($this->ym->sem_max_datein($start_date,$thesis),2);
 		$semmax2 = round($this->ym->sem_max_datein($finish_date,$thesis),2);
 		if($semmax1 < $semmax2) : $ketsemmax = "LEBIH LAMA"; else : $ketsemmax = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>MASA STUDI MAKSIMUM</td><td>$semmax1</td><td>$semmax2</td><td>$ketsemmax</td></tr>";
-		//$semmin1 = round ($this->ym->get_sem_min($start,$thesis),2);
-		//$semmin2 = round ($this->ym->get_sem_min($finish,$thesis),2);
-		//format lama
-		//$semmin1 = round($this->get_real_sem($start,$thesis,"min"),2);
-		//$semmin2 = round($this->get_real_sem($finish,$thesis,"min",2));
-		//format baru
+		//masa studi minimum
 		$semmin1 = round($this->ym->sem_min_datein($start_date,$thesis),2);
-		$semmin2 = round($this->ym->sem_min-datein($finish_date,$thesis),2);
+		$semmin2 = round($this->ym->sem_min_datein($finish_date,$thesis),2);
 		if($semmin1 < $semmin2) : $ketsemmin = "LEBIH LAMA"; else : $ketsemmin = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>MASA STUDI MINIMUM</td><td>$semmin1</td><td>$semmin2</td><td>$ketsemmin</td></tr>";
 		$table  .= "<tr><td><b>4</b></td><td><b>IPK</b></td><td></td><td></td><td></td></tr>";
-		//format lama
-		//$avgipk1 = round ($this->ym->get_avg_ipk($start,$thesis),2);
-		//$avgipk2 = round ($this->ym->get_avg_ipk($finish,$thesis),2);
-		//format baru
+		//rerata IPK
 		$avgipk1 = round($this->ym->ipk_avg_datein($start_date,$thesis),2);
 		$avgipk2 = round($this->ym->ipk_avg_datein($finish_date,$thesis),2);
 		if($avgipk1 < $avgipk2) : $ketavgipk = "NAIK"; else : $ketavgipk = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>RERATA IPK</td><td>$avgipk1</td><td>$avgipk2</td><td>$ketavgipk</td></tr>";
-		//format lama
-		//$ipkmax1 = round ($this->ym->get_max_ipk($start,$thesis),2);
-		//$ipkmax2 = round ($this->ym->get_max_ipk($finish,$thesis),2);
-		//format baru
+		//ipk maximum
 		$ipkmax1 = round($this->ym->ipk_max_datein($start_date,$thesis),2);
 		$ipkmax2 = round($this->ym->ipk_max_datein($finish_date,$thesis),2);
 		if($ipkmax1 < $ipkmax2) : $ketipkmax = "NAIK"; else : $ketipkmax = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>IPK MAKSIMUM</td><td>$ipkmax1</td><td>$ipkmax2</td><td>$ketipkmax</td></tr>";
-		//format lama
-		//$ipkmin1 = round ($this->ym->get_min_ipk($start,$thesis),2);
-		//$ipkmin2 = round ($this->ym->get_min_ipk($finish,$thesis),2);
-		//format baru
+		//ipk minimum
 		$ipkmin1 = round($this->ym->ipk_min_datein($start_date,$thesis),2);
-		$ipkmin2 = round($this->ym->ipk_min_datein($finish_date),2);
+		$ipkmin2 = round($this->ym->ipk_min_datein($finish_date,$thesis),2);
 		if($ipkmin1 < $ipkmin2) : $ketipkmin = "NAIK"; else : $ketipkmin = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>IPK MINIMUM</td><td>$ipkmin1</td><td>$ipkmin2</td><td>$ketipkmin</td></tr>";
 		$table  .= "<tr><td><b>5</b></td><td><b>PREDIKAT</b></td><td></td><td></td><td></td></tr>";
-		$cum1	 = $this->ym->count_cum($start,$thesis);
-		$cum2	 = $this->ym->count_cum($finish,$thesis);
+		//dengan pujian= cumloude
+		$cum1	 = $this->ym->cum_datein($start_date,$thesis);
+		$cum2	 = $this->ym->cum_datein($finish_date,$thesis);
 		if($cum1 < $cum2): $ketcum ="NAIK"; elseif ($cum1 == $cum2) : $ketcum ="TETAP"; else : $ketcum ="TURUN"; endif;
 		$table  .= "<tr><td></td><td>DENGAN PUJIAN</td><td>$cum1</td><td>$cum2</td><td>$ketcum</td></tr>";
-		$v_good1 = $this->ym->count_verygood($start,$thesis) - $cum1;
-		$v_good2 = $this->ym->count_verygood($finish,$thesis) - $cum2;
+		//sangat memuaskan
+		$v_good1 = $this->ym->verrygood_datein($start_date,$thesis);
+		$v_good2 = $this->ym->verrygood_datein($finish_date,$thesis);
 		if($v_good1 < $v_good2) : $ketvgood = "NAIK"; elseif($v_good1 == $v_good2): $ketvgood ="TETAP"; else : $ketvgood = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>SANGAT MEMUASKAN</td><td>$v_good1</td><td>$v_good2</td><td>$ketvgood</td></tr>";
-		$good1	 = $this->ym->count_good($start,$thesis);
-		$good2   = $this->ym->count_good($finish,$thesis);
+		//memuaskan
+		$good1	 = $this->ym->good_datein($start_date,$thesis);
+		$good2	 = $this->ym->good_datein($finish_date,$thesis);
 		if($good1 < $good2) : $ketgood = "NAIK"; elseif($good1 == $good2): $ketgood ="TETAP"; else : $ketgood = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>MEMUASKAN</td><td>$good1</td><td>$good2</td><td>$ketgood</td></tr>";
 		
 		$table	.= "<tr><td><b>6</b></td><td><b>MASUK FT MELALUI</b></td><td></td><td></td><td></td></tr>";
-		$pbu1	 = $this->ym->count_yudis_by(array('date'=>$start,'parrental' => 'PBU','thesis'=>$thesis));
-		$pbu2	 = $this->ym->count_yudis_by(array('date'=>$finish,'parrental' => 'PBU','thesis'=>$thesis));
+		//jumalh PBU
+		$pbu1	 = $this->ym->count_yudis_by(array('datein'=>$start_date,'parrental' => 'PBU','thesis'=>$thesis));
+		$pbu2	 = $this->ym->count_yudis_by(array('datein'=>$finish_date,'parrental' => 'PBU','thesis'=>$thesis));
 		if($pbu1 < $pbu2) : $ketpbu = "NAIK"; elseif($pbu1 == $pbu2): $ketpbu ="TETAP"; else : $ketpbu = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>PBU</td><td>$pbu1</td><td>$pbu2</td><td>$ketpbu</td></tr>";
-		$utul1	 = $this->ym->count_yudis_by(array('date'=>$start,'parrental' => 'UTUL','thesis'=>$thesis));
-		$utul2	 = $this->ym->count_yudis_by(array('date'=>$finish,'parrental' => 'UTUL','thesis'=>$thesis));
+		//Jumalh UTUL
+		$utul1	 = $this->ym->count_yudis_by(array('datein'=>$start_date,'parrental' => 'UTUL','thesis'=>$thesis));
+		$utul2	 = $this->ym->count_yudis_by(array('datein'=>$finish_date,'parrental' => 'UTUL','thesis'=>$thesis));
 		if($utul1 < $utul2) : $ketutul = "NAIK"; elseif($utul1 == $utul2): $ketutul ="TETAP"; else : $ketutul = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>UTUL</td><td>$utul1</td><td>$utul2</td><td>$ketutul</td></tr>";
-		$pks1	 = $this->ym->count_yudis_by(array('date'=>$start,'parrental' => 'PKS','thesis'=>$thesis));
-		$pks2	 = $this->ym->count_yudis_by(array('date'=>$finish,'parrental' => 'PKS','thesis'=>$thesis));
+		//JUMLAh PKS
+		$pks1	 = $this->ym->count_yudis_by(array('datein'=>$start_date,'parrental' => 'PKS','thesis'=>$thesis));
+		$pks2	 = $this->ym->count_yudis_by(array('datein'=>$finish_date,'parrental' => 'PKS','thesis'=>$thesis));
 		if($pks1 < $pks2) : $ketpks = "NAIK"; elseif($pks1 == $pks2): $ketpks ="TETAP"; else : $ketpks = "TURUN"; endif;
-		$table  .= "<tr><td></td><td>PKS</td><td>$pks1</td><td>$pks2</td><td>$ketpks</td></tr>";
-		
+		$table  .= "<tr><td></td><td>PKS</td><td>$pks1</td><td>$pks2</td><td>$ketpks</td></tr>";		
 		$table	.= "<tr><td><b>7</b></td><td><b>ASAL SEKOLAH</b></td><td></td><td></td><td></td></tr>";
-		$sma1	 = $this->ym->count_yudis_by(array('date'=>$start,'school' => 'SMA','thesis'=>$thesis));
-		$sma2	 = $this->ym->count_yudis_by(array('date'=>$finish,'school' => 'SMA','thesis'=>$thesis));
+		//jumalh SMA
+		$sma1	 = $this->ym->count_yudis_by(array('datein'=>$start_date,'school' => 'SMA','thesis'=>$thesis));
+		$sma2	 = $this->ym->count_yudis_by(array('datein'=>$finish_date,'school' => 'SMA','thesis'=>$thesis));
 		if($sma1 < $sma2) : $ketsma = "NAIK"; elseif($sma1 == $sma2): $ketsma ="TETAP"; else : $ketsma = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>SMA</td><td>$sma1</td><td>$sma2</td><td>$ketsma</td></tr>";
-		$smk1	 = $this->ym->count_yudis_by(array('date'=>$start,'school' => 'SMK','thesis'=>$thesis));
-		$smk2	 = $this->ym->count_yudis_by(array('date'=>$finish,'school' => 'SMK','thesis'=>$thesis));
+		//jumlah smk
+		$smk1	 = $this->ym->count_yudis_by(array('datein'=>$start_date,'school' => 'SMK','thesis'=>$thesis));
+		$smk2	 = $this->ym->count_yudis_by(array('datein'=>$finish_date,'school' => 'SMK','thesis'=>$thesis));
 		if($smk1 < $smk2) : $ketsmk = "NAIK"; elseif($smk1 == $smk2): $ketsmk ="TETAP"; else : $ketsmk = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>SMK</td><td>$smk1</td><td>$smk2</td><td>$ketsmk</td></tr>";
-		$d31	 = $this->ym->count_yudis_by(array('date'=>$start,'school' => 'DIII','thesis'=>$thesis));
-		$d32	 = $this->ym->count_yudis_by(array('date'=>$finish,'school' => 'DIII','thesis'=>$thesis));
+		//Jumlah D3
+		$d31	 = $this->ym->count_yudis_by(array('datein'=>$start_date,'school' => 'DIII','thesis'=>$thesis));
+		$d32	 = $this->ym->count_yudis_by(array('datein'=>$finish_date,'school' => 'DIII','thesis'=>$thesis));
 		if($d31 < $d32) : $ketd3 = "NAIK"; elseif($d31 == $d32): $ketd3 ="TETAP"; else : $ketd3 = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>DIII</td><td>$d31</td><td>$d32</td><td>$ketd3</td></tr>";
-		$man1	 = $this->ym->count_yudis_by(array('date'=>$start,'school' => 'MAN DLL','thesis'=>$thesis));
-		$man2	 = $this->ym->count_yudis_by(array('date'=>$finish,'school' => 'MAN DLL','thesis'=>$thesis));
+		//jumlah MAN
+		$man1	 = $this->ym->count_yudis_by(array('datein'=>$start_date,'school' => 'MAN DLL','thesis'=>$thesis));
+		$man2	 = $this->ym->count_yudis_by(array('datein'=>$finish_date,'school' => 'MAN DLL','thesis'=>$thesis));
 		if($man1 < $man2) : $ketman = "NAIK"; elseif($man1 == $man2): $ketman ="TETAP"; else : $ketman = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>MAN DLL</td><td>$man1</td><td>$man2</td><td>$ketman</td></tr>";
 		$table 	.= "</table>";
