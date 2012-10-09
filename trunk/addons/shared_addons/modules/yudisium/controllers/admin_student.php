@@ -32,6 +32,7 @@ class Admin_Student extends Admin_Controller {
             $this->load->driver('Streams');
             $this->lang->load('yudisium');
             $this->load->model('yudisium_m','ym');
+            $this->load->helper('yudisium');
             $this->data->prodies  = $this->prodies();
 	}
     
@@ -93,7 +94,7 @@ class Admin_Student extends Admin_Controller {
         }
     public function edit($id=0)
         {
-            $id OR redirect('admin/yudisium/create');
+            $id OR redirect('admin/yudisium/college');
             $mhs_id= array('id' => $id);
             $data= $this->ym->get_mhs_by($mhs_id);
             $this->form_validation->set_rules($this->rules);
@@ -130,6 +131,21 @@ class Admin_Student extends Admin_Controller {
                 ->set('data',$data)
                 ->build('admin/form_college');
         }
+    
+    public function delete($id=0)
+        {
+            $id OR redirect('admin/yudisium/college');
+            $result = $this->ym->del_mhs($id);
+            if($result)
+            {
+                 $this->pyrocache->delete('yudisium_m');
+                $this->session->set_flashdata('success', $this->lang->line('yudisium_delete_success'));
+            }else{
+                $this->session->set_flashdata('error', $this->lang->line('yudisium_delete_error'));
+            }
+            redirect('admin/yudisium/college');
+        }
+    
     public function ajax_filter()
 	{
 		$keywords = $this->input->post('f_keywords');

@@ -40,6 +40,10 @@ class Module_Yudisium extends Module {
 			    'graduate' => array(
 				    'name'  => 'yudisium_graduate',
 				    'uri'   => 'admin/yudisium/graduate'
+			    ),
+			    'college' => array(
+				    'name'  => 'yudisium_college',
+				    'uri'   => 'admin/yudisium/college'
 			    )
                         ),                      
 		);

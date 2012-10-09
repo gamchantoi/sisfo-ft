@@ -5,8 +5,9 @@
 		<th><?php echo lang('yudisium_name'); ?></th>
 		<th class="collapse"><?php echo lang('yudisium_nim'); ?></th>
 		<th class="collapse"><?php echo lang('yudisium_department'); ?></th>
-		<th></th>
-		<th width="180"></th>
+		<th class="collapse"><?php echo lang('yudisium_major'); ?></th>
+		<th class="collapse">Aksi</th>
+		
 	</tr>
     </thead>
     <tfoot>
@@ -23,8 +24,10 @@
 		<td><?php echo $item->name; ?></td>
                 <td class="collapse"><?php echo $item->nim; ?></td>
                 <td class="collapse"><?php echo $item->x; ?></td>
+		<td class="collapse"><?php echo get_major_name($item->department);?></td>
 		<td>
 		    <a href="admin/yudisium/college/edit/<?php echo $item->id; ?>" title="Edit data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/edit.png"></a>
+		    <a href="admin/yudisium/college/delete/<?php echo $item->id; ?>" title="Hapus data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/delete.png"></a>
 		</td>
             </tr>
         <?php endforeach; ?>
