@@ -39,7 +39,7 @@ class Module_Yudisium extends Module {
                             ),
 			    'graduate' => array(
 				    'name'  => 'yudisium_graduate',
-				    'uri'   => 'admin/yudisium/graduate'
+				    'uri'   => 'admin/yudisium/data_graduates'
 			    ),
 			    'college' => array(
 				    'name'  => 'yudisium_college',
