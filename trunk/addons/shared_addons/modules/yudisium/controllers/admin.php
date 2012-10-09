@@ -1812,7 +1812,7 @@ class Admin extends Admin_Controller {
 		if($man1 < $man2) : $ketman = "NAIK"; elseif($man1 == $man2): $ketman ="TETAP"; else : $ketman = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>MAN DLL</td><td>$man1</td><td>$man2</td><td>$ketman</td></tr>";
 		$table 	.= "</table>";
-		$sign 	 = $this->sign("400");
+		$sign 	 = $this->sign("350");
 		$legend  = $this->legend();
 		
 		echo $style.$header.$table.$sign."<br>".$legend;
