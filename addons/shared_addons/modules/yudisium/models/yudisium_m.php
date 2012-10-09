@@ -862,4 +862,9 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('id', $id);
 	    return $this->db->update('college', $data); 
 	}
+	public function del_mhs($id)
+	{
+	    $this->db->where('id', $id);
+	    return $this->db->delete('college'); 
+	}
 }

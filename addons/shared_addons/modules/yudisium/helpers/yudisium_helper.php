@@ -89,6 +89,14 @@ function get_decree_num($date)
         $result = $ci->yudisium_m->decree_num($date);
         return $result;
     }
+    
+function get_major_name($id)
+    {
+        $ci=& get_instance();
+        $ci->load->model('yudisium_m');
+        $result = $ci->yudisium_m->get_major($id);
+        return $result;
+    }
 /**    
 function export_xls($date,$thesis)
     {
