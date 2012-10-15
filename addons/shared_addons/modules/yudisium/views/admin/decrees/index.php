@@ -5,6 +5,9 @@
     <?php if ($decrees) : ?>
     <?php echo $this->load->view('admin/partials/filter_decrees'); ?>
     <?php echo form_open('admin/yudisium/decrees/action'); ?>
+    <div>
+	<p><a href="admin/yudisium/decrees/create/"><img src="<?php echo base_url().$this->module_details['path'];?>/img/add.png"> <b>Tambah data Surat Keputusan</b></a></p>
+    </div>
     <div id="filter-stage">
         <?php echo $this->load->view('admin/tables/decrees')?>
     </div>

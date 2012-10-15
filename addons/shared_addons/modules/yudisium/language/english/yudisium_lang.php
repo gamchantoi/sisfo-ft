@@ -121,3 +121,5 @@ $lang['yudisium_decrees_edit']          = 'Edit Nomor Surat Keputusan';
 $lang['yudisium_lectures']              = 'Data Dosen';
 $lang['yudisium_nip']                   = 'Nip Dosen';
 $lang['yudisium_lecture_name']          = 'Nama Dosen';
+$lang['yudisium_lectures_create']        = 'Tambah Data Dosen';
+$lang['yudisium_lectures_edit']          = 'Edit Data Dosen';

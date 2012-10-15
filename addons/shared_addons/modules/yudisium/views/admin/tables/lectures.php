@@ -23,8 +23,8 @@
                         <td><?php echo $data->name;?></td>
                         <td><?php echo $data->major?></td>
                         <td>
-                            <a href="admin/yudisium/lectures/edit/<?php echo $data->id; ?>" title="Edit data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/edit.png"></a>
-                            <a href="admin/yudisium/lectures/delete/<?php echo $data->id; ?>" title="Hapus data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/delete.png"></a>
+                            <a href="admin/yudisium/lecturez/edit/<?php echo $data->id; ?>" title="Edit data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/edit.png"></a>
+                            <a href="admin/yudisium/lecturez/delete/<?php echo $data->id; ?>" title="Hapus data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/delete.png"></a>
                         </td>
                     </tr>
                     <?php $i++; endforeach; ?>

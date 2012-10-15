@@ -2,7 +2,7 @@
 	
 	<legend>Cari Dosen</legend>
 	
-	<?php echo form_open('admin/yudisium/lectures/ajax_filter'); ?>
+	<?php echo form_open('admin/yudisium/lecturez/ajax_filter'); ?>
 
 	<?php echo form_hidden('f_module', $module_details['slug']); ?>
 		<ul>  
