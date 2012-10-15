@@ -735,6 +735,7 @@ class Yudisium_m extends MY_Model {
 		$this->db->order_by('id','DESC');
 		return $this->get_all();
 	}
+	
 	public function search_mhs($data = array())
 	{
 		
@@ -867,4 +868,234 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('id', $id);
 	    return $this->db->delete('college'); 
 	}
+	
+	//========================
+	// Operasi Surat Keputusan
+	//========================
+	public function count_decrees_by($parrams=array())
+	{
+	    if(!empty($parrams['date']))
+	    {
+		$this->db->where('date',$parrams['date']);
+	    }
+	    if(!empty($parrams['number']))
+	    {
+		$this->db->where('number',$parrams['number']);
+	    }
+	    if(!empty($parrams['ant']))
+	    {
+		$this->db->where('ant',$parrams['ant']);
+	    }
+	    if(!empty($parrams['id']))
+	    {
+		$this->db->where('id',$parrams['id']);
+	    }
+	    if(!empty($parrams['desc']))
+	    {
+		$this->db->order_by($parrams['desc'],'DESC');
+	    }
+	    if(!empty($parrams['asc']))
+	    {
+		$this->db->order_by($parrams['asc'],'ASC');
+	    }
+	    $this->db->from('decree');
+	    return $this->db->count_all_results();
+	}
+	
+	public function get_decrees_by($parrams=array())
+	{
+	    if(!empty($parrams['date']))
+	    {
+		$this->db->where('date',$parrams['date']);
+	    }
+	    if(!empty($parrams['number']))
+	    {
+		$this->db->where('number',$parrams['number']);
+	    }
+	    if(!empty($parrams['ant']))
+	    {
+		$this->db->where('ant',$parrams['ant']);
+	    }
+	    if(!empty($parrams['id']))
+	    {
+		$this->db->where('id',$parrams['id']);
+	    }
+	    if(!empty($parrams['desc']))
+	    {
+		$this->db->order_by($parrams['desc'],'DESC');
+	    }
+	    if(!empty($parrams['asc']))
+	    {
+		$this->db->order_by($parrams['asc'],'ASC');
+	    }
+	    if (isset($params['limit']) && is_array($params['limit']))
+			$this->db->limit($params['limit'][0], $params['limit'][1]);
+		elseif (isset($params['limit']))
+			$this->db->limit($params['limit']);
+	    $result= $this->db->get('decree')->result();
+	    return $result;
+	}
+	
+	public function get_decrees_rows($parrams=array())
+	{
+	    if(!empty($parrams['id']))
+	    {
+		$this->db->where('id',$parrams['id']);
+	    }
+	    if(!empty($parrams['date']))
+	    {
+		$this->db->where('date',$parrams['date']);
+	    }
+	    if(!empty($parrams['number']))
+	    {
+		$this->db->where('number',$parrams['number']);
+	    }
+	    if(!empty($parrams['ant']))
+	    {
+		$this->db->where('ant',$parrams['ant']);
+	    }
+	    if(!empty($parrams['id']))
+	    {
+		$this->db->where('id',$parrams['id']);
+	    }
+	    
+	    return $result = $this->db->get('decree')->row();	    
+	}
+	
+	public function edit_decrees($id,$data)
+	{
+	    $this->db->where('id',$id);
+	    return $this->db->update('decree', $data);
+	}
+	
+	public function add_decrees($data)
+	{
+	    return $this->db->insert('decree', $data); 
+	}
+	
+	public function del_decrees($id)
+	{
+	    $this->db->where('id',$id);
+	    return $this->db->delete('decree');
+	}
+	
+	public function get_decrees_all()
+	{
+	    return $this->db->select('id,date,number,ant')->get('decree')->result();
+	}
+	public function search_decrees($data = array())
+	{
+		
+
+		if (array_key_exists('date', $data))
+		{
+			$this->db->where('date', $data['date']);
+		}
+		if (array_key_exists('number', $data))
+		{
+			$this->db->where('number', $data['number']);
+		}
+		return $this->get_decrees_all();
+	}
+	
+	function count_lectures_by($parrams=array())
+	{
+	    if(!empty($parrams['nip']))
+	       {
+		    $this->db->where('nip',$parrams['nip']);
+	       }
+	    if(!empty($parrams['name']))
+		{
+		    $this->db->where('name',$parrams['name']);
+		}
+	    if(!empty($parrams['major']))
+		{
+		    $this->db->where('major',$parrams['major']);
+		}
+	    if(!empty($parrams['id']))
+		{
+		    $this->db->where('id',$parrams['id']);
+		}
+	    $this->db->from('lecture');
+	    return $this->db->count_all_results();
+	}
+	
+	function get_lectures_by($parrams=array())
+	    {
+		if(!empty($parrams['nip']))
+		   {
+			$this->db->where('nip',$parrams['nip']);
+		   }
+		if(!empty($parrams['name']))
+		    {
+			$this->db->where('name',$parrams['name']);
+		    }
+		if(!empty($parrams['major']))
+		    {
+			$this->db->where('major',$parrams['major']);
+		    }
+		if(!empty($parrams['id']))
+		    {
+			$this->db->where('id',$parrams['id']);
+		    }
+		if (isset($params['limit']) && is_array($params['limit']))
+			    $this->db->limit($params['limit'][0], $params['limit'][1]);
+		    elseif (isset($params['limit']))
+			    $this->db->limit($params['limit']);
+		$result= $this->db->get('lecture')->result();
+		return $result;
+	    }
+	function search_lectures($data=array())
+	    {
+		if (array_key_exists('nip', $data))
+		{
+			$this->db->where('nip', $data['nip']);
+		}
+		if (array_key_exists('name', $data))
+		{
+			$matches = array();
+			if (strstr($data['name'], '%'))
+			{
+				preg_match_all('/%.*?%/i', $data['name'], $matches);
+			}
+
+			if (!empty($matches[0]))
+			{
+				foreach ($matches[0] as $match)
+				{
+					$phrases[] = str_replace('%', '', $match);
+				}
+			}
+			else
+			{
+				$temp_phrases = explode(' ', $data['name']);
+				foreach ($temp_phrases as $phrase)
+				{
+					$phrases[] = str_replace('%', '', $phrase);
+				}
+			}
+
+			$counter = 0;
+			foreach ($phrases as $phrase)
+			{
+				if ($counter == 0)
+				{
+					$this->db->like('name', $phrase);
+				}
+				else
+				{
+					$this->db->or_like('name', $phrase);
+				}
+				$counter++;
+			}
+		}
+		$result= $this->db->get('lecture')->result();
+		return $result;
+	    }
+	
+	function del_lectures($id)
+	    {
+		$this->db->where('id',$id);
+		return $this->db->delete('lecture');
+	    }
 }
