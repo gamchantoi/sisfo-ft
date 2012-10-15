@@ -1,4 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+/**
+ * @author 	Dwi Agus Purwanto
+ * @package 	PyroCMS
+ * @subpackage 	Admin Decrees
+ * @since		v0.1
+ *
+ */
 
 class Admin_Decrees extends Admin_Controller
 {

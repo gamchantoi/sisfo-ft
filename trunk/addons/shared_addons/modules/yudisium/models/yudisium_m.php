@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 /**
- * @author 		Dwi Agus Purwanto
+ * @author 	Dwi Agus Purwanto
  * @package 	PyroCMS
  * @subpackage 	Yudicium model
  * @since		v0.1
@@ -8,11 +8,8 @@
  */
 class Yudisium_m extends MY_Model {
     protected $_table = 'yudisium';
-    
-    function insert_college($data)
-    {
-	return $this->db->insert('college', $data); 
-    }
+	
+
     function count_by($parram= array())
     {
 	if (!empty($parrams['printed']))
@@ -30,7 +27,7 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('status', '1');
 	}
 
-	    return $this->db->count_all_results('yudisium');
+	return $this->db->count_all_results('yudisium');
     }
     
     function count_college_by($parrams= array())
@@ -121,14 +118,7 @@ class Yudisium_m extends MY_Model {
         return $this->db->get('printed')->result();
     }
     
-    function get_write_avg($date,$prodi)
-    {
-	$this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
-	$this->db->where('yudisium_date',$date);
-	$this->db->where('thesis',$prodi);
-	$result = $this->db->get('yudisium')->row();
-	return $result->rerata;
-    }
+    
     
     function get_stage($nim)
 	{
@@ -140,6 +130,13 @@ class Yudisium_m extends MY_Model {
 	    $query = $this->db->query("SELECT RIGHT (`x`,2) AS stage FROM `default_college` WHERE nim='".$nim."'");
 	    $row   = $query->row();
 	    return $row->stage;
+	}
+	
+    function error_data()
+	{
+	    $this->db->select('nim,name,graduation,yudisium_date')
+		->where('graduation > yudisium_date');
+	    return $this->db->get('yudisium')->result();
 	}
 	
     function antidatir($date,$type)
@@ -181,12 +178,16 @@ class Yudisium_m extends MY_Model {
 	    ->where('antidatir','N');
 	    return $this->db->count_all_results();
 	}
-    function error_data()
-	{
-	    $this->db->select('nim,name,graduation,yudisium_date')
-		->where('graduation > yudisium_date');
-	    return $this->db->get('yudisium')->result();
-	}
+    
+    function get_write_avg($date,$prodi)
+    {
+	$this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
+	$this->db->where('yudisium_date',$date);
+	$this->db->where('thesis',$prodi);
+	$result = $this->db->get('yudisium')->row();
+	return $result->rerata;
+    }
+    
     function count_cum_s1($where)
 	{
 	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
@@ -300,13 +301,6 @@ class Yudisium_m extends MY_Model {
 	    $query  = $this->db->query("SELECT AVG(( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 ) - vacation) AS semester FROM (`default_yudisium`) WHERE  `yudisium_date` =  '".$where."' AND `thesis` = '".$prodi."'");
 	    $result = $query->row();
 	    return $result->semester;
-	    /**
-	    $this->db->select("AVG( DATEDIFF(`yudisium_date`,CONCAT('20',LEFT(`nim`,2),'-09-01'))/180 ) AS semester");
-	    
-	    $this->db->where('yudisium_date',$where);
-	    $result= $this->db->get('yudisium')->row();
-	    return $result->semester;
-	    **/
 	}
     
     function get_write_min($date,$prodi)
@@ -467,117 +461,6 @@ class Yudisium_m extends MY_Model {
 	    }
 	    return $this->db->count_all_results('yudisium');
 	}
-    function get_yudis_by($key,$value)
-    {
-	
-    }
-    function get_religion($id)
-    {
-        $result = $this->db->select('id,name')->where('id',$id)->get('religions')->row();
-        return $result->name;
-    }
-    
-    function get_religions()
-    {
-        $result= array();
-        $this->db->select('id,name');
-        $this->db->from('default_religions');
-        $this->db->order_by('id','ASC');
-        $array_keys_values = $this->db->get();
-        foreach ($array_keys_values->result() as $row)
-        {
-            $result[0]= '-Pilih Agama-';
-            $result[$row->id]= $row->name;
-        }
-
-        return $result;
-    }
-    
-    function get_dept(){
-        return $this->db->get('department')->result();
-    }
-	
-    function get_dpt_name($id)
-    {
-	$dpt= $this->db->select('id,name,major')->where('id',$id)->get('department')->row();
-	return $dpt->name;
-    }
-    function get_dept_id($name){
-        return $this->db->select('id,name')->where('name',$name)->get('department')->result();
-    }
-    
-    function get_lecture(){
-        return $this->db->select('id,name,major')->order_by('name','ASC')->get('lecture')->result();
-    }
-    
-	function get_pa($key){
-        return $this->db->select('id,name,major')->where('major',$key)->order_by('name','ASC')->get('lecture')->result();
-    }
-	
-    function search_pa($key)
-    {
-        $get_major= $this->db->select('major')->where('id',$key)->get('department')->row();
-        
-        $result = array();
-		$this->db->select('*');
-		$this->db->from('default_lecture');
-		$this->db->where('major',$get_major->major);
-		$this->db->order_by('name','ASC');
-		$array_keys_values = $this->db->get();
-        foreach ($array_keys_values->result() as $row)
-        {
-            $result[0]= '-Pilih Dosen-';
-            $result[$row->id]= $row->name;
-        }
-
-        return $result;
-    
-    }
-    
-     
-    function get_major($id)
-    {
-        $get_major= $this->db->select('id,major')->where('id',$id)->get('department')->row();
-        return $get_major->major;
-    }
-	
-	function get_major_by_name($name)
-    {
-        $get_major= $this->db->select('id,major')->where('name',$name)->get('department')->row();
-        return $get_major->major;
-    }
-    
-    function get_dosen($prodi_id){
-        $prodi_id = $this->input->post('department');
-        $get_major= $this->db->select('major')->where('id',$prodi_id)->get('department')->row();
-		$result = array();
-		$this->db->select('*');
-		$this->db->from('default_lecture');
-		$this->db->where('major',$get_major->major);
-		$this->db->order_by('name','ASC');
-		$array_keys_values = $this->db->get();
-        foreach ($array_keys_values->result() as $row)
-        {
-            $result[0]= '-Pilih Dosen-';
-            $result[$row->id]= $row->name;
-        }
-
-        return $result;
-
-    }
-    function get_lecture_by($key,$value=''){
-        $this->db->select('id,nip,name,major');
-        if (is_array($key))
-		{
-			$this->db->where($key);
-		}
-		else
-		{
-			$this->db->where($key, $value);
-		}
-
-		return $this->db->get('lecture')->row();
-    }
     
     function get_by($key,$value='')
     {
@@ -591,30 +474,8 @@ class Yudisium_m extends MY_Model {
 			$this->db->where($key, $value);
 		}
 
-		return $this->db->get($this->_table)->row();
+	return $this->db->get($this->_table)->row();
     }
-    
-    function get_decree_num($date)
-	{
-	    $result = $this->db->where('date',$date)->get('decree')->row();
-	    return $result->number;  
-	}
-    function get_decree_ant($date,$ant)
-	{
-	    $result = $this->db->where('date',$date)->where('ant',$ant)->get('decree')->row();
-	    return $result->number;
-	}
-    function decree_num($date)
-	{
-	    $result = $this->db->where('date',$date)->get('decree')->result();
-	    return $result;
-	}
-    function get_decree_dy($bln,$thn)
-	{
-	    $bt= $bln."-".$thn;
-	    $result = $this->db->where("DATE_FORMAT(`date` , '%M-%Y' )=",$bt)->get('decree')->row();
-	    return $result->number;  
-	}
     
     function get_many_by($params = array())
 	{
@@ -687,84 +548,362 @@ class Yudisium_m extends MY_Model {
     
     function check_exists($field, $value = '', $id = 0)
 	{
-		if (is_array($field))
+	    if (is_array($field))
 		{
-			$params = $field;
-			$id = $value;
+		    $params = $field;
+		    $id = $value;
 		}
-		else
+	    else
 		{
-			$params[$field] = $value;
+		    $params[$field] = $value;
 		}
-		$params['id !='] = (int) $id;
+	    $params['id !='] = (int) $id;
 
-		return parent::count_by($params) == 0;
+	    return parent::count_by($params) == 0;
 	}
 	
     function check_nim_exists($field, $value = '', $id = 0)
 	{
-		if (is_array($field))
+	    if (is_array($field))
 		{
-			$params = $field;
-			$id = $value;
+		    $params = $field;
+		    $id = $value;
 		}
-		else
+	    else
 		{
-			$params[$field] = $value;
+		    $params[$field] = $value;
 		}
 		$params['id !='] = (int) $id;
 
-		return parent::count_by($params) == 0;
+	    return parent::count_by($params) == 0;
 	}
         
     public function search($data = array())
 	{
-		if (array_key_exists('nim', $data))
+	    if (array_key_exists('nim', $data))
 		{
 			$this->db->where('nim', $data['nim']);
 		}
-		if (array_key_exists('printed', $data))
+	    if (array_key_exists('printed', $data))
 		{
 			$this->db->where('printed', $data['printed']);
 		}
                 
-                if (array_key_exists('name', $data))
+            if (array_key_exists('name', $data))
 		{
 			$this->db->like('name',$data['name']);
 		}
 		$this->db->order_by('id','DESC');
-		return $this->get_all();
+	    return $this->get_all();
+	}
+    public function get_anti_periode($month)
+	{
+	    $this->db->select('DISTINCT(yudisium_date)');
+	    $this->db->where("date_format(date_in,'%m-%Y')",$month);
+	    $result = $this->db->get('yudisium')->result();
+	    return $result;
+	}
+    public function yudis_date_n_datein($date)
+	{
+	    $datein= date('m-Y');
+	    //$datein='08-2012';
+	    $this->db->where("date_format(date_in,'%m-%Y')",$datein);
+	    $this->db->where('yudisium_date',$date);
+	    $result = $this->db->from('yudisium')->count_all_results();
+	    return $result;
 	}
 	
-	public function search_mhs($data = array())
-	{
-		
+    function get_yudis_by($key,$value)
+    {
+	
+    }
+    function get_religion($id)
+    {
+        $result = $this->db->select('id,name')->where('id',$id)->get('religions')->row();
+        return $result->name;
+    }
+    
+    function get_religions()
+    {
+        $result= array();
+        $this->db->select('id,name');
+        $this->db->from('default_religions');
+        $this->db->order_by('id','ASC');
+        $array_keys_values = $this->db->get();
+        foreach ($array_keys_values->result() as $row)
+        {
+            $result[0]= '-Pilih Agama-';
+            $result[$row->id]= $row->name;
+        }
 
-		if (array_key_exists('status', $data))
+        return $result;
+    }
+    
+    function get_dept(){
+        return $this->db->get('department')->result();
+    }
+	
+    function get_dpt_name($id)
+    {
+	$dpt= $this->db->select('id,name,major')->where('id',$id)->get('department')->row();
+	return $dpt->name;
+    }
+    function get_dept_id($name){
+        return $this->db->select('id,name')->where('name',$name)->get('department')->result();
+    }
+    
+    function get_lecture(){
+        return $this->db->select('id,name,major')->order_by('name','ASC')->get('lecture')->result();
+    }
+    
+    function get_pa($key){
+        return $this->db->select('id,name,major')->where('major',$key)->order_by('name','ASC')->get('lecture')->result();
+    }
+	
+    function search_pa($key)
+    {
+        $get_major= $this->db->select('major')->where('id',$key)->get('department')->row();
+        
+        $result = array();
+		$this->db->select('*');
+		$this->db->from('default_lecture');
+		$this->db->where('major',$get_major->major);
+		$this->db->order_by('name','ASC');
+		$array_keys_values = $this->db->get();
+        foreach ($array_keys_values->result() as $row)
+        {
+            $result[0]= '-Pilih Dosen-';
+            $result[$row->id]= $row->name;
+        }
+
+        return $result;
+    
+    }
+    /**
+     
+    manajemen jurusan dan prodi 
+    **/
+    function get_major($id)
+    {
+        $get_major= $this->db->select('id,major')->where('id',$id)->get('department')->row();
+        return $get_major->major;
+    }
+	
+    function get_major_by_name($name)
+    {
+        $get_major= $this->db->select('id,major')->where('name',$name)->get('department')->row();
+        return $get_major->major;
+    }
+    
+    function get_majors()
+    {
+        $result= array();
+        $this->db->select('major');
+        $array_keys_values = $this->db->get('department');
+        foreach ($array_keys_values->result() as $row)
+        {
+            $result[0]= '-Pilih jurusan-';
+            $result[$row->major]= $row->major;
+        }
+
+        return $result;
+    }
+    
+    /**
+     * Managemen dosen
+     *
+     *
+     *
+     *
+     *
+     */
+    function get_dosen($prodi_id){
+        $prodi_id = $this->input->post('department');
+        $get_major= $this->db->select('major')->where('id',$prodi_id)->get('department')->row();
+		$result = array();
+		$this->db->select('*');
+		$this->db->from('default_lecture');
+		$this->db->where('major',$get_major->major);
+		$this->db->order_by('name','ASC');
+		$array_keys_values = $this->db->get();
+        foreach ($array_keys_values->result() as $row)
+        {
+            $result[0]= '-Pilih Dosen-';
+            $result[$row->id]= $row->name;
+        }
+
+        return $result;
+
+    }
+    function get_lecture_by($key,$value=''){
+        $this->db->select('id,nip,name,major');
+        if (is_array($key))
+	    {
+		$this->db->where($key);
+	    }
+	else
+	    {
+		$this->db->where($key, $value);
+	    }
+
+	return $this->db->get('lecture')->row();
+    }
+    
+    function count_lectures_by($parrams=array())
+	{
+	    if(!empty($parrams['nip']))
+	       {
+		    $this->db->where('nip',$parrams['nip']);
+	       }
+	    if(!empty($parrams['name']))
 		{
-			$this->db->where('status', $data['status']);
+		    $this->db->where('name',$parrams['name']);
 		}
-		if (array_key_exists('nim', $data))
+	    if(!empty($parrams['major']))
 		{
-			$this->db->where('nim', $data['nim']);
+		    $this->db->where('major',$parrams['major']);
 		}
-                
-                if (array_key_exists('keywords', $data))
+	    if(!empty($parrams['id']))
 		{
-			$matches = array();
-			if (strstr($data['keywords'], '%'))
+		    $this->db->where('id',$parrams['id']);
+		}
+	    $this->db->from('lecture');
+	    return $this->db->count_all_results();
+	}
+	
+    public function get_lectures_by($parrams=array())
+	    {
+		if(!empty($parrams['nip']))
+		   {
+			$this->db->where('nip',$parrams['nip']);
+		   }
+		if(!empty($parrams['name']))
+		    {
+			$this->db->where('name',$parrams['name']);
+		    }
+		if(!empty($parrams['major']))
+		    {
+			$this->db->where('major',$parrams['major']);
+		    }
+		if(!empty($parrams['id']))
+		    {
+			$this->db->where('id',$parrams['id']);
+		    }
+		if (isset($params['limit']) && is_array($params['limit']))
+			    $this->db->limit($params['limit'][0], $params['limit'][1]);
+		    elseif (isset($params['limit']))
+			    $this->db->limit($params['limit']);
+		$result= $this->db->get('lecture')->result();
+		return $result;
+	    }
+	    
+    public function get_lectures_all()
+	{
+	    return $this->db->select('id,nip,name,major')->get('lecture')->result();
+	}
+	
+    function search_lectures($data=array())
+	{
+		if (array_key_exists('nip', $data))
+		{
+			$this->db->where('nip', $data['nip']);
+		}
+		if (array_key_exists('name', $data))
+		{
+		    $matches = array();
+		    if (strstr($data['name'], '%'))
 			{
-				preg_match_all('/%.*?%/i', $data['keywords'], $matches);
+				preg_match_all('/%.*?%/i', $data['name'], $matches);
 			}
 
-			if (!empty($matches[0]))
+		    if (!empty($matches[0]))
 			{
 				foreach ($matches[0] as $match)
 				{
 					$phrases[] = str_replace('%', '', $match);
 				}
 			}
-			else
+		    else
+			{
+				$temp_phrases = explode(' ', $data['name']);
+				foreach ($temp_phrases as $phrase)
+				{
+					$phrases[] = str_replace('%', '', $phrase);
+				}
+			}
+
+		    $counter = 0;
+		    foreach ($phrases as $phrase)
+			{
+				if ($counter == 0)
+				{
+					$this->db->like('name', $phrase);
+				}
+				else
+				{
+					$this->db->or_like('name', $phrase);
+				}
+				$counter++;
+			}
+		}
+	    $result= $this->get_lectures_all();
+	    return $result;
+	}
+	
+    function del_lectures($id)
+	    {
+		$this->db->where('id',$id);
+		return $this->db->delete('lecture');
+	    }
+    function add_lectures($data)
+	{
+	    return $this->db->insert('lecture', $data); 
+	}
+    function edit_lectures($id,$data)
+	{
+	    $this->db->where('id', $id);
+	    return $this->db->update('lecture', $data);
+	}
+    /** end of dosen */
+    
+    
+	
+	
+    /**
+     * manajemen mahasiswa
+     *
+     *
+     *
+     */
+    public function search_mhs($data = array())
+	{
+		
+
+	    if (array_key_exists('status', $data))
+		{
+			$this->db->where('status', $data['status']);
+		}
+	    if (array_key_exists('nim', $data))
+		{
+			$this->db->where('nim', $data['nim']);
+		}
+                
+            if (array_key_exists('keywords', $data))
+		{
+		    $matches = array();
+		    if (strstr($data['keywords'], '%'))
+			{
+				preg_match_all('/%.*?%/i', $data['keywords'], $matches);
+			}
+
+		    if (!empty($matches[0]))
+			{
+				foreach ($matches[0] as $match)
+				{
+					$phrases[] = str_replace('%', '', $match);
+				}
+			}
+		    else
 			{
 				$temp_phrases = explode(' ', $data['keywords']);
 				foreach ($temp_phrases as $phrase)
@@ -773,8 +912,8 @@ class Yudisium_m extends MY_Model {
 				}
 			}
 
-			$counter = 0;
-			foreach ($phrases as $phrase)
+		    $counter = 0;
+		    foreach ($phrases as $phrase)
 			{
 				if ($counter == 0)
 				{
@@ -791,7 +930,7 @@ class Yudisium_m extends MY_Model {
 				$counter++;
 			}
 		}
-		return $this->get_college_all();
+	    return $this->get_college_all();
 	}
 	
 	public function get_mhs_by($parrams=array())
@@ -815,7 +954,7 @@ class Yudisium_m extends MY_Model {
 	    return $this->db->get('college')->row();
 	}
 	
-	public function count_mhs_by($parrams=array())
+    public function count_mhs_by($parrams=array())
 	{
 	    if(!empty($parrams['status']))
 	    {
@@ -841,38 +980,50 @@ class Yudisium_m extends MY_Model {
 	    return $this->db->count_all_results();
 	}
 	
-	public function get_anti_periode($month)
-	{
-	    
-	    $this->db->select('DISTINCT(yudisium_date)');
-	    $this->db->where("date_format(date_in,'%m-%Y')",$month);
-	    $result = $this->db->get('yudisium')->result();
-	    return $result;
-	}
-	public function yudis_date_n_datein($date)
-	{
-	    $datein= date('m-Y');
-	    //$datein='08-2012';
-	    $this->db->where("date_format(date_in,'%m-%Y')",$datein);
-	    $this->db->where('yudisium_date',$date);
-	    $result = $this->db->from('yudisium')->count_all_results();
-	    return $result;
-	}
-	public function update_mhs($id,$data)
+    public function update_mhs($id,$data)
 	{
 	    $this->db->where('id', $id);
 	    return $this->db->update('college', $data); 
 	}
-	public function del_mhs($id)
+    public function del_mhs($id)
 	{
 	    $this->db->where('id', $id);
-	    return $this->db->delete('college'); 
+	    return $this->db->delete('college');
 	}
+    function insert_college($data)
+    {
+	return $this->db->insert('college', $data); 
+    }
+    /** end of mahasiswa **/	
+	
 	
 	//========================
 	// Operasi Surat Keputusan
 	//========================
-	public function count_decrees_by($parrams=array())
+	
+    function get_decree_num($date)
+	{
+	    $result = $this->db->where('date',$date)->get('decree')->row();
+	    return $result->number;  
+	}
+    function get_decree_ant($date,$ant)
+	{
+	    $result = $this->db->where('date',$date)->where('ant',$ant)->get('decree')->row();
+	    return $result->number;
+	}
+    function decree_num($date)
+	{
+	    $result = $this->db->where('date',$date)->get('decree')->result();
+	    return $result;
+	}
+    function get_decree_dy($bln,$thn)
+	{
+	    $bt= $bln."-".$thn;
+	    $result = $this->db->where("DATE_FORMAT(`date` , '%M-%Y' )=",$bt)->get('decree')->row();
+	    return $result->number;  
+	}
+	
+    public function count_decrees_by($parrams=array())
 	{
 	    if(!empty($parrams['date']))
 	    {
@@ -902,7 +1053,7 @@ class Yudisium_m extends MY_Model {
 	    return $this->db->count_all_results();
 	}
 	
-	public function get_decrees_by($parrams=array())
+    public function get_decrees_by($parrams=array())
 	{
 	    if(!empty($parrams['date']))
 	    {
@@ -936,7 +1087,7 @@ class Yudisium_m extends MY_Model {
 	    return $result;
 	}
 	
-	public function get_decrees_rows($parrams=array())
+    public function get_decrees_rows($parrams=array())
 	{
 	    if(!empty($parrams['id']))
 	    {
@@ -962,140 +1113,39 @@ class Yudisium_m extends MY_Model {
 	    return $result = $this->db->get('decree')->row();	    
 	}
 	
-	public function edit_decrees($id,$data)
+    public function edit_decrees($id,$data)
 	{
 	    $this->db->where('id',$id);
 	    return $this->db->update('decree', $data);
 	}
 	
-	public function add_decrees($data)
+    public function add_decrees($data)
 	{
 	    return $this->db->insert('decree', $data); 
 	}
 	
-	public function del_decrees($id)
+    public function del_decrees($id)
 	{
 	    $this->db->where('id',$id);
 	    return $this->db->delete('decree');
 	}
 	
-	public function get_decrees_all()
+    public function get_decrees_all()
 	{
 	    return $this->db->select('id,date,number,ant')->get('decree')->result();
 	}
-	public function search_decrees($data = array())
+    public function search_decrees($data = array())
 	{
-		
-
-		if (array_key_exists('date', $data))
+	    if (array_key_exists('date', $data))
 		{
 			$this->db->where('date', $data['date']);
 		}
-		if (array_key_exists('number', $data))
+	    if (array_key_exists('number', $data))
 		{
 			$this->db->where('number', $data['number']);
 		}
-		return $this->get_decrees_all();
+	    return $this->get_decrees_all();
 	}
+    /** end of surat keputusan **/	
 	
-	function count_lectures_by($parrams=array())
-	{
-	    if(!empty($parrams['nip']))
-	       {
-		    $this->db->where('nip',$parrams['nip']);
-	       }
-	    if(!empty($parrams['name']))
-		{
-		    $this->db->where('name',$parrams['name']);
-		}
-	    if(!empty($parrams['major']))
-		{
-		    $this->db->where('major',$parrams['major']);
-		}
-	    if(!empty($parrams['id']))
-		{
-		    $this->db->where('id',$parrams['id']);
-		}
-	    $this->db->from('lecture');
-	    return $this->db->count_all_results();
-	}
-	
-	function get_lectures_by($parrams=array())
-	    {
-		if(!empty($parrams['nip']))
-		   {
-			$this->db->where('nip',$parrams['nip']);
-		   }
-		if(!empty($parrams['name']))
-		    {
-			$this->db->where('name',$parrams['name']);
-		    }
-		if(!empty($parrams['major']))
-		    {
-			$this->db->where('major',$parrams['major']);
-		    }
-		if(!empty($parrams['id']))
-		    {
-			$this->db->where('id',$parrams['id']);
-		    }
-		if (isset($params['limit']) && is_array($params['limit']))
-			    $this->db->limit($params['limit'][0], $params['limit'][1]);
-		    elseif (isset($params['limit']))
-			    $this->db->limit($params['limit']);
-		$result= $this->db->get('lecture')->result();
-		return $result;
-	    }
-	function search_lectures($data=array())
-	    {
-		if (array_key_exists('nip', $data))
-		{
-			$this->db->where('nip', $data['nip']);
-		}
-		if (array_key_exists('name', $data))
-		{
-			$matches = array();
-			if (strstr($data['name'], '%'))
-			{
-				preg_match_all('/%.*?%/i', $data['name'], $matches);
-			}
-
-			if (!empty($matches[0]))
-			{
-				foreach ($matches[0] as $match)
-				{
-					$phrases[] = str_replace('%', '', $match);
-				}
-			}
-			else
-			{
-				$temp_phrases = explode(' ', $data['name']);
-				foreach ($temp_phrases as $phrase)
-				{
-					$phrases[] = str_replace('%', '', $phrase);
-				}
-			}
-
-			$counter = 0;
-			foreach ($phrases as $phrase)
-			{
-				if ($counter == 0)
-				{
-					$this->db->like('name', $phrase);
-				}
-				else
-				{
-					$this->db->or_like('name', $phrase);
-				}
-				$counter++;
-			}
-		}
-		$result= $this->db->get('lecture')->result();
-		return $result;
-	    }
-	
-	function del_lectures($id)
-	    {
-		$this->db->where('id',$id);
-		return $this->db->delete('lecture');
-	    }
 }
