@@ -16,7 +16,9 @@
 	<?php echo form_close(); ?>
 	
 </div>
-
+<div>
+    <?php $this->load->view('admin/partials/pagination'); ?>  
+</div>
 <?php else : ?>
 	<div class="no_data"><?php echo lang('blog_currently_no_posts'); ?></div>
 <?php endif; ?>

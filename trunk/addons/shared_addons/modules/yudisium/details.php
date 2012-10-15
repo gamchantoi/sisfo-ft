@@ -33,6 +33,10 @@ class Module_Yudisium extends Module {
                                     'name'  => 'yudisium_decree',
                                     'uri'   => 'admin/yudisium/decree'
                             ),
+			    'decrees'  => array(
+                                    'name'  => 'yudisium_decrees',
+                                    'uri'   => 'admin/yudisium/decrees'
+                            ),
                             'report'  => array(
                                     'name'  => 'yudisium_report',
                                     'uri'   => 'admin/yudisium/report'
@@ -40,6 +44,10 @@ class Module_Yudisium extends Module {
 			    'graduate' => array(
 				    'name'  => 'yudisium_graduate',
 				    'uri'   => 'admin/yudisium/data_graduates'
+			    ),
+			    'lecturez' => array(
+				    'name'  => 'yudisium_lectures',
+				    'uri'   => 'admin/yudisium/lecturez'
 			    ),
 			    'college' => array(
 				    'name'  => 'yudisium_college',

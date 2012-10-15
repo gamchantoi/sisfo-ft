@@ -17,14 +17,9 @@ class Admin_Student extends Admin_Controller {
 			  ),
 		    array(
 			    'field' => 'nim',
-			    'label' => 'lang:yudisium_nim',
+			    'label' => 'lang:yudisium_decree',
 			    'rules' => 'trim|numeric|required|max_length[100]|callback__check_nim'
-			  ),
-		    array(
-			    'field' => 'department',
-			    'label' => 'lang:yudisium_department',
-			    'rules' => 'trim|required'
-                        )
+			  )
             );
     public function __construct()
 	{
