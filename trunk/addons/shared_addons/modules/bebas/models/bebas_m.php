@@ -73,6 +73,11 @@ class Bebas_m extends MY_Model{
             return $this->db->get('department')->row();
         }
     
+    function get_all()
+        {
+            return $this->db->get('bt')->result();
+        }
+    
     function count_by($params=array())
         {
             if(!empty($params['nim']))
@@ -88,6 +93,51 @@ class Bebas_m extends MY_Model{
                 $this->db->where('prodi',$params['prodi']);
             }
             return $this->db->count_all_results('bt');
+        }
+    function get_many_by($parrams=array())
+        {
+            if(!empty($parrams['id']))
+            {
+                $this->db->where('id',$parrams['id']);
+            }
+            if(!empty($parrams['nim']))
+            {
+                $this->db->where('nim',$parrams['nim']);
+            }
+            if(!empty($parrams['nama']))
+            {
+                $this->db->where('nama',$parrams['nama']);
+            }
+            if(!empty($parrams['prodi']))
+            {
+                $this->db->where('prodi',$parrams['prodi']);
+            }
+            if (isset($parrams['limit']) && is_array($parrams['limit']))
+			$this->db->limit($parrams['limit'][0], $parrams['limit'][1]);
+		elseif (isset($parrams['limit']))
+			$this->db->limit($parrams['limit']);
+	    return $this->get_all();
+        }
+    
+    function get_row_by($params=array())
+        {
+            if(!empty($params['id']))
+            {
+                $this->db->where('id',$params['id']);
+            }
+            if(!empty($params['nim']))
+            {
+                $this->db->where('nim',$params['nim']);
+            }
+            if(!empty($params['name']))
+            {
+                $this->db->where('name',$params['name']);
+            }
+            if(!empty($params['prodi']))
+            {
+                $this->db->where('prodi',$params['prodi']);
+            }
+            return $this->db->get('bt')->row();
         }
     
     function check_exists($field, $value = '', $id = 0)
@@ -105,4 +155,17 @@ class Bebas_m extends MY_Model{
 
 		return parent::count_by($params) == 0;
 	}
+    
+    function search_by($data=array())
+        {
+             if (array_key_exists('nim', $data))
+		{
+			$this->db->where('nim', $data['nim']);
+		}
+	    if (array_key_exists('nama', $data))
+		{
+			$this->db->like('nama', $data['nama']);
+		}
+	    return $this->get_all();
+        }
 }

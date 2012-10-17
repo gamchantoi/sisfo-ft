@@ -21,7 +21,7 @@
                 </li>
                 <li class="even">
 		    <label for="department">Nilai D</label>	
-		    <div class="input"><?php echo form_input('nilai',$data->nilai); ?></div>
+		    <div class="input"><?php echo form_input('nilai_d',$data->nilai_d); ?></div>
 		</li>
                 <li class="even">
 		    <label for="department">IPK</label>	
