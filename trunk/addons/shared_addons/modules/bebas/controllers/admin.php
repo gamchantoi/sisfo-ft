@@ -290,15 +290,57 @@ class Admin extends Admin_Controller{
         {
             $id OR redirect('admin/bebas');
             $data = $this->bt->get_row_by(array('id' => $id));
-            $style= "<title>Cetak SK Bebas Teori</title>
+            $style= "
+            <html><head><title>Cetak SK Bebas Teori</title>
                     <style>
-                    @media print{@page {size: A5}}
-                    </style>";
-            $table  = "<table style=\"font-size:14px;\">";
+                    @media print {
+                    @page {
+                    size:a5;
+                    }
+                    }
+                    .rotate{
+                    size: A5 landscape;
+                    -webkit-transform: rotate(-90deg) scale(.90,.90); 
+                    -moz-transform:rotate(-90deg) scale(.95,.95);
+                    /**zoom: 58%;**/
+                    filter: progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);
+                    }
+                    
+                    </style> </head>";
+            $table  = "<body><div class=\"rotate\"><table style=\"font-size:14px;\">";
 	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\"><b><font size=\"1.5\">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN </font><br>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><small>Alamat : Kampus Karangmalang, Yogyakarta, 55281<br>Telp. (0274) 586168 psw. 276,289,292 (0274) 586734 Fax. (0274) 586734<br>website: http://ft.uny.ac.id email:ft@uny.ac.id, teknik@uny.ac.id</small> ";
             $table .= "</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
-            $table .= "<tr><td colspan=3><hr></td></tr></table>";
-            $table .= "<table><tr><td colspan=2>Kepala Sub Bagian Pendidikan Fakultas Teknik Universitas Negeri Yogyakarta me¬nerang¬kan bahwa: </td></tr></table>";
+            $table .= "<tr><td colspan=3><hr></td></tr><tr><td colspan=3><br></td></tr>";
+            $table .= "<tr><td colspan=3 align=\"center\"><u><b>SURAT KETERANGAN BEBAS TEORI</b></u></tr></tr>";
+            $table .= "<tr><td colspan=3 align=\"center\">Nomor : ".$data->no."/".$data->kode."/".date('Y')."</tr>";
+            $table .= "</table>";
+            $table .= "<table><tr><td colspan=2>Kepala Sub Bagian Pendidikan Fakultas Teknik Universitas Negeri Yogyakarta menerangkan bahwa: </td></tr>";
+            $table .= "<tr><td>Nama</td><td>: ".$data->nama."</td></tr>";
+            $table .= "<tr><td>NIM</td><td>: ".$data->nim."</td></tr>";
+            $table .= "<tr><td>Program Studi</td><td>: ".$this->bt->get_dpt_row(array('id' => $data->prodi))->name."</td></tr>";
+            $table .= "<tr><td>Fakultas</td><td>: Teknik</td></tr>";
+            $table .= "</table>";
+            $table .= "<table>";
+            $table .= "<tr><td colspan=2>Telah mencapai hasil studi sebagai berikut :</td></tr>";
+            $table .= "<tr><td>Jumlah SKS</td><td>: ".$data->sks." sks</td></tr>";
+            $table .= "<tr><td>Mata Kuliah Wajib Lulus</td><td>: sudah terpenuhi</td></tr>";
+            $table .= "<tr><td>Jumlah nilai D</td><td>: ".$data->nilai_d." sks</td></tr></table>";
+            $table .= "<table><tr><td colspan=2>Keterangan ini diberikan untuk keperluan : </td></tr>";
+            if($data->jenjang == 'D3'):
+            $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/unchecked.png\" width=\"32px\"> </td><td valign=\"middle\"> 1. Menempuh Ujian Tugas Akhir Bukan Skripsi</td></tr>";
+            $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/unchecked.png\" width=\"32px\"> </td><td valign=\"middle\"> 2. Menempuh Ujian Tugas Akhir Skripsi</td></tr>";
+            $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/checked.png\" width=\"32px\"> </td><td valign=\"middle\"> 3. Menempuh Ujian Tugas Akhir D3</td></tr>";
+            else :
+            $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/unchecked.png\" width=\"32px\"> </td><td valign=\"middle\"> 1. Menempuh Ujian Tugas Akhir Bukan Skripsi</td></tr>";
+            $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/checked.png\" width=\"32px\"> </td><td valign=\"middle\"> 2. Menempuh Ujian Tugas Akhir Skripsi</td></tr>";
+            $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/unchecked.png\" width=\"32px\"> </td><td valign=\"middle\"> 3. Menempuh Ujian Tugas Akhir D3</td></tr>";
+            endif;
+            $table .= "</table>";
+            $table .= "<table><tr><td align=\"left\">Telah menempuh ujian TABS/TAS/<br> TA D3, pada tanggal ....<br>Ketua program Studi,</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=\"center\">Yogyakarta, ".tanggal($data->tanggal_surat)." <br> Kepala Sub Bagian Pendidikan<br> Fakultas Teknik UNY</td></tr>";
+            $table .= "<tr><td colspan=2><br><br><br></td></tr>";
+            $table .= "<tr><td>(__________________________)<br>NIP. </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=\"center\">Dra. Sari Puspita<br /> Nip. 19630912 198812 2 001</td></tr>";
+            $table .= "</table></div>";
+            $table .= "</body></html>";
             echo $style;
             echo $table;
             
