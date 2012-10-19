@@ -5,9 +5,6 @@
     <?php if ($bebas) : ?>
     <?php echo $this->load->view('admin/partials/filter'); ?>
     <?php echo form_open('admin/bebas/action'); ?>
-    <div>
-	<p><a href="admin/bebas/create/"><img src="<?php echo base_url().$this->module_details['path'];?>/img/add.png"> <b>Tambah data Surat Keputusan</b></a></p>
-    </div>
     <div id="filter-stage">
         <?php echo $this->load->view('admin/tables/bebas')?>
     </div>
