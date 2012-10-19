@@ -202,7 +202,13 @@ class Admin extends Admin_Controller{
             $data = $this->bt->get_row_by(array('id' => $id));
             $arr     = array('nim' => $this->input->post('nim'));
             $college = $this->bt->get_mhs_row($arr);
-            $this->form_validation->set_rules($this->v_rules);
+            $this->form_validation->set_rules(array_merge($this->v_rules, array(
+			    'title' => array(
+				    'field' => 'nim',
+				    'label' => 'lang:bebas_nim',
+				    'rules' => 'trim|htmlspecialchars|required|max_length[100]|callback__check_nim['.$id.']'
+			    ),
+		    )));
 	    if($this->form_validation->run()){
 		$result = $this->bt->edit_bt($id,array(
 			    'nim'	        => $this->input->post('nim'),
@@ -293,6 +299,7 @@ class Admin extends Admin_Controller{
             $style= "
             <html><head><title>Cetak SK Bebas Teori</title>
                     <style>
+                    /**
                     @media print {
                     @page {
                     size:a5;
@@ -305,16 +312,23 @@ class Admin extends Admin_Controller{
                     /**zoom: 58%;**/
                     filter: progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);
                     }
-                    
+                    **/
+                    .kotak1{
+                        width : 559px
+                    }
                     </style> </head>";
-            $table  = "<body><div class=\"rotate\"><table style=\"font-size:14px;\">";
-	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\"><b><font size=\"1.5\">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN </font><br>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><small>Alamat : Kampus Karangmalang, Yogyakarta, 55281<br>Telp. (0274) 586168 psw. 276,289,292 (0274) 586734 Fax. (0274) 586734<br>website: http://ft.uny.ac.id email:ft@uny.ac.id, teknik@uny.ac.id</small> ";
+            $table  = "<body>";
+            $table .= "<table>";
+            $table .= "<tr><td width=\"580px\"></td>";
+            $table .= "<td>";
+            $table .= "<table style=\"font-size:14px;\">";
+	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\"><b><font size=\"1.5\">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN </font><br>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><small>Alamat : Kampus Karangmalang, Yogyakarta, 55281<br>Telp. (0274) 586168 psw. 276,289,292 (0274) 586734 Fax. (0274) 586734<br>website: http://ft.uny.ac.id <br>email:ft@uny.ac.id, teknik@uny.ac.id</small> ";
             $table .= "</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
             $table .= "<tr><td colspan=3><hr></td></tr><tr><td colspan=3><br></td></tr>";
             $table .= "<tr><td colspan=3 align=\"center\"><u><b>SURAT KETERANGAN BEBAS TEORI</b></u></tr></tr>";
             $table .= "<tr><td colspan=3 align=\"center\">Nomor : ".$data->no."/".$data->kode."/".date('Y')."</tr>";
             $table .= "</table>";
-            $table .= "<table><tr><td colspan=2>Kepala Sub Bagian Pendidikan Fakultas Teknik Universitas Negeri Yogyakarta menerangkan bahwa: </td></tr>";
+            $table .= "<table><tr><td colspan=2>Kepala Sub Bagian Pendidikan Fakultas Teknik Universitas Negeri Yogyakarta<br> menerangkan bahwa: </td></tr>";
             $table .= "<tr><td>Nama</td><td>: ".$data->nama."</td></tr>";
             $table .= "<tr><td>NIM</td><td>: ".$data->nim."</td></tr>";
             $table .= "<tr><td>Program Studi</td><td>: ".$this->bt->get_dpt_row(array('id' => $data->prodi))->name."</td></tr>";
@@ -339,7 +353,7 @@ class Admin extends Admin_Controller{
             $table .= "<table><tr><td align=\"left\">Telah menempuh ujian TABS/TAS/<br> TA D3, pada tanggal ....<br>Ketua program Studi,</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=\"center\">Yogyakarta, ".tanggal($data->tanggal_surat)." <br> Kepala Sub Bagian Pendidikan<br> Fakultas Teknik UNY</td></tr>";
             $table .= "<tr><td colspan=2><br><br><br></td></tr>";
             $table .= "<tr><td>(__________________________)<br>NIP. </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=\"center\">Dra. Sari Puspita<br /> Nip. 19630912 198812 2 001</td></tr>";
-            $table .= "</table></div>";
+            $table .= "</table></td></tr></table>";
             $table .= "</body></html>";
             echo $style;
             echo $table;

@@ -114,7 +114,7 @@
 					<li><a href="admin/prakerin">Praktik Industri</a></li>
 					<li><a href="admin/survei">Survei</a></li>
 					<li><a href="admin/penelitian">Penelitian</a></li>
-					<li><a href="admin/bt">Bebas Teori</a></li>
+					<li><a href="admin/bebas">Bebas Teori</a></li>
 					<li><a href="admin/yudisium">Yudisium</a></li>
 				</ul>
 			</li>
