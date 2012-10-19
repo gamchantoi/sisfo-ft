@@ -9,4 +9,6 @@ $lang['bt_edit_success']                       = 'Edit Data Sukses';
 $lang['bt_edit_error']                         = 'Edit Data Gagal';
 $lang['bt_delete_success']                     = 'Hapus Data Sukses';
 $lang['bt_delete_error']                       = 'Hapus Data Gagal';
+$lang['bt_list']                               = 'Daftar SK Bebas Teori';
+$lang['bt_add']                                = 'Tambah SK Bebas Teori';
 
