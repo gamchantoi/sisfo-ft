@@ -11,22 +11,28 @@
     <div class="form_inputs">
         <fieldset>
             <ul>
+                <?php if($this->method == 'edit'): ?>
                 <li class="even">
-		    <label for="name">NIM</label>
-		    <div class="input"><?php echo form_input('nim',$data->nim, 'maxlength="25" '); ?></div>			
-		</li>
+				    <label for="name">Tanggal Surat</label>
+				    <div class="input"><?php echo form_input('tanggal_surat',$data->tanggal_surat, 'maxlength="25" '); ?></div>			
+				</li>
+            	<?php endif; ?>
+                <li class="even">
+				    <label for="name">NIM</label>
+				    <div class="input"><?php echo form_input('nim',$data->nim, 'maxlength="25" '); ?></div>			
+				</li>
                 <li class="even">        
-		    <label for="nim">SKS</label>
-		    <div class="input"><?php echo form_input('sks',$data->sks); ?></div>			
+				    <label for="nim">SKS</label>
+				    <div class="input"><?php echo form_input('sks',$data->sks); ?></div>			
                 </li>
                 <li class="even">
-		    <label for="department">Nilai D</label>	
-		    <div class="input"><?php echo form_input('nilai_d',$data->nilai_d); ?></div>
-		</li>
+				    <label for="department">Nilai D</label>	
+				    <div class="input"><?php echo form_input('nilai_d',$data->nilai_d); ?></div>
+				</li>
                 <li class="even">
-		    <label for="department">IPK</label>	
-		    <div class="input"><?php echo form_input('ipk',$data->ipk); ?></div>
-		</li>
+				    <label for="department">IPK</label>	
+				    <div class="input"><?php echo form_input('ipk',$data->ipk); ?></div>
+				</li>
             </ul>
         </fieldset>
     </div>

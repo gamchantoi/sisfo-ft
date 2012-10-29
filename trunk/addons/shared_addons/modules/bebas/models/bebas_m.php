@@ -168,4 +168,20 @@ class Bebas_m extends MY_Model{
 		}
 	    return $this->get_all();
         }
+
+    function add_print($id,$code)
+        {
+            $this->db->set('id_parrent',$id)
+                        ->set('code',$code)
+                        ->set('date',date('Y-m-d H:m:s'));
+            return $this->db->insert('printed');
+        }
+
+    function get_printed($id,$code)
+        {
+            $this->db->select('date')
+                    ->where('id_parrent',$id)
+                    ->where('code','7');
+            return $this->db->get('printed')->result();
+        }
 }
