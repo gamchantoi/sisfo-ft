@@ -11,6 +11,18 @@ if(!function_exists("get_prodi"))
         return $result->name;
     }
 }
+
+if(!function_exists("get_printed"))
+{
+  function get_printed($id)
+  {
+    $ci =& get_instance();
+    $ci->load->model('bebas_m','bt');
+    $result = $ci->bt->get_printed($id,'7');
+    return $result;
+  }
+}
+
 if(! function_exists("tanggal"))
 {
     function tanggal($tgl){

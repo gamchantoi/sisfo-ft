@@ -67,8 +67,6 @@ class Admin extends Admin_Controller{
         $this->input->is_ajax_request()
 			? $this->template->build('admin/tables/bebas')
 			: $this->template->build('admin/index');
-       
-        
     }
     
     public function jenjang($dpt)
@@ -76,11 +74,16 @@ class Admin extends Admin_Controller{
             list($dpt_name,$dpt_code)= explode("-",$dpt);
             return $jenjang = trim($dpt_code);
         }
+
     public function number()
         {
             $number = $this->bt->get_number();
-            return $number->no;
+            if($number) : $results = $number->no;
+            else : $results = 0;
+            endif ;
+            return $results;
         }
+
     public function kode($dpt)
         {
             switch ($dpt){
@@ -166,7 +169,7 @@ class Admin extends Admin_Controller{
                             'kode'              => $this->kode($college->x),
 			    'jam_pesan'         => date('Y-m-d H:i:s'),
                             'tanggal_surat'     => date('Y-m-d'),
-                            'jam_selesai'       => date('Y-m-d H:i:s'),
+                            //'jam_selesai'       => date('Y-m-d H:i:s'),
 			    'sks'               => $this->input->post('sks'),
                             'ipk'               => $this->input->post('ipk'),
                             'nilai_d'           => $this->input->post('nilai_d')
@@ -204,21 +207,22 @@ class Admin extends Admin_Controller{
             $college = $this->bt->get_mhs_row($arr);
             $this->form_validation->set_rules(array_merge($this->v_rules, array(
 			    'title' => array(
-				    'field' => 'nim',
-				    'label' => 'lang:bebas_nim',
-				    'rules' => 'trim|htmlspecialchars|required|max_length[100]|callback__check_nim['.$id.']'
+				'field' => 'nim',
+				'label' => 'lang:bebas_nim',
+				'rules' => 'trim|htmlspecialchars|required|max_length[100]|callback__check_nim['.$id.']'
 			    ),
 		    )));
 	    if($this->form_validation->run()){
 		$result = $this->bt->edit_bt($id,array(
-			    'nim'	        => $this->input->post('nim'),
-			    'sks'	        => $this->input->post('sks'),
-			    'ipk'               => $this->input->post('ipk'),
-			    'nilai_d'           => $this->input->post('nilai_d'),
-                            'nama'              => $college->name,
-                            'prodi'             => $this->get_dpt($college->x),
-                            'jenjang'           => $this->jenjang($college->x),
-                            'kode'              => $this->kode($college->x)
+                'tanggal_surat'    => $this->input->post('tanggal_surat'),
+			    'nim'	           => $this->input->post('nim'),
+			    'sks'	           => $this->input->post('sks'),
+			    'ipk'              => $this->input->post('ipk'),
+			    'nilai_d'          => $this->input->post('nilai_d'),
+                'nama'             => $college->name,
+                'prodi'            => $this->get_dpt($college->x),
+                'jenjang'          => $this->jenjang($college->x),
+                'kode'             => $this->kode($college->x)
 			));
             if ($result)
 		    {
@@ -268,9 +272,9 @@ class Admin extends Admin_Controller{
     
     public function ajax_filter()
         {
-            $nama = $this->input->post('f_nama');
-	    $nim   = $this->input->post('f_nim');
-	    $post_data = array();
+            $nama   = $this->input->post('f_nama');
+	        $nim    = $this->input->post('f_nim');
+	        $post_data = array();
 
 		if($nim){
                     $post_data['nim'] = $nim;
@@ -322,7 +326,7 @@ class Admin extends Admin_Controller{
             $table .= "<tr><td width=\"580px\"></td>";
             $table .= "<td>";
             $table .= "<table style=\"font-size:14px;\">";
-	    $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\"><b><font size=\"1.5\">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN </font><br>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><small>Alamat : Kampus Karangmalang, Yogyakarta, 55281<br>Telp. (0274) 586168 psw. 276,289,292 (0274) 586734 Fax. (0274) 586734<br>website: http://ft.uny.ac.id <br>email:ft@uny.ac.id, teknik@uny.ac.id</small> ";
+	        $table .= "<tr><td><img src=\"".base_url().$this->module_details['path']."/img/Logo_uny.gif\" width=\"80px\"><td  align=\"center\"><b><font size=\"1.5\">KEMENTERIAN PENDIDIKAN DAN KEBUDAYAAN </font><br>UNIVERSITAS NEGERI YOGYAKARTA<br>FAKULTAS TEKNIK<br><small>Alamat : Kampus Karangmalang, Yogyakarta, 55281<br>Telp. (0274) 586168 psw. 276,289,292 (0274) 586734 Fax. (0274) 586734<br>website: http://ft.uny.ac.id <br>email:ft@uny.ac.id, teknik@uny.ac.id</small> ";
             $table .= "</b></td><td><img src=\"".base_url().$this->module_details['path']."/img/iso.png\" width=\"80px\" align=\"right\"></td></tr>";
             $table .= "<tr><td colspan=3><hr></td></tr><tr><td colspan=3><br></td></tr>";
             $table .= "<tr><td colspan=3 align=\"center\"><u><b>SURAT KETERANGAN BEBAS TEORI</b></u></tr></tr>";
@@ -357,6 +361,18 @@ class Admin extends Admin_Controller{
             $table .= "</body></html>";
             echo $style;
             echo $table;
-            
+            $this->add_print($id,'7');
+            $this->time_off($id);
+        }
+
+    function add_print($id,$code)
+        {
+            return $this->bt->add_print($id,$code);
+        }
+
+    function time_off($id)
+        {
+            $data = array('jam_selesai' => date('Y-m-d H:m:s') );
+            return $this->bt->edit_bt($id,$data);
         }
 }

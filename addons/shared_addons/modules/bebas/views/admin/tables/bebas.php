@@ -21,7 +21,7 @@
             <td><?php echo $item->no; ?></td>
             <td><?php echo tanggal($item->tanggal_surat); ?></td>
             <td><?php echo $item->nim; ?></td>
-            <td><?php echo $item->nama; ?></td>
+            <td><a href="#" title="<?php print_r(get_printed($item->id)); ?>"><?php echo $item->nama; ?></a></td>
             <td><?php echo get_prodi($item->prodi); ?></td>
             <td>
                 <a href="admin/bebas/prints/<?php echo $item->id; ?>" title="Cetak data Bebas Teori"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a>
