@@ -379,6 +379,7 @@ class Yudisium_m extends MY_Model {
             $this->db->from('default_yudisium');
             $this->db->where("date_format(date_in,'%m-%Y')",$date);
             $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=",$sem);
+			//this->db->where("yudisium_date <=",date('Y')."-06-30");
             $this->db->where("thesis",$prodi);
             $this->db->where("parrental <> ","PKS");
             $this->db->where('ipk >=','3.51');

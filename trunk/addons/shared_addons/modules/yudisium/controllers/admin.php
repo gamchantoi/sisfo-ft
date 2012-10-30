@@ -2419,40 +2419,50 @@ class Admin extends Admin_Controller {
 		}
 	    }else{
 		if($smster <= 10)
-		{
-		    //$ok = "ok";
-		    if($ipk <= 4.0 && $ipk >= 3.51)
-		    {
-			if($parrental == 'PKS')
 			{
-			    $predicate = 'Sangat Memuaskan';
+				//$ok = "ok";
+				$var_date = date('Y')."-06-30";
+				if($ipk <= 4.0 && $ipk >= 3.51)
+				{
+					if($parrental == 'PKS')
+					{
+						$predicate = 'Sangat Memuaskan';
+					}else{
+						//$predicate = 'Dengan Pujian'; 
+						if ($smster == 10 && $date > $var_date)
+							{
+								$predicate = 'Sangat Memuaskan';
+								
+							}else{
+								$predicate = 'Dengan Pujian';
+							}
+					}
+					
+				}
+				
+				if($ipk >= 2.76  && $ipk <= 3.50)
+				{
+				$predicate = 'Sangat Memuaskan';
+				}
+				if($ipk >= 2.00 && $ipk <= 2.75)
+				{
+				$predicate = 'Memuaskan';
+				}
 			}else{
-			    $predicate = 'Dengan Pujian';   
+				//$ok = "ok";
+				if($ipk <= 4.0 && $ipk >= 3.51)
+				{
+				$predicate = 'Sangat Memuaskan';
+				}
+				if($ipk >= 2.76  && $ipk <= 3.50)
+				{
+				$predicate = 'Sangat Memuaskan';
+				}
+				if($ipk >= 2.00 && $ipk <= 2.75)
+				{
+				$predicate = 'Memuaskan';
+				}
 			}
-		    }
-		    if($ipk >= 2.76  && $ipk <= 3.50)
-		    {
-			$predicate = 'Sangat Memuaskan';
-		    }
-		    if($ipk >= 2.00 && $ipk <= 2.75)
-		    {
-			$predicate = 'Memuaskan';
-		    }
-		}else{
-		    //$ok = "ok";
-		    if($ipk <= 4.0 && $ipk >= 3.51)
-		    {
-			$predicate = 'Sangat Memuaskan';
-		    }
-		    if($ipk >= 2.76  && $ipk <= 3.50)
-		    {
-			$predicate = 'Sangat Memuaskan';
-		    }
-		    if($ipk >= 2.00 && $ipk <= 2.75)
-		    {
-			$predicate = 'Memuaskan';
-		    }
-		}
 	    }
 	return $predicate;
 	}
