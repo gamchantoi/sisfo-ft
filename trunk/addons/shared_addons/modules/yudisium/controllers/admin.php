@@ -1084,11 +1084,11 @@ class Admin extends Admin_Controller {
 		{
 		    case	'D3'	:
 			$stage	= "D3";
-			$lamp	= 1;
+			$lamp	= 2;
 			break;
 		    case	'Skripsi':
 			$stage	= "S1";
-			$lamp	= 2;
+			$lamp	= 1;
 			break;
 		    default		:
 			$header .= "<br />";
