@@ -901,7 +901,7 @@ class Admin extends Admin_Controller {
 	    //$table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><img src=\"".base_url().$this->module_details['path']."/img/brur.gif_\" height=\"50px\"><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
 	    $table .= "<tr class='smaller'><td></td><td style=\"padding-left: 200px; \"><br>Dekan, <br><br><br><br><br>Dr. Moch. Bruri Triyono<br>NIP 19560216 198603 1 003</td></tr>";
 	    $table .= "<tr class='smaller'><td colspan=2>Tembusan Yth. :</td></tr>";
-	    $table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Pembantu Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Pend. dan Kerjasama;<br>6. Kabag. Kemahasiswaan</td><td style=\"padding-left: 190px; \">7. Kasubag Registrasi dan Statistik<br>8. Para Pembantu Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
+	    $table .= "<tr class='smaller'><td>1. Rektor  <br>2. Para Wakil Rektor<br>3. Para Kepala Biro<br>4. Para Dekan<br>5. Kabag. Akademik;<br>6. Kasubag. Akademik</td><td style=\"padding-left: 190px; \">7. Kasubag Registrasi<br>8. Para Wakil Dekan FT<br>9. Para Ketua Jurusan/Program Studi FT<br>10. Kasubag Pendidikan FT<br>11. Yang Bersangkutan; <br> Universitas Negeri Yogyakarta</td></tr>";
 	    $table .= "</table>";
 	    
 	    //$table .= "<table>";
