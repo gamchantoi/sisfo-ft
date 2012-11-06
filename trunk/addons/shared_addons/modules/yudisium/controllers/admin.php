@@ -1694,8 +1694,9 @@ class Admin extends Admin_Controller {
 		$header  = "<table align=\"center\">";
 		$header	.= $this->header_logo();
 		$header .= "<tr><td colspan=\"3\"></td></tr>";
-		$header .= "<tr><td colspan=\"3\" align=\"center\">DATA LULUSAN MAHASISWA ".$prodi." FAKULTAS TEKNIK <br> BULAN ".strtoupper($bln1)." ".$thn1." DAN ".strtoupper($bln2)." ".$thn2."</td></tr>";
-		$header	.= "<tr><td colspan=\"3\"></td></tr>";
+		$header .= "<tr><td colspan=\"3\"><br></td></tr>";
+		$header .= "<tr><td colspan=\"3\" align=\"center\"><b>DATA LULUSAN MAHASISWA ".$prodi." FAKULTAS TEKNIK BULAN ".strtoupper($bln2)." ".$thn2."</b></td></tr>";
+		$header	.= "<tr><td colspan=\"3\"><br></td></tr>";
 		$header .= "</table>";
 		$table 	 = "<table class=\"gridtable\" border=\"1px\">";
 		$table	.= "<tr><th>No</th><th>DATA LULUSAN ".$prodi."</th><th>".tanggal($start)."</th><th>".tanggal($finish)."</th><th>KETERANGAN</th></tr>";
