@@ -1714,49 +1714,49 @@ class Admin extends Admin_Controller {
 		//avg rerata
 		$avg1	 = round($this->ym->write_avg_datein($start_date,$thesis),2);
 		$avg2	 = round($this->ym->write_avg_datein($finish_date,$thesis),2);
-		if($avg1 < $avg2) : $ketavg ="LEBIH LAMA"; else : $ketavg = "LEBIH CEPAT"; endif;
+		if($avg1 < $avg2) : $ketavg ="LEBIH LAMA"; elseif ($avg1 == $avg2) : $ketavg ="TETAP"; else : $ketavg = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>RERATA LAMA PENULISAN TA</td><td>".$avg1."</td><td>".$avg2."</td><td>$ketavg</td></tr>";
 		//max
 		$max1	 = round($this->ym->write_max_datein($start_date,$thesis),2);
 		$max2	 = round($this->ym->write_max_datein($finish_date,$thesis),2);
-		if($max1 < $max2) : $ketmax = "LEBIH LAMA"; else : $ketmax = "LEBIH CEPAT"; endif;
+		if($max1 < $max2) : $ketmax = "LEBIH LAMA"; elseif($max1 == $max2): $ketmax = "TETAP"; else : $ketmax = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>LAMA MAKSIMUM PENULISAN TA</td><td>".$max1."</td><td>".$max2."</td><td>$ketmax</td></tr>";
 		//min
 		$min1	 = round($this->ym->write_min_datein($start_date,$thesis),2);
 		$min2	 = round($this->ym->write_min_datein($finish_date,$thesis),2);
-		if($min1 < $min2) : $ketmin = "LEBIH LAMA"; else : $ketmin = "LEBIH CEPAT"; endif;
+		if($min1 < $min2) : $ketmin = "LEBIH LAMA"; elseif($min1 == $min2): $ketmin = "TETAP"; else : $ketmin = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>LAMA MINIMUM PENULISAN TA</td><td>".$min1."</td><td>".$min2."</td><td>$ketmin</td></tr>";
 		$table  .= "<tr><td><b>3</b></td><td><b>MASA STUDI</b></td><td></td><td></td><td></td></tr>";
 		//rerata masa studi
 		$avgsem1 = round($this->ym->sem_avg_datein($start_date,$thesis),2);
 		$avgsem2 = round($this->ym->sem_avg_datein($finish_date,$thesis),2);
-		if($avgsem1 < $avgsem2) : $ketavgsem = "LEBIH LAMA"; else : $ketavgsem = "LEBIH CEPAT"; endif;
+		if($avgsem1 < $avgsem2) : $ketavgsem = "LEBIH LAMA"; elseif($avgsem1 == $avgsem2): $ketavgsem = "TETAP"; else : $ketavgsem = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>RERATA MASA STUDI</td><td>$avgsem1</td><td>$avgsem2</td><td>$ketavgsem</td></tr>";
 		//masa studi maximum
 		$semmax1 = round($this->ym->sem_max_datein($start_date,$thesis),2);
 		$semmax2 = round($this->ym->sem_max_datein($finish_date,$thesis),2);
-		if($semmax1 < $semmax2) : $ketsemmax = "LEBIH LAMA"; else : $ketsemmax = "LEBIH CEPAT"; endif;
+		if($semmax1 < $semmax2) : $ketsemmax = "LEBIH LAMA"; elseif($semmax1 == $semmax2): $ketsemmax = "TETAP"; else : $ketsemmax = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>MASA STUDI MAKSIMUM</td><td>$semmax1</td><td>$semmax2</td><td>$ketsemmax</td></tr>";
 		//masa studi minimum
 		$semmin1 = round($this->ym->sem_min_datein($start_date,$thesis),2);
 		$semmin2 = round($this->ym->sem_min_datein($finish_date,$thesis),2);
-		if($semmin1 < $semmin2) : $ketsemmin = "LEBIH LAMA"; else : $ketsemmin = "LEBIH CEPAT"; endif;
+		if($semmin1 < $semmin2) : $ketsemmin = "LEBIH LAMA"; elseif($semmin1 == $semmin2): $ketsemmin = "TETAP"; else : $ketsemmin = "LEBIH CEPAT"; endif;
 		$table  .= "<tr><td></td><td>MASA STUDI MINIMUM</td><td>$semmin1</td><td>$semmin2</td><td>$ketsemmin</td></tr>";
 		$table  .= "<tr><td><b>4</b></td><td><b>IPK</b></td><td></td><td></td><td></td></tr>";
 		//rerata IPK
 		$avgipk1 = round($this->ym->ipk_avg_datein($start_date,$thesis),2);
 		$avgipk2 = round($this->ym->ipk_avg_datein($finish_date,$thesis),2);
-		if($avgipk1 < $avgipk2) : $ketavgipk = "NAIK"; else : $ketavgipk = "TURUN"; endif;
+		if($avgipk1 < $avgipk2) : $ketavgipk = "NAIK"; elseif($avgipk1 == $avgipk2): $ketavgipk = "TETAP"; else : $ketavgipk = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>RERATA IPK</td><td>$avgipk1</td><td>$avgipk2</td><td>$ketavgipk</td></tr>";
 		//ipk maximum
 		$ipkmax1 = round($this->ym->ipk_max_datein($start_date,$thesis),2);
 		$ipkmax2 = round($this->ym->ipk_max_datein($finish_date,$thesis),2);
-		if($ipkmax1 < $ipkmax2) : $ketipkmax = "NAIK"; else : $ketipkmax = "TURUN"; endif;
+		if($ipkmax1 < $ipkmax2) : $ketipkmax = "NAIK"; elseif($ipkmax1 == $ipkmax2): $ketipkmax ="TETAP"; else : $ketipkmax = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>IPK MAKSIMUM</td><td>$ipkmax1</td><td>$ipkmax2</td><td>$ketipkmax</td></tr>";
 		//ipk minimum
 		$ipkmin1 = round($this->ym->ipk_min_datein($start_date,$thesis),2);
 		$ipkmin2 = round($this->ym->ipk_min_datein($finish_date,$thesis),2);
-		if($ipkmin1 < $ipkmin2) : $ketipkmin = "NAIK"; else : $ketipkmin = "TURUN"; endif;
+		if($ipkmin1 < $ipkmin2) : $ketipkmin = "NAIK"; elseif($ipkmin1 == $ipkmin2): $ketipkmin = "TETAP"; else : $ketipkmin = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>IPK MINIMUM</td><td>$ipkmin1</td><td>$ipkmin2</td><td>$ketipkmin</td></tr>";
 		$table  .= "<tr><td><b>5</b></td><td><b>PREDIKAT</b></td><td></td><td></td><td></td></tr>";
 		//dengan pujian= cumloude
