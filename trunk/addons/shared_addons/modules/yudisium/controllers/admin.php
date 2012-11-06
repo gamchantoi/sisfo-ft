@@ -1764,8 +1764,8 @@ class Admin extends Admin_Controller {
 		if($cum1 < $cum2): $ketcum ="NAIK"; elseif ($cum1 == $cum2) : $ketcum ="TETAP"; else : $ketcum ="TURUN"; endif;
 		$table  .= "<tr><td></td><td>DENGAN PUJIAN</td><td>$cum1</td><td>$cum2</td><td>$ketcum</td></tr>";
 		//sangat memuaskan
-		$v_good1 = $this->ym->verrygood_datein($start_date,$thesis);
-		$v_good2 = $this->ym->verrygood_datein($finish_date,$thesis);
+		$v_good1 = $this->ym->verrygood_datein($start_date,$thesis)-$cum1;
+		$v_good2 = $this->ym->verrygood_datein($finish_date,$thesis)- $cum2;
 		if($v_good1 < $v_good2) : $ketvgood = "NAIK"; elseif($v_good1 == $v_good2): $ketvgood ="TETAP"; else : $ketvgood = "TURUN"; endif;
 		$table  .= "<tr><td></td><td>SANGAT MEMUASKAN</td><td>$v_good1</td><td>$v_good2</td><td>$ketvgood</td></tr>";
 		//memuaskan
