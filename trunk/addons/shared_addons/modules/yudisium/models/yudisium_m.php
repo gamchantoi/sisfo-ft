@@ -3,8 +3,8 @@
  * @author 	Dwi Agus Purwanto
  * @package 	PyroCMS
  * @subpackage 	Yudicium model
- * @since		v0.1
- *
+ * @since	v0.1
+ * @website	http://www.cempakaweb.com
  */
 class Yudisium_m extends MY_Model {
     protected $_table = 'yudisium';
@@ -126,7 +126,8 @@ class Yudisium_m extends MY_Model {
 	    $this->db->select("RIGHT (`x`, '2) AS `stage`")
 	    ->where('nim',$nim);
 	    $result = $this->db->get('college')->row();
-	    return $result->stage; **/
+	    return $result->stage; 
+	    **/
 	    $query = $this->db->query("SELECT RIGHT (`x`,2) AS stage FROM `default_college` WHERE nim='".$nim."'");
 	    $row   = $query->row();
 	    return $row->stage;
@@ -373,13 +374,14 @@ class Yudisium_m extends MY_Model {
             $result = $query->row();
             return $result->rerata;
 	}
+    //cek kumlot
     function cum_datein($date,$prodi)
 	{
 	    if ($prodi == 'Skripsi') : $sem ="10"; else : $sem ="8"; endif;
             $this->db->from('default_yudisium');
             $this->db->where("date_format(date_in,'%m-%Y')",$date);
             $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=",$sem);
-			//this->db->where("yudisium_date <=",date('Y')."-06-30");
+	    //this->db->where("yudisium_date <=",date('Y')."-06-30");
             $this->db->where("thesis",$prodi);
             $this->db->where("parrental <> ","PKS");
             $this->db->where('ipk >=','3.51');
@@ -1149,4 +1151,9 @@ class Yudisium_m extends MY_Model {
 	}
     /** end of surat keputusan **/	
 	
+    
+    function cek_data()
+    {
+	$this->db->where('date','');
+    }
 }
