@@ -1693,7 +1693,7 @@ class Admin extends Admin_Controller {
 		$style 	 = $this->style_present("Data Lulusan","","");
 		$header  = "<table align=\"center\">";
 		$header	.= $this->header_logo();
-		$header .= "<tr><td colspan=\"3\"></td></tr>";
+		//$header .= "<tr><td colspan=\"3\"></td></tr>";
 		$header .= "<tr><td colspan=\"3\"><br></td></tr>";
 		$header .= "<tr><td colspan=\"3\" align=\"center\"><b>DATA LULUSAN MAHASISWA ".$prodi." FAKULTAS TEKNIK BULAN ".strtoupper($bln2)." ".$thn2."</b></td></tr>";
 		$header	.= "<tr><td colspan=\"3\"><br></td></tr>";
