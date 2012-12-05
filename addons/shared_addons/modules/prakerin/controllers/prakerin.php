@@ -53,10 +53,14 @@ class Prakerin extends Public_Controller {
 	{
 		parent::__construct();
 		$this->load->model('prakerin_m','pkl');
-		$this->data->prodies  = $this->prodies();
-		$this->data->lectures = $this->lectures();
-                $this->data->district = $this->district();
-                $this->data->number   = $this->number();
+		$prodies  = $this->prodies();
+		$lectures = $this->lectures();
+                $district = $this->district();
+                $number   = $this->number();
+		$this->template->set('prodies',$prodies)
+			->set('lectures',$lectures)
+			->set('number',$number)
+			->set('district',$district);
 	}
     
     public function index()

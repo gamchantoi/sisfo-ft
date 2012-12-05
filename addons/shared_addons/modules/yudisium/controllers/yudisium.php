@@ -142,21 +142,35 @@ class Yudisium extends Public_Controller {
 		);
     
     public function __construct()
-	{
-		
+	{		
 		parent::__construct();
-
 		$this->lang->load('yudisium');
 		$this->load->model('yudisium_m');
-		$this->data->prodies  = $this->prodies();
-                $this->data->lectures = $this->lectures();
-		$this->data->vacations= array(
+		$religions= array(
+					      0 => '-Agama-',
+					      1 => 'Islam',
+					      2 => 'Katholik',
+					      3 => 'Kristen',
+					      4 => 'Hindu',
+					      5 => 'Budha',
+					      6 => 'Konghuchu',
+					      7 => 'Lainnya'
+					      );
+		$vacations= array(
 						'0' => '0',
 						'1' => '1',
 						'2' => '2',
 						'3' => '3',
 						'4' => '4'
 		);
+		$this->template->set('religions', $religions)
+		    ->set('vacations',$vacations)
+		    ->set('prodies',$this->prodies())
+		    ->set('lectures',$this->lectures());
+		//$this->data->prodies  = $this->prodies();
+                //$this->data->lectures = $this->lectures();
+		/**
+		
 		$this->data->religions= array(
 					      0 => '-Agama-',
 					      1 => 'Islam',
@@ -167,12 +181,12 @@ class Yudisium extends Public_Controller {
 					      6 => 'Konghuchu',
 					      7 => 'Lainnya'
 					      );
+		**/
 	}
         
     
     
     public function index() {
-
         $this->template
 //			->set('departments',$dpid)
 			->append_css('module::ui-lightness/jquery-ui-1.7.3.custom.css')
@@ -186,7 +200,7 @@ class Yudisium extends Public_Controller {
 					  $( "#date" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
 					  });</script>')
 			->title($this->module_details['name'])
-                        ->build('index', $this->data);
+                        ->build('index');
     }
     
     public function prodi(){

@@ -170,14 +170,17 @@ class Admin extends Admin_Controller {
 
 		$this->lang->load('yudisium');
 		$this->load->model('yudisium_m','ym');
-		$this->data->prodies  = $this->prodies();
-		$this->data->lectures = $this->lectures();
 		$this->load->library('form_validation');
 		$this->load->library('ExportToExcel');
 		$this->load->helper('tanggal');
 		$this->load->helper('printed');
 		$this->load->helper('yudisium');
-		$this->data->religions= $this->ym->get_religions();
+		$religions= $this->ym->get_religions();
+		$prodies  = $this->prodies();
+		$lectures = $this->lectures();
+		$this->template->set('religions',$religions)
+			->set('prodies',$prodies)
+			->set('lectures',$lectures);
 	}
     
     public function index()

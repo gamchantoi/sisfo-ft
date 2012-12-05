@@ -4,7 +4,7 @@
             var nim = $("#nim").val();
 		$.ajax({
 		   type : "POST",
-		   url  : "<?php echo base_url(); ?>yudisium/prodi",
+		   url  : "<?php echo base_url(); ?>index.php/yudisium/prodi",
 		   data : "nim=" + nim,
 		   success: function(data){
 		       $("#profile").html(data);
