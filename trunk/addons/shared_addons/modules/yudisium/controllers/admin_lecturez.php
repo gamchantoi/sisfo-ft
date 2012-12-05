@@ -33,7 +33,8 @@ class Admin_Lecturez extends Admin_Controller
         $this->lang->load('yudisium');
         $this->load->model('yudisium_m','ym');
         $this->load->helper('tanggal');
-	$this->data->majors= $this->ym->get_majors();
+	$majors= $this->ym->get_majors();
+	$this->template->set('majors',$majors);
     }
     
     public function index()

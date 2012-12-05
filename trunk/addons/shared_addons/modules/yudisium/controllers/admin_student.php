@@ -33,7 +33,8 @@ class Admin_Student extends Admin_Controller {
             $this->lang->load('yudisium');
             $this->load->model('yudisium_m','ym');
             $this->load->helper('yudisium');
-            $this->data->prodies  = $this->prodies();
+            $prodies  = $this->prodies();
+	    $this->template->set('prodies',$prodies);
 	}
     
     public function index()
