@@ -111,11 +111,11 @@
 		<?php if ($this->current_user->group == 'admin' OR $this->current_user->group == 'petugas'): ?>
 			<li><a href="#">Layanan</a>
 				<ul>
-					<li><a href="admin/prakerin">Praktik Industri</a></li>
-					<li><a href="admin/survei">Survei</a></li>
-					<li><a href="admin/penelitian">Penelitian</a></li>
-					<li><a href="admin/bebas">Bebas Teori</a></li>
-					<li><a href="admin/yudisium">Yudisium</a></li>
+					<li><?php echo anchor('admin/prakerin', "Praktik Industri"); ?></li>
+					<li><?php echo anchor('admin/survei', "Survei"); ?></li>
+					<li><?php echo anchor('admin/penelitian', "Penelitian"); ?></li>
+					<li><?php echo anchor('admin/bebas', "Bebas Teori"); ?></li>
+					<li><?php echo anchor('admin/yudisium', "Yudisium"); ?></li>
 				</ul>
 			</li>
 		<?php endif; ?>
