@@ -23,8 +23,12 @@
                         <td><?php echo tanggal($data->date);?></td>
                         <td><?php echo $data->ant?></td>
                         <td>
-                            <a href="admin/yudisium/decrees/edit/<?php echo $data->id; ?>" title="Edit data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/edit.png"></a>
-                            <a href="admin/yudisium/decrees/delete/<?php echo $data->id; ?>" title="Hapus data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/delete.png"></a>
+	    <?php
+			$img_edit = img(array("src" => base_url($this->module_details['path']."/img/edit.png"), "title" => "Edit data SK", "alt" => "Edit data SK", "class" => "edit"));
+			$img_del  = img(array("src" => base_url($this->module_details['path']."/img/delete.png"), "title" => "Hapus data SK", "alt" => "Hapus data SK", "class" => "delete"));
+			echo anchor("admin/yudisium/decrees/edit/".$data->id, $img_edit);
+			echo anchor("admin/yudisium/decrees/delete/".$data->id, $img_del);
+	    ?>
                         </td>
                     </tr>
                     <?php $i++; endforeach; ?>

@@ -23,8 +23,12 @@
                         <td><?php echo $data->name;?></td>
                         <td><?php echo $data->major?></td>
                         <td>
-                            <a href="admin/yudisium/lecturez/edit/<?php echo $data->id; ?>" title="Edit data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/edit.png"></a>
-                            <a href="admin/yudisium/lecturez/delete/<?php echo $data->id; ?>" title="Hapus data Mahasiswa"><img src="<?php echo base_url().$this->module_details['path'];?>/img/delete.png"></a>
+	    <?php
+	    $img_edit = img(array("src" => base_url($this->module_details['path']."/img/edit.png"), "title" => "Edit data Dosen", "alt" => "Edit data Dosen", "class" => "edit"));
+	    $img_del  = img(array("src" => base_url($this->module_details['path']."/img/delete.png"), "title" => "Hapus data Dosen", "alt" => "Hapus data Dosen", "class" => "delete"));
+            echo anchor("admin/yudisium/lecturez/edit/".$data->id, $img_edit);
+	    echo anchor("admin/yudisium/lecturez/delete/".$data->id, $img_del);
+	    ?>
                         </td>
                     </tr>
                     <?php $i++; endforeach; ?>
