@@ -263,6 +263,60 @@ class Yudisium_m extends MY_Model {
 	    return $result->rerata;
 	}
     
+    /**
+     *==========================
+     *Report Statistik
+     *==========================
+     *
+     */
+    function avg_ipk($tahun,$grade,$prodi)
+    {
+	$query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE date_format(`yudisium_date`,'%Y')='".$tahun."' AND thesis ='".$grade."' AND department='".$prodi."'");
+	$result = $query->row();
+	return $result->rerata;
+    }
+    
+    function avg_ipk_ttl($tahun)
+    {
+	$query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE date_format(`yudisium_date`,'%Y')='".$tahun."'");
+	$result = $query->row();
+	return $result->rerata;
+    }
+    
+    function avg_ta($tahun,$grade,$prodi)
+    {
+	$this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
+	    //$this->db->where('yudisium_date',$date);
+	    $this->db->where("date_format(date_in,'%Y')",$tahun);
+	    $this->db->where('thesis',$grade);
+	    $this->db->where('department',$prodi);
+	    $result = $this->db->get('yudisium')->row();
+	    return $result->rerata;
+    }
+    
+    function avg_ta_ttl($tahun)
+    {
+	$this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
+	    //$this->db->where('yudisium_date',$date);
+	    $this->db->where("date_format(date_in,'%Y')",$tahun);
+	    $result = $this->db->get('yudisium')->row();
+	    return $result->rerata;
+    }
+    
+    function avg_studi($tahun,$grade,$prodi)
+    {
+	$query  = $this->db->query("SELECT AVG(( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /360 )) AS semester FROM (`default_yudisium`) WHERE  date_format(date_in,'%Y') =  '".$tahun."' AND `thesis` = '".$grade."' AND department='".$prodi."'");
+        $result = $query->row();
+        return $result->semester;
+    }
+    
+    function avg_studi_ttl($tahun)
+    {
+	$query  = $this->db->query("SELECT AVG(( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /360 )) AS semester FROM (`default_yudisium`) WHERE  date_format(date_in,'%Y') =  '".$tahun."'");
+        $result = $query->row();
+        return $result->semester;
+    }
+    
     function get_max_ipk($where,$thesis)
 	{
 	    $query  = $this->db->query("SELECT MAX(ipk) AS maksimum FROM `default_yudisium` WHERE `yudisium_date`='".$where."' AND thesis ='".$thesis."'");
