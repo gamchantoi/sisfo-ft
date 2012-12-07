@@ -31,8 +31,8 @@
 		    <?php
 	    $img_edit = img(array("src" => base_url($this->module_details['path']."/img/edit.png"), "title" => "Edit data Mahasiswa", "alt" => "Edit data Mahasiswa", "class" => "edit"));
 	    $img_del  = img(array("src" => base_url($this->module_details['path']."/img/delete.png"), "title" => "Hapus data Mahasiswa", "alt" => "Hapus data Mahasiswa", "class" => "delete"));
-            echo anchor("admin/yudisium/college/".$data->id, $img_edit);
-	    echo anchor("admin/yudisium/college/delete/".$data->id, $img_del);
+            echo anchor("admin/yudisium/college/edit/".$item->id, $img_edit);
+	    echo anchor("admin/yudisium/college/delete/".$item->id, $img_del);
 	    ?>
 		</td>
             </tr>

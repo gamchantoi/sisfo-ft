@@ -1,8 +1,8 @@
 <section class="title">
 <?php if ($this->method == 'create'): ?>
-	<h4><?php echo lang('yudisium_create_title'); ?></h4>
+	<h4><?php echo lang('yudisium_college_create'); ?></h4>
 <?php else: ?>
-	<h4><?php echo sprintf(lang('yudisium_edit_title'), $data->name); ?></h4>
+	<h4><?php echo sprintf(lang('yudisium_college_edit'), $data->name); ?></h4>
 <?php endif; ?>
 </section>
 
