@@ -61,11 +61,24 @@ $(document).ready(function()
 					?>
 					</td>
 					<td>
-						<a href="admin/yudisium/preview/<?php echo $item->id; ?>" rel="modal" target="_blank" title="Tampilkan Detai Peserta Yudisium"><img src="<?php echo base_url().$this->module_details['path'];?>/img/zoom.png"></a>
+						<!--<a href="admin/yudisium/preview/<?php echo $item->id; ?>" rel="modal" target="_blank" title="Tampilkan Detai Peserta Yudisium"><img src="<?php echo base_url().$this->module_details['path'];?>/img/zoom.png"></a>
 						<a href="admin/yudisium/repo/<?php echo $item->id; ?>" class="cetak" title="cetak tanda terima Penyerahan CD"><img src="<?php echo base_url().$this->module_details['path'];?>/img/cd.png"></a>
 						<a href="admin/yudisium/cetak/<?php echo $item->id; ?>" class="cetak" title="cetak Isian Kelulusan"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a>
 						<a href="admin/yudisium/edit/<?php echo $item->id; ?>" title="Edit data Peserta Yudisium"><img src="<?php echo base_url().$this->module_details['path'];?>/img/edit.png"></a>
-						<a href="admin/yudisium/delete/<?php echo $item->id; ?>" title="Hapus data Peserta Yudisium"><img src="<?php echo base_url().$this->module_details['path'];?>/img/delete.png"></a>
+						<a href="admin/yudisium/delete/<?php echo $item->id; ?>" title="Hapus data Peserta Yudisium"><img src="<?php echo base_url().$this->module_details['path'];?>/img/delete.png"></a>-->
+					<?php
+						$img_edit  = img(array("src" => base_url($this->module_details['path']."/img/edit.png")));
+						$img_del   = img(array("src" => base_url($this->module_details['path']."/img/delete.png")));
+						$img_prev  = img(array("src" => base_url($this->module_details['path']."/img/zoom.png")));
+						$img_repo  = img(array("src" => base_url($this->module_details['path']."/img/cd.png")));
+						$img_print = img(array("src" => base_url($this->module_details['path']."/img/print.png")));
+						echo anchor("admin/yudisium/preview/".$item->id, $img_prev,array('rel' => 'modal','target'=>'_blank','title' =>'Tampilkan Detai Peserta Yudisium'));
+						echo anchor("admin/yudisium/repo/".$item->id, $img_repo,array('title' =>'cetak tanda terima Penyerahan CD'));
+						echo anchor("admin/yudisium/cetak/".$item->id, $img_print,array('title' =>'cetak Isian Kelulusan'));
+						echo anchor("admin/yudisium/edit/".$item->id, $img_edit,array('title' =>'Edit data Peserta Yudisium'));
+						echo anchor("admin/yudisium/delete/".$item->id, $img_del,array('title' =>'Hapus data Peserta Yudisium'));
+						
+					?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

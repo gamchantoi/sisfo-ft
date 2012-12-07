@@ -321,6 +321,7 @@ class Admin extends Admin_Controller {
     
     public function create()
 	{
+	    $data = new stdClass();
 	    $this->form_validation->set_rules($this->v_rules);
 	    if($this->form_validation->run())
 	    {
@@ -361,8 +362,7 @@ class Admin extends Admin_Controller {
 		if ($id)
 		{
 		    $this->pyrocache->delete_all('ym');
-		    $this->session->set_flashdata(array('success' => sprintf(lang('yudisium_add_success'), $this->input->post('title'))));
-			    
+		    $this->session->set_flashdata(array('success' => sprintf(lang('yudisium_add_success'), $this->input->post('title'))));			    
 		}
 		else
 		{
