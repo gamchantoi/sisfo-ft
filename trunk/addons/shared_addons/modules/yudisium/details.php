@@ -53,10 +53,6 @@ class Module_Yudisium extends Module {
 				    'name'  => 'yudisium_college',
 				    'uri'   => 'admin/yudisium/college'
 			    ),
-			    'receipt' => array(
-				    'name'  => 'yudisium_receipt',
-				    'uri'   => 'admin/yudisium/get_receipt'
-			    ),
 			    'statistik' => array(
 				    'name'  => 'yudisium_statistik',
 				    'uri'   => 'admin/yudisium/get_statistik'
