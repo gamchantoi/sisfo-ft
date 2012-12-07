@@ -1565,8 +1565,26 @@ class Admin extends Admin_Controller {
 	    $x_bln = $exp[1];
 	    $x_tgl = $exp[2];
 	    $ant   = $exp[3];
+	    switch($ant)
+	    {
+		case "a" :
+		    $anti= "1";
+		    break;
+		case "b" :
+		    $anti= "2";
+		    break;
+		case "c" :
+		    $anti= "3";
+		    break;
+		case "d" :
+		    $anti= "4";
+		    break;
+		default  :
+		    $anti= "N";
+		    break;
+	    }
 	    $x_date= $x_thn."-".$x_bln."-".$x_tgl;
-	    $parrams 	= array('yudisium_date'=>$x_date ,'antidatir' => $ant,'records'=>'1','orderasc' => 'department');
+	    $parrams 	= array('yudisium_date'=>$x_date ,'antidatir' => $anti,'records'=>'1','orderasc' => 'department');
             $data       = $this->ym->get_many_by($parrams);
             $_tanggal   = tanggal($date);
             list($tgl,$bln,$thn) = explode(" ",$_tanggal);
