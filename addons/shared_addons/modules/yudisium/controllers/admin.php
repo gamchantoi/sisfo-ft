@@ -1691,8 +1691,7 @@ class Admin extends Admin_Controller {
 	    );
 	    $data_yudis = $this->data_yudisium();
 	    $this->template
-			->title($this->module_details['name'], lang('yudisium_graduate'))
-			->append_js('module::jquery.printPage.js')
+			->title($this->module_details['name'], 'Statistik Lulusan')
 			->set('tahun', $tahun)
 			->build('admin/statistik');   
 	}
