@@ -15,7 +15,8 @@
 				<th class="collapse"><?php echo lang('yudisium_date'); ?></th>
 				<th class="collapse"><?php echo lang('yudisium_print_sk'); ?></th>			    
 				<th class="collapse"><?php echo lang('yudisium_attch_d3'); ?></th>			  
-				<th class="collapse"><?php echo lang('yudisium_attch_s1'); ?></th>					    
+				<th class="collapse"><?php echo lang('yudisium_attch_s1'); ?></th>
+				<th class="collapse"><?php echo lang('yudisium_receipt'); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -36,17 +37,26 @@
 					<td>
 					  <!--<a href="admin/yudisium/cetak_sk/<?php echo $item->yudisium_date; ?>" class="cetak" title="cetak Surat Keputusan Dekan"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png"></a>-->
 					  <?php foreach ($decree as $dc ):?>
-					  <b><a href="admin/yudisium/cetak_sk/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |
+					  <b><?php echo anchor("admin/yudisium/cetak_sk/".$dc->date."-".$dc->ant,$dc->number); ?></b> |
+					  <!--<b><a href="admin/yudisium/cetak_sk/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |-->
 					  <?php endforeach;?>
 					</td>
 					<td>
 					  <?php foreach ($decree as $dc ):?>
-					  <b><a href="admin/yudisium/pattch_d3/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |
+					  <b><?php echo anchor("admin/yudisium/pattch_d3/".$dc->date."-".$dc->ant,$dc->number); ?></b> |
+					  <!--<b><a href="admin/yudisium/pattch_d3/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |-->
 					  <?php endforeach;?>
 					</td>
 					<td>
 					  <?php foreach ($decree as $dc ):?>
-					  <b><a href="admin/yudisium/pattch_s1/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |
+					  <b><?php echo anchor("admin/yudisium/pattch_s1/".$dc->date."-".$dc->ant,$dc->number); ?></b> |
+					  <!--<b><a href="admin/yudisium/pattch_s1/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |-->
+					  <?php endforeach;?>
+					</td>
+					<td>
+					  <?php foreach ($decree as $dc ):?>
+					  <b><?php echo anchor("admin/yudisium/present_receipt/".$dc->date."-".$dc->ant,$dc->number); ?></b> |
+					 <!-- <b><a href="admin/yudisium/present_receipt/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> | -->
 					  <?php endforeach;?>
 					</td>
 					<!--<td><a href="admin/yudisium/pattch_d3/<?php echo $item->yudisium_date; ?>" class="cetak" title="Cetak Lampiran SK Yudisium Mahasiswa D3"><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png" width="30px" align="center"></a> | <a href="admin/yudisium/attch_d3/<?php echo $item->yudisium_date; ?>" title="Download Lampiran SK Yudisium Mahasiswa D3"><img src="<?php echo base_url().$this->module_details['path'];?>/img/excel.png" width="30px" align="center"></a></td>
