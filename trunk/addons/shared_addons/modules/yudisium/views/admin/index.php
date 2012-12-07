@@ -119,10 +119,11 @@ $(document).ready(function()
       </thead>
       <tbody>
 	<?php
+	$img_xls = img(array("src" => base_url($this->module_details['path']."/img/excel.png"), "width" => "30px","align"=>"center"));
 	  foreach ($yudisium as $yudi)
 	  {
 	    ?>
-	    <tr><td><?php echo tanggal($yudi->yudisium_date); ?></td><td><?php echo get_antidatir_a($yudi->yudisium_date);?></td><td><?php echo get_antidatir_b($yudi->yudisium_date);?></td><td><?php echo get_antidatir_c($yudi->yudisium_date);?></td><td><?php echo get_antidatir_d($yudi->yudisium_date);?></td><td><?php echo get_yudis_normal($yudi->yudisium_date); ?></td><td><a href="admin/yudisium/export_all_data/<?php echo $yudi->yudisium_date; ?>" title="Download Lampiran SK Yudisium Mahasiswa D3"><img src="<?php echo base_url().$this->module_details['path'];?>/img/excel.png" width="30px" align="center"></a></td></tr>
+	    <tr><td><?php echo tanggal($yudi->yudisium_date); ?></td><td><?php echo get_antidatir_a($yudi->yudisium_date);?></td><td><?php echo get_antidatir_b($yudi->yudisium_date);?></td><td><?php echo get_antidatir_c($yudi->yudisium_date);?></td><td><?php echo get_antidatir_d($yudi->yudisium_date);?></td><td><?php echo get_yudis_normal($yudi->yudisium_date); ?></td><td><?php echo anchor("admin/yudisium/export_all_data/".$yudi->yudisium_date,$img_xls,array('title' => 'Download Lampiran SK Yudisium Mahasiswa D3'));?></td></tr>
 	<?php
 	  }
 	?>

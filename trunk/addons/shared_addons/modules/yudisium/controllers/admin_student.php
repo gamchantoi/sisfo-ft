@@ -62,7 +62,8 @@ class Admin_Student extends Admin_Controller {
 	}
     public function create()
         {
-            $this->form_validation->set_rules($this->rules);
+            $data = new stdClass();
+	    $this->form_validation->set_rules($this->rules);
 	    if($this->form_validation->run())
             {
                 $id=$this->ym->insert_college(array(

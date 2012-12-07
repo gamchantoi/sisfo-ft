@@ -34,7 +34,8 @@ class Admin_Lecturez extends Admin_Controller
         $this->load->model('yudisium_m','ym');
         $this->load->helper('tanggal');
 	$majors= $this->ym->get_majors();
-	$this->template->set('majors',$majors);
+	//$this->template->set('majors',$majors);
+	$this->template->set('jurusan',$majors);
     }
     
     public function index()
@@ -62,7 +63,8 @@ class Admin_Lecturez extends Admin_Controller
     
     public function create()
     {
-        $this->form_validation->set_rules($this->rules);
+        $data = new stdClass();
+	$this->form_validation->set_rules($this->rules);
         if($this->form_validation->run())
         {
             $id=$this->ym->add_lectures(array(
@@ -90,7 +92,7 @@ class Admin_Lecturez extends Admin_Controller
         }
         $this->template
 	    ->set('data',$data)
-	    ->set('jurusan',$this->data->majors)
+	  //  ->set('jurusan',$this->data->majors)
 	    ->build('admin/lectures/form_lectures');
     }
     
@@ -128,7 +130,7 @@ class Admin_Lecturez extends Admin_Controller
 		    }
             $this->template
                 ->title($this->module_details['name'], sprintf(lang('yudisium_lectures_edit'), $data->name))
-		->set('jurusan',$this->data->majors)
+		//->set('jurusan',$this->data->majors)
                 ->set('data',$data)
                 ->build('admin/lectures/form_lectures');
 	}

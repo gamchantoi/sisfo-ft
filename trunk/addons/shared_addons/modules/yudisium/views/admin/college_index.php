@@ -6,7 +6,10 @@
 
 <?php echo $this->load->view('admin/partials/filter_college'); ?>
 <div>
-	<p><a href="admin/yudisium/college/create/"><img src="<?php echo base_url().$this->module_details['path'];?>/img/add.png"> <b>Tambah Data Mahasiswa</b></a></p>
+	<p>
+	<!--	<a href="admin/yudisium/college/create/"><img src="<?php echo base_url().$this->module_details['path'];?>/img/add.png"> <b>Tambah Data Mahasiswa</b></a>-->
+	<?php echo anchor("admin/yudisium/college/create",img(array("src" =>base_url().$this->module_details['path']."/img/add.png"))."<b> Tambah data Mahasiswa</b>");?>
+	</p>
 </div>
 <div id="filter-stage">
 
