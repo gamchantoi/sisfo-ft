@@ -13,9 +13,19 @@
 		});
 	});
 </script>
-<h2 id="page_title" class="page-title">
-	<?php echo lang('yudisium_add') ?>
-</h2>
+
+<?php
+$now = date('Y-m-d H:m:s');
+$time_now = strtotime($now);
+$time_expired = strtotime($expired);
+if ($time_now >= $time_expired){
+	?>
+	<h2 id="page_title" class="page-title">PENDAFTARAN YUDISIUM TELAH DITUTUP</h2>
+	<?php
+}else{
+?>
+	<?php echo $now."<br>".$expired."<br>".$time_now."<br>".$time_expired; ?>
+	<h2 id="page_title" class="page-title"><?php echo lang('yudisium_add') ?></h2>
 <div>
 	<?php if(validation_errors()):?>
 	<div class="error-box">
@@ -204,3 +214,6 @@
 	<?php echo form_submit('submit', 'Simpan'); ?>
 	<?php echo form_close(); ?>
 </div>
+<?php
+}
+?>

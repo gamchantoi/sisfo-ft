@@ -139,6 +139,12 @@ class Yudisium_m extends MY_Model {
 	    return $this->db->update('yudisium', $data); 
 	}
     
+    function get_expired()
+	{
+	    $result=$this->db->select('expired')->get('expired')->row();
+	    return $result->expired;
+	}
+    
     function error_data()
 	{
 	    $this->db->select('nim,name,graduation,yudisium_date')

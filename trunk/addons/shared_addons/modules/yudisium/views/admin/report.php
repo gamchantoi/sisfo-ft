@@ -36,7 +36,7 @@
 		<tbody>
 		</tbody>
 		<?php foreach ($data as $item) : ?>
-				<tr>
+			<tr>
 					<td><?php echo tanggal($item->yudisium_date); ?></td>
 					<?php $decrees = get_decree_num($item->yudisium_date);?>
 					<!--<td><b><?php echo count_yudisium_by($item->yudisium_date,'D3'); ?></b>  <img src="<?php echo base_url().$this->module_details['path'];?>/img/graduate.png" width="20px" align="center"></td> -->
@@ -72,7 +72,7 @@
 					</td>
 					<!--<td><b><?php echo count_yudisium_all($item->yudisium_date); ?></b>  <img src="<?php echo base_url().$this->module_details['path'];?>/img/graduate.png" width="20px" align="center"></td>
 					<td><a href="admin/yudisium/export_all/<?php echo $item->yudisium_date; ?>"></?php><img src="<?php echo base_url().$this->module_details['path'];?>/img/excel.png" width="30px" align="center"></a></td> -->
-				</tr>
+			</tr>
 		<?php endforeach ; ?>
 		</table>
 	</div>
