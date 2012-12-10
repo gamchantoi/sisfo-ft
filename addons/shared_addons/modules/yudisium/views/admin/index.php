@@ -11,7 +11,7 @@ $(document).ready(function()
 });
 </script>
 <section class="title">
-	<h4>Pendaftaran Yudisium</h4>
+	<h4>Pendaftaran Yudisium </h4>
 </section>
 <section class="item">
 	<div>
@@ -97,6 +97,27 @@ $(document).ready(function()
 		<td><h1><?php echo $this_date; ?></h1></td>
 	      </tr>
 	    </tbody>
+	    <tfoot>
+	      <tr>
+		<?php echo form_open('admin/yudisium/expired'); ?>
+		<div class="form_inputs">
+		  <fieldset>
+		      <ul>
+			  <li class="even">
+			      <label for="expired">Yudisium Ditutup Tanggal</label>
+			      <div class="input"><?php echo form_input('expired',$expired); ?></div>			
+			  </li>
+			  <li>
+			    <div class="buttons float-right padding-top">
+				<?php $this->load->view('admin/partials/buttons', array('buttons' => array('save','cancel'))); ?>
+			    </div>
+			  </li>
+		      </ul>
+		  </fieldset>
+		</div>
+		<?php echo form_close(); ?>
+	      </tr>
+	    </tfoot>
 	  </table>
 	</div>
 </section>

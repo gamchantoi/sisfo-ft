@@ -275,6 +275,7 @@ class Admin extends Admin_Controller {
 			->append_js('module::jquery.printPage.js')
 			->append_js('module::jquery.qtip.js')
 			->append_css('module::jquery.qtip.css')
+			->set('expired',$this->ym->get_expired())
 			->set('anti_periode',$anti_periode)
 			->set('this_date',$this_date)
 			->set('this_month',$this_month)
@@ -476,6 +477,14 @@ class Admin extends Admin_Controller {
 	    $this->data->religion	= $this->get_religion($this->data->item->religion);
 	    $this->data->printed 	= $this->get_printed($id);
 	    $this->load->view('admin/view',$this->data);
+	}
+	
+    public function expired()
+	{
+	   if($_POST)
+	   {
+	    print_r($_POST);
+	   }
 	}
 	
     //fungsi rekap data peserta yudisium
