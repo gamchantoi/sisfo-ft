@@ -45,25 +45,29 @@
 					<!--<td><a href="admin/yudisium/export_d3/<?php echo $item->yudisium_date; ?>"><img src="<?php echo base_url().$this->module_details['path'];?>/img/excel.png" width="30px" align="center"></a></td>-->
 					<td>
 					  <?php foreach($decrees as $dc):?>
-					    <b><a href="admin/yudisium/report_d3/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |
+					    <b><?php echo anchor("admin/yudisium/report_d3/".$dc->date."-".$dc->ant,$dc->number)?></b> |
+					   <!-- <b><a href="admin/yudisium/report_d3/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |-->
 					    <?php endforeach; ?>
 					</td>
 					<td>
 					  <!--<a href="admin/yudisium/present_d3/<?php echo $item->yudisium_date; ?>" class="cetak"></?php><img src="<?php echo base_url().$this->module_details['path'];?>/img/print.png" width="30px" align="center"></a>-->
 					  <?php foreach($decrees as $pdc): ?>
-					    <b><a href="admin/yudisium/present_d3/<?php echo $pdc->date?>-<?php echo $pdc->ant; ?>"><?php echo $pdc->number; ?></a></b> |
+					    <b><?php echo anchor("admin/yudisium/present_d3/".$pdc->date."-".$pdc->ant,$pdc->number); ?></b> |
+					    <!--<b><a href="admin/yudisium/present_d3/<?php echo $pdc->date?>-<?php echo $pdc->ant; ?>"><?php echo $pdc->number; ?></a></b> |-->
 					  <?php endforeach; ?>
 					</td>
 					<!--<td><b><?php echo count_yudisium_by($item->yudisium_date,'Skripsi'); ?></b>  <img src="<?php echo base_url().$this->module_details['path'];?>/img/graduate.png" width="20px" align="center"></td>-->
 					<td>
 					  <?php foreach($decrees as $dc):?>
-					    <b><a href="admin/yudisium/report_s1/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |
+					    <b><?php echo anchor("admin/yudisium/report_s1/".$dc->date."-".$dc->ant,$dc->number); ?></b> |
+					    <!--<b><a href="admin/yudisium/report_s1/<?php echo $dc->date;?>-<?php echo $dc->ant;?>"><?php echo $dc->number; ?></a></b> |-->
 					    <?php endforeach; ?>				  
 					</td>
 					<!--<td><a href="admin/yudisium/export_s1/<?php echo $item->yudisium_date; ?>"><img src="<?php echo base_url().$this->module_details['path'];?>/img/excel.png" width="30px" align="center"></a></td>-->
 					<td>
 					  <?php foreach($decrees as $pdc): ?>
-					    <b><a href="admin/yudisium/present_s1/<?php echo $pdc->date?>-<?php echo $pdc->ant; ?>"><?php echo $pdc->number; ?></a></b> |
+					    <b><?php echo anchor("admin/yudisium/present_s1/".$dc->date."-".$dc->ant,$dc->number); ?></b> |
+					    <!--<b><a href="admin/yudisium/present_s1/<?php echo $pdc->date?>-<?php echo $pdc->ant; ?>"><?php echo $pdc->number; ?></a></b> |-->
 					  <?php endforeach; ?>
 					</td>
 					<!--<td><b><?php echo count_yudisium_all($item->yudisium_date); ?></b>  <img src="<?php echo base_url().$this->module_details['path'];?>/img/graduate.png" width="20px" align="center"></td>

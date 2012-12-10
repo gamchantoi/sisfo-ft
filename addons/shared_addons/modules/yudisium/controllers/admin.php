@@ -488,6 +488,19 @@ class Admin extends Admin_Controller {
 			->build('admin/report');
 	}
 	
+    public function archive($tanggal)
+    {
+	list($thn,$bln,$tgl)= explode("-",$tanggal);
+	$bt=$bln."-".$thn;
+	$result = $this->ym->archive($bt,array('records' => '1'));
+	if($result){
+	    $this->session->set_flashdata(array('success' => sprintf(lang('yudisium_archive_success'), $bt)));
+	}else{
+	    $this->session->set_flashdata('error', $this->lang->line('yudisium_archive_error'));
+	}
+	redirect('admin/yudisium');
+    }
+    
 	//fungsi tampil data Surat keputusan Dekan
     public function decree()
 	{

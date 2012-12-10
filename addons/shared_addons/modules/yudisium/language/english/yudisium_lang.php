@@ -128,3 +128,5 @@ $lang['yudisium_college_create']       = 'Tambah Data Mahasiswa';
 $lang['yudisium_college_edit']         = 'Edit Data Mahasiswa';
 $lang['yudisium_receipt']               = 'Tanda Terima SK';
 $lang['yudisium_statistik']             = 'Statistik Lulusan';
+$lang['yudisium_archive_error']         = 'Pengarsipan gagal';
+$lang['yudisium_archive_success']       = 'pengarshipan berhasil';

@@ -133,6 +133,12 @@ class Yudisium_m extends MY_Model {
 	    return $row->stage;
 	}
 	
+    function archive($bt,$data)
+	{
+	    $this->db->where("date_format(date_in,'%m-%Y')",$bt);
+	    return $this->db->update('yudisium', $data); 
+	}
+    
     function error_data()
 	{
 	    $this->db->select('nim,name,graduation,yudisium_date')
