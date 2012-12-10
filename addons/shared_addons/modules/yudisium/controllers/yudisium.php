@@ -147,21 +147,21 @@ class Yudisium extends Public_Controller {
 		$this->lang->load('yudisium');
 		$this->load->model('yudisium_m');
 		$religions= array(
-					      0 => '-Agama-',
-					      1 => 'Islam',
-					      2 => 'Katholik',
-					      3 => 'Kristen',
-					      4 => 'Hindu',
-					      5 => 'Budha',
-					      6 => 'Konghuchu',
-					      7 => 'Lainnya'
-					      );
+				0 => '-Agama-',
+				1 => 'Islam',
+				2 => 'Katholik',
+				3 => 'Kristen',
+				4 => 'Hindu',
+				5 => 'Budha',
+				6 => 'Konghuchu',
+				7 => 'Lainnya'
+				);
 		$vacations= array(
-						'0' => '0',
-						'1' => '1',
-						'2' => '2',
-						'3' => '3',
-						'4' => '4'
+				'0' => '0',
+				'1' => '1',
+				'2' => '2',
+				'3' => '3',
+				'4' => '4'
 		);
 		$this->template->set('religions', $religions)
 		    ->set('vacations',$vacations)
@@ -200,6 +200,7 @@ class Yudisium extends Public_Controller {
 					  $( "#date" ).datepicker({dateFormat: "yy-mm-dd",changeMonth: true,changeYear: true});
 					  });</script>')
 			->title($this->module_details['name'])
+			->set('expired',$this->yudisium_m->get_expired())
                         ->build('index');
     }
     
@@ -232,37 +233,37 @@ class Yudisium extends Public_Controller {
 	if($this->form_validation->run()){
 	    if($this->input->post('submit')=='Simpan'){
 		$id=$this->yudisium_m->insert(array(
-						    'name'	        => $this->input->post('name'),
-                                                    'date'              => date('Y-m-d H:i:s'),
-						    'date_in'           => date('Y-m-d H:i:s'),
-						    'nim'	        => $this->input->post('nim'),
-						    'department'        => $this->input->post('department'),
-						    'pa'	        => $this->input->post('pa'),
-                                                    'place_of_birth'    => $this->input->post('pob'),
-                                                    'date_of_birth'     => $this->input->post('dob'),
-                                                    'religion'          => $this->input->post('religion'),
-                                                    'sex'               => $this->input->post('gender'),
-                                                    'meriage'           => $this->input->post('merriage'),
-                                                    'address'           => $this->input->post('address'),
-                                                    'parrent'           => $this->input->post('parrent'),
-						    'parrent_address'   => $this->input->post('parrent_address'),
-                                                    'parrental'         => $this->input->post('parrental'),
-                                                    'soo'               => $this->input->post('soo'),
-                                                    'school_address'    => $this->input->post('school_address'),
-                                                    'sma'               => $this->input->post('sma'),
-                                                    'graduation'        => $this->input->post('graduation'),
-                                                    'ipk'               => $this->input->post('ipk'),
-                                                    'sks'               => $this->input->post('sks'),
-                                                    'thesis'            => $this->input->post('thesis'),
-                                                    'thesis_title'      => $this->input->post('thesis_title'),
-                                                    'lecture'           => $this->input->post('lecture'),
-                                                    'start'             => $this->input->post('start'),
-                                                    'finish'            => $this->input->post('finish'),
-                                                    'vacation'          => $this->input->post('vacation'),
-                                                    'yudisium_date'     => $this->input->post('yudisium_date'),
-						    'antidatir'		=> $this->input->post('antidatir'),
-                                                    'phone'             => $this->input->post('phone'),
-                                                    'email'             => $this->input->post('email')
+		    'name'	        => $this->input->post('name'),
+                    'date'              => date('Y-m-d H:i:s'),
+		    'date_in'           => date('Y-m-d H:i:s'),
+		    'nim'	        => $this->input->post('nim'),
+		    'department'        => $this->input->post('department'),
+		    'pa'	        => $this->input->post('pa'),
+                    'place_of_birth'    => $this->input->post('pob'),
+                    'date_of_birth'     => $this->input->post('dob'),
+                    'religion'          => $this->input->post('religion'),
+                    'sex'               => $this->input->post('gender'),
+                    'meriage'           => $this->input->post('merriage'),
+                    'address'           => $this->input->post('address'),
+                    'parrent'           => $this->input->post('parrent'),
+		    'parrent_address'   => $this->input->post('parrent_address'),
+                    'parrental'         => $this->input->post('parrental'),
+                    'soo'               => $this->input->post('soo'),
+                    'school_address'    => $this->input->post('school_address'),
+                    'sma'               => $this->input->post('sma'),
+                    'graduation'        => $this->input->post('graduation'),
+                    'ipk'               => $this->input->post('ipk'),
+                    'sks'               => $this->input->post('sks'),
+                    'thesis'            => $this->input->post('thesis'),
+                    'thesis_title'      => $this->input->post('thesis_title'),
+                    'lecture'           => $this->input->post('lecture'),
+                    'start'             => $this->input->post('start'),
+                    'finish'            => $this->input->post('finish'),
+                    'vacation'          => $this->input->post('vacation'),
+                    'yudisium_date'     => $this->input->post('yudisium_date'),
+		    'antidatir'		=> $this->input->post('antidatir'),
+                    'phone'             => $this->input->post('phone'),
+                    'email'             => $this->input->post('email')
 						    ));	
 		if($id){
                     $this->pyrocache->delete_all('yudisium_m');
