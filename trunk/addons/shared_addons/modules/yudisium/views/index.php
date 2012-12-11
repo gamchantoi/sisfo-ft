@@ -24,7 +24,6 @@ if ($time_now >= $time_expired){
 	<?php
 }else{
 ?>
-	<?php echo $now."<br>".$expired."<br>".$time_now."<br>".$time_expired; ?>
 	<h2 id="page_title" class="page-title"><?php echo lang('yudisium_add') ?></h2>
 <div>
 	<?php if(validation_errors()):?>

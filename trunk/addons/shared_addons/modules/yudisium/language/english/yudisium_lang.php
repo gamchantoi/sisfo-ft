@@ -130,3 +130,5 @@ $lang['yudisium_receipt']               = 'Tanda Terima SK';
 $lang['yudisium_statistik']             = 'Statistik Lulusan';
 $lang['yudisium_archive_error']         = 'Pengarsipan gagal';
 $lang['yudisium_archive_success']       = 'pengarshipan berhasil';
+$lang['yudisium_expired_error']         = 'Perubahan Tanggal Penutupan Yudisium gagal';
+$lang['yudisium_expired_success']       = 'Perubahan Tanggal Penutupan Yudisium berhasil';

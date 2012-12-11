@@ -166,7 +166,7 @@
 			</li>
 			<li>
 				<label for="antidatir"><?php echo lang('yudisium_antidatir');?></label>
-				<?php echo form_dropdown('antidatir',array('2'=>'Tidak','1'=>'Ya'),$data->antidatir)?>
+				<?php echo form_dropdown('antidatir',array('N'=>'Tidak','1'=>'Antidatir Bulan pertama','2'=>'Antidatir Bulan kedua','3'=>'Antidatir Bulan ketiga','4' => 'Antidatir Bulan keempat'),$data->antidatir)?>
 			</li>
 			
 			
