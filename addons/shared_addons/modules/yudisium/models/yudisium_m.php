@@ -568,6 +568,10 @@ class Yudisium_m extends MY_Model {
 		{
 		    $this->db->where('yudisium_date',$params['yudisium_date']);
 		}
+		if(!empty($params['date_in']))
+		{
+		    $this->db->where("date_format(date_in,'%m-%Y')",$params['date_in']);
+		}
 		if(!empty($params['antidatir']))
 		{
 		    $this->db->where('antidatir',$params['antidatir']);

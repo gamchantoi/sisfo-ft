@@ -104,7 +104,7 @@ $(document).ready(function()
 		  <fieldset>
 		      <ul>
 			  <li class="even">
-			      <label for="expired">Yudisium Ditutup Tanggal ("tahun-bulan-tanggal jam:menit:detik")</label>
+			      <label for="expired">Yudisium Ditutup Tanggal <br> <span>("tahun-bulan-tanggal jam:menit:detik")</span></label>
 			      <div class="input"><?php echo form_input('expired',$expired); ?></div>			
 			  </li>
 			  <li>
