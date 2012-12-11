@@ -1198,11 +1198,14 @@ class Admin extends Admin_Controller {
 	
     public function export_all_data($date)
 	{
-	    $parrams = array('yudisium_date' => $date);
-	    $data   = $this->ym->get_many_by($parrams);
+	    //$parrams = array('yudisium_date' => $date);
+	    list($thn,$bln,$tgl) = explode("-",$date);
+	    $bt	     = $bln."-".$thn;
+	    $parrams = array('date_in' => $bt);
+	    $data    = $this->ym->get_many_by($parrams);
 	    $i =1;
-	    $table  = "<table class=\"gridtable\" border=\"1px\">";
-	    $table .= "<tr><td>nim</td>
+	    $table   = "<table class=\"gridtable\" border=\"1px\">";
+	    $table  .= "<tr><td>nim</td>
 			    <td>nama</td>
 			    <td>program studi</td>
 			    <td>pembimbing akademik</td>
@@ -1261,8 +1264,7 @@ class Admin extends Admin_Controller {
 			<td>".$d->phone."</td>
 			</tr>";
 	    }
-	    $table .= "</table>";
-	 $table;
+	    $table .= "</table>";	    
 	    $excel	= new ExportToExcel();
 	    $excel->exportWithPage($table,"Rekap-data-yudisium-all.xls");
 	}
