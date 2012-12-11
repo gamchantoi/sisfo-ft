@@ -483,7 +483,14 @@ class Admin extends Admin_Controller {
 	{
 	   if($_POST)
 	   {
-	    print_r($_POST);
+		$data = $this->input->post('expired');
+		$result = $this->ym->add_expired(array('expired' => $data));
+		if($result){
+		    $this->session->set_flashdata(array('success' => sprintf(lang('yudisium_expired_success'), $bt)));
+		}else{
+		    $this->session->set_flashdata('error', $this->lang->line('yudisium_expired_error'));
+		}
+		redirect('admin/yudisium');
 	   }
 	}
 	
