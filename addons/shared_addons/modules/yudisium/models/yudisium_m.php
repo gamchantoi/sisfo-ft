@@ -60,7 +60,7 @@ class Yudisium_m extends MY_Model {
     
     function yudis_this_date($date)
     {
-	$this->db->where("date_format(date_in,'%m-%Y')",$date);
+	$this->db->where("date_format(date_in,'%d-%m-%Y')",$date);
 	return $this->db->count_all_results('yudisium');
     }
     function get_all()
