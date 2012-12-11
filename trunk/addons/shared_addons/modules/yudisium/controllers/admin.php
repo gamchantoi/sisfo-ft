@@ -1205,7 +1205,8 @@ class Admin extends Admin_Controller {
 	    $data    = $this->ym->get_many_by($parrams);
 	    $i =1;
 	    $table   = "<table class=\"gridtable\" border=\"1px\">";
-	    $table  .= "<tr><td>nim</td>
+	    $table  .= "<tr><td>no</td>
+			    <td>nim</td>
 			    <td>nama</td>
 			    <td>program studi</td>
 			    <td>pembimbing akademik</td>
@@ -1213,6 +1214,7 @@ class Admin extends Admin_Controller {
 			    <td>tanggal lahir</td>
 			    <td>agama</td>
 			    <td>jenis kelamin</td>
+			    <td>status</td>
 			    <td>alamat</td>
 			    <td>orangtua</td>
 			    <td>alamat orangtua</td>
@@ -1231,10 +1233,18 @@ class Admin extends Admin_Controller {
 			    <td>selesai penulisan ta</td>
 			    <td>cuti</td>
 			    <td>tanggal yudisium</td>
-			    <td>no telp</td></tr>";
+			    <td>no telp</td>
+			    <td>email</td>
+			    </tr>";
 	    foreach($data as $d)
 	    {
+		if($d->status == 1){
+		    $status = "Belum Kawin";
+		}else{
+		    $status = "Kawin";
+		}
 		$table .= "<tr>
+			<td>".$i."</td>
 			<td>".$d->nim."</td>
 			<td>".$d->name."</td>
 			<td>".lang("yudisium_dp_".$d->department)."</td>
@@ -1243,6 +1253,7 @@ class Admin extends Admin_Controller {
 			<td>".$d->date_of_birth."</td>
 			<td>".$d->religion."</td>
 			<td>".$d->sex."</td>
+			<td>".$status."</td>
 			<td>".$d->address."</td>
 			<td>".$d->parrent."</td>
 			<td>".$d->parrent_address."</td>
@@ -1262,7 +1273,9 @@ class Admin extends Admin_Controller {
 			<td>".$d->vacation."</td>
 			<td>".$d->yudisium_date."</td>
 			<td>".$d->phone."</td>
+			<td>".$d->email."</td>
 			</tr>";
+			$i++;
 	    }
 	    $table .= "</table>";	    
 	    $excel	= new ExportToExcel();
