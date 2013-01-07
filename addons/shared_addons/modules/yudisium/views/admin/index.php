@@ -146,7 +146,7 @@ $(document).ready(function()
 	  foreach ($yudisium as $yudi)
 	  {
 	    ?>
-	    <tr><td><?php echo tanggal($yudi->yudisium_date); ?></td><td><?php echo get_antidatir_a($yudi->yudisium_date);?></td><td><?php echo get_antidatir_b($yudi->yudisium_date);?></td><td><?php echo get_antidatir_c($yudi->yudisium_date);?></td><td><?php echo get_antidatir_d($yudi->yudisium_date);?></td><td><?php echo get_yudis_normal($yudi->yudisium_date); ?></td><td><?php echo anchor("admin/yudisium/export_all_data/".$yudi->yudisium_date,$img_xls,array('title' => 'Download Data Yudisium'));?></td><td><?php echo anchor("admin/yudisium/archive/".$yudi->yudisium_date, $img_arc);?></td></tr>
+	    <tr><td><?php echo tanggal($yudi->yudisium_date); ?></td><td><b><?php echo anchor('admin/yudisium/dxp/a-'.$yudi->yudisium_date,get_antidatir_a($yudi->yudisium_date)); ?></b></td><td><b><?php echo anchor('admin/yudisium/dxp/b-'.$yudi->yudisium_date,get_antidatir_b($yudi->yudisium_date));?></b></td><td><b><?php echo anchor('admin/yudisium/dxp/c-'.$yudi->yudisium_date,get_antidatir_c($yudi->yudisium_date));?></b></td><td><b><?php echo anchor('admin/yudisium/dxp/d-'.$yudi->yudisium_date,get_antidatir_d($yudi->yudisium_date));?></b></td><td><b><?php echo anchor('admin/yudisium/dxp/N-'.$yudi->yudisium_date,get_yudis_normal($yudi->yudisium_date));?></b></td><td><?php echo anchor("admin/yudisium/export_all_data/".$yudi->yudisium_date,$img_xls,array('title' => 'Download Data Yudisium'));?></td><td><?php echo anchor("admin/yudisium/archive/".$yudi->yudisium_date, $img_arc);?></td></tr>
 	<?php
 	  }
 	?>

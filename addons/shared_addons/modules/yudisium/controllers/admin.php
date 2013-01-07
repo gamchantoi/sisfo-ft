@@ -1166,6 +1166,9 @@ class Admin extends Admin_Controller {
 		case "d" :
 		    $anti= "4";
 		    break;
+		case "e" :
+		    $anti= "5";
+		    break;
 		default  :
 		    $anti= "0";
 		    break;
@@ -1196,12 +1199,119 @@ class Admin extends Admin_Controller {
 	    return $table;
 	}
 	
+    public function dxp($date)
+	{
+	    list($ant,$thn,$bln,$tgl)= explode("-",$date);
+	    $dates = $thn."-".$bln."-".$tgl;
+	    switch($ant)
+	    {
+		case "a" :
+		    $anti= "1";
+		    break;
+		case "b" :
+		    $anti= "2";
+		    break;
+		case "c" :
+		    $anti= "3";
+		    break;
+		case "d" :
+		    $anti= "4";
+		    break;
+		case "e" :
+		    $anti= "5";
+		    break;
+		default  :
+		    $anti= "N";
+		    break;
+	    }
+	    $parrams = array('yudisium_date' => $dates,'antidatir' => $anti);
+	    
+	    $data    = $this->ym->get_many_by($parrams);
+	    $i =1;
+	    $table   = "<table class=\"gridtable\" border=\"1px\">";
+	    $table  .= "<tr><td>no</td>
+			    <td>nim</td>
+			    <td>nama</td>
+			    <td>program studi</td>
+			    <td>pembimbing akademik</td>
+			    <td>tempat lahir</td>
+			    <td>tanggal lahir</td>
+			    <td>agama</td>
+			    <td>jenis kelamin</td>
+			    <td>status</td>
+			    <td>alamat</td>
+			    <td>orangtua</td>
+			    <td>alamat orangtua</td>
+			    <td>masuk Melalui</td>
+			    <td>asal sekolah</td>
+			    <td>nama sekolah</td>
+			    <td>alamat sekolah</td>
+			    <td>sma</td>
+			    <td>tanggal lulus</td>
+			    <td>sks</td>
+			    <td>ipk</td>
+			    <td>tugas akhir</td>
+			    <td>judul tugas akhir</td>
+			    <td>pembimbing tugas akhir</td>
+			    <td>mulai penulisan ta</td>
+			    <td>selesai penulisan ta</td>
+			    <td>cuti</td>
+			    <td>tanggal yudisium</td>
+			    <td>no telp</td>
+			    <td>email</td>
+			    </tr>";
+	    foreach($data as $d)
+	    {
+		if($d->status == 1){
+		    $status = "Belum Kawin";
+		}else{
+		    $status = "Kawin";
+		}
+		$table .= "<tr>
+			<td>".$i."</td>
+			<td>".$d->nim."</td>
+			<td>".$d->name."</td>
+			<td>".lang("yudisium_dp_".$d->department)."</td>
+			<td>".$this->get_name($d->pa)."</td>
+			<td>".$d->place_of_birth."</td>
+			<td>".$d->date_of_birth."</td>
+			<td>".$d->religion."</td>
+			<td>".$d->sex."</td>
+			<td>".$status."</td>
+			<td>".$d->address."</td>
+			<td>".$d->parrent."</td>
+			<td>".$d->parrent_address."</td>
+			<td>".$d->parrental."</td>
+			<td>".$d->school."</td>
+			<td>".$d->soo."</td>
+			<td>".$d->school_address."</td>
+			<td>".$d->sma."</td>
+			<td>".$d->graduation."</td>
+			<td>".$d->sks."</td>
+			<td>".$d->ipk."</td>
+			<td>".$d->thesis."</td>
+			<td>".$d->thesis_title."</td>
+			<td>".$this->get_name($d->lecture)."</td>
+			<td>".$d->start."</td>
+			<td>".$d->finish."</td>
+			<td>".$d->vacation."</td>
+			<td>".$d->yudisium_date."</td>
+			<td>".$d->phone."</td>
+			<td>".$d->email."</td>
+			</tr>";
+			$i++;
+	    }
+	    $table .= "</table>";	    
+	    $excel	= new ExportToExcel();
+	    $excel->exportWithPage($table,"Rekap-data-yudisium-".$date.".xls");
+	}
     public function export_all_data($date)
 	{
 	    //$parrams = array('yudisium_date' => $date);
 	    list($thn,$bln,$tgl) = explode("-",$date);
 	    $bt	     = $bln."-".$thn;
 	    $parrams = array('date_in' => $bt);
+	    //$parrams = array('yudis' => $bt);
 	    $data    = $this->ym->get_many_by($parrams);
 	    $i =1;
 	    $table   = "<table class=\"gridtable\" border=\"1px\">";
@@ -1568,6 +1678,9 @@ class Admin extends Admin_Controller {
 		case "d" :
 		    $anti= "4";
 		    break;
+		case "e" :
+		    $anti= "5";
+		    break;
 		default  :
 		    $anti= "N";
 		    break;
@@ -1622,6 +1735,9 @@ class Admin extends Admin_Controller {
 		    break;
 		case "d" :
 		    $anti= "4";
+		    break;
+		case "e" :
+		    $anti= "5";
 		    break;
 		default  :
 		    $anti= "N";
@@ -2286,25 +2402,26 @@ class Admin extends Admin_Controller {
 	    echo "Tabel 1. Statistik Lulusan FT UNY Tahun $tahun";
 	    $style  = $this->style_present("STATISTIK Lulusan","","");
 	    $table  = "<table class=\"gridtable\" border=\"1px\">";
-	    $table .= "<tr><td valign=\"top\"><b>No.</b></td><td valign=\"top\"><b>PROGRAM STUDI</b></td><td align=\"center\"><b>RERATA MASA STUDI<br>(dalam Tahun)</b></td><td align=\"center\"><b>RERATA LAMA TA/TAS<br>(dalam bulan)</b></td><td align=\"center\" valign=\"top\"><b>RERATA IPK</b></td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>1.</b></td><td valign=\"top\"><b>PT ELEKTRO</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','9'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','9'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','9'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>2.</b></td><td valign=\"top\"><b>PT MEKATRONIKA</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','10'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','10'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','10'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>3.</b></td><td valign=\"top\"><b>PT ELEKTRONIKA</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','11'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','11'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','11'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>4.</b></td><td valign=\"top\"><b>PT INFORMATIKA</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','12'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','12'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','12'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>5.</b></td><td valign=\"top\"><b>PT MESIN</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','13'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','13'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','13'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>6.</b></td><td valign=\"top\"><b>PT OTOMOTIF</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','14'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','14'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','14'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>7.</b></td><td valign=\"top\"><b>PT SIPIL DAN PERENCANAAN</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','15'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','15'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','15'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>8.</b></td><td valign=\"top\"><b>PT BOGA</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','16'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','16'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','16'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>9.</b></td><td valign=\"top\"><b>PT BUSANA</b></td><td>".round($this->ym->avg_studi($tahun,'Skripsi','17'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','17'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','17'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>10.</b></td><td valign=\"top\"><b>TEKNIK ELEKTRO</b></td><td>".round($this->ym->avg_studi($tahun,'D3','1'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','1'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','1'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>11.</b></td><td valign=\"top\"><b>TEKNIK ELEKTRONIKA</b></td><td>".round($this->ym->avg_studi($tahun,'D3','2'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','2'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','2'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>12.</b></td><td valign=\"top\"><b>TEKNIK MESIN</b></td><td>".round($this->ym->avg_studi($tahun,'D3','3'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','3'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','3'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>13.</b></td><td valign=\"top\"><b>TEKNIK OTOMOTIF</b></td><td>".round($this->ym->avg_studi($tahun,'D3','4'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','4'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','4'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>14.</b></td><td valign=\"top\"><b>TEKNIK SIPIL</b></td><td>".round($this->ym->avg_studi($tahun,'D3','5'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','5'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','5'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>15.</b></td><td valign=\"top\"><b>TEKNIK BOGA</b></td><td>".round($this->ym->avg_studi($tahun,'D3','6'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','6'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','6'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>16.</b></td><td valign=\"top\"><b>TEKNIK BUSANA</b></td><td>".round($this->ym->avg_studi($tahun,'D3','7'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','7'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','7'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\"><b>17.</b></td><td valign=\"top\"><b>TATA RIAS DAN KECANTIKAN</b></td><td>".round($this->ym->avg_studi($tahun,'D3','8'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','8'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','8'),2)."</td></tr>";
-	    $table .= "<tr><td valign=\"top\" colspan=\"2\"><b>JUMALAH / RERATA</b></td><td>".round($this->ym->avg_studi_ttl($tahun),2)."</td><td>".round($this->ym->avg_ta_ttl($tahun),2)."</td><td>".round($this->ym->avg_ipk_ttl($tahun),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>No.</b></td><td valign=\"top\"><b>PROGRAM STUDI</b></td><td align=\"center\"><b>JUMLAH LULUSAN</b></td><td align=\"center\"><b>JUMLAH CUMLAUDE</b></td><td align=\"center\"><b>RERATA MASA STUDI<br>(dalam Tahun)</b></td><td align=\"center\"><b>RERATA LAMA TA/TAS<br>(dalam bulan)</b></td><td align=\"center\" valign=\"top\"><b>RERATA IPK</b></td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>1.</b></td><td valign=\"top\"><b>PT ELEKTRO</b></td><td>".$this->ym->count_graduate('9',$tahun)."</td><td>".$c1=$this->ym->count_cum('Skripsi','9',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','9'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','9'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','9'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>2.</b></td><td valign=\"top\"><b>PT MEKATRONIKA</b></td><td>".$this->ym->count_graduate('10',$tahun)."</td><td>".$c2=$this->ym->count_cum_('Skripsi','10',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','10'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','10'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','10'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>3.</b></td><td valign=\"top\"><b>PT ELEKTRONIKA</b></td><td>".$this->ym->count_graduate('11',$tahun)."</td><td>".$c3=$this->ym->count_cum_('Skripsi','11',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','11'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','11'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','11'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>4.</b></td><td valign=\"top\"><b>PT INFORMATIKA</b></td><td>".$this->ym->count_graduate('12',$tahun)."</td><td>".$c4=$this->ym->count_cum_('Skripsi','12',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','12'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','12'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','12'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>5.</b></td><td valign=\"top\"><b>PT MESIN</b></td><td>".$this->ym->count_graduate('13',$tahun)."</td><td>".$c5=$this->ym->count_cum_('Skripsi','13',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','13'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','13'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','13'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>6.</b></td><td valign=\"top\"><b>PT OTOMOTIF</b></td><td>".$this->ym->count_graduate('14',$tahun)."</td><td>".$c6=$this->ym->count_cum_('Skripsi','14',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','14'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','14'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','14'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>7.</b></td><td valign=\"top\"><b>PT SIPIL DAN PERENCANAAN</b></td><td>".$this->ym->count_graduate('15',$tahun)."</td><td>".$c7=$this->ym->count_cum_('Skripsi','15',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','15'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','15'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','15'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>8.</b></td><td valign=\"top\"><b>PT BOGA</b></td><td>".$this->ym->count_graduate('16',$tahun)."</td><td>".$c8=$this->ym->count_cum_('Skripsi','16',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','16'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','16'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','16'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>9.</b></td><td valign=\"top\"><b>PT BUSANA</b></td><td>".$this->ym->count_graduate('17',$tahun)."</td><td>".$c9=$this->ym->count_cum_('Skripsi','17',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','17'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','17'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','17'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>10.</b></td><td valign=\"top\"><b>TEKNIK ELEKTRO</b></td><td>".$this->ym->count_graduate('1',$tahun)."</td><td>".$c10=$this->ym->count_cum_('D3','1',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'D3','1'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','1'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','1'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>11.</b></td><td valign=\"top\"><b>TEKNIK ELEKTRONIKA</b></td><td>".$this->ym->count_graduate('2',$tahun)."</td><td>".$c11=$this->ym->count_cum_('D3','2',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'D3','2'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','2'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','2'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>12.</b></td><td valign=\"top\"><b>TEKNIK MESIN</b></td><td>".$this->ym->count_graduate('3',$tahun)."</td><td>".$c12=$this->ym->count_cum_('D3','3',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'D3','3'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','3'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','3'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>13.</b></td><td valign=\"top\"><b>TEKNIK OTOMOTIF</b></td><td>".$this->ym->count_graduate('4',$tahun)."</td><td>".$c13=$this->ym->count_cum_('D3','4',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'D3','4'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','4'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','4'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>14.</b></td><td valign=\"top\"><b>TEKNIK SIPIL</b></td><td>".$this->ym->count_graduate('5',$tahun)."</td><td>".$c14=$this->ym->count_cum_('D3','5',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'D3','5'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','5'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','5'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>15.</b></td><td valign=\"top\"><b>TEKNIK BOGA</b></td><td>".$this->ym->count_graduate('6',$tahun)."</td><td>".$c15=$this->ym->count_cum_('D3','6',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'D3','6'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','6'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','6'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>16.</b></td><td valign=\"top\"><b>TEKNIK BUSANA</b></td><td>".$this->ym->count_graduate('7',$tahun)."</td><td>".$c16=$this->ym->count_cum_('D3','7',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'D3','7'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','7'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','7'),2)."</td></tr>";
+	    $table .= "<tr><td valign=\"top\"><b>17.</b></td><td valign=\"top\"><b>TATA RIAS DAN KECANTIKAN</b></td><td>".$this->ym->count_graduate('8',$tahun)."</td><td>".$c17=$this->ym->count_cum_('D3','8',$tahun)."</td><td>".round($this->ym->avg_studi($tahun,'D3','8'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','8'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','8'),2)."</td></tr>";
+	    $ct= $c1+$c2+$c3+$c4+$c5+$c6+$c7+$c8+$c9+$c10+$c11+$c12+$c13+$c14+$c15+$c16+$c17;
+	    $table .= "<tr><td valign=\"top\" colspan=\"2\"><b>JUMALAH / RERATA</b></td><td>".$this->ym->count_all_graduate($tahun)."</td><td>".$ct."</td><td>".round($this->ym->avg_studi_ttl($tahun),2)."</td><td>".round($this->ym->avg_ta_ttl($tahun),2)."</td><td>".round($this->ym->avg_ipk_ttl($tahun),2)."</td></tr>";
 	    $table .= "</table>";
 	    echo $style;
 	    echo $table;
