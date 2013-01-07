@@ -151,6 +151,20 @@ class Yudisium_m extends MY_Model {
 	    return $result->expired;
 	}
     
+    function count_graduate($dpt,$thn)
+	{
+	    $this->db->where('department',$dpt);
+	    $this->db->where("date_format(date_in,'%Y')",$thn);
+	    return $this->db->count_all_results('yudisium');
+	}
+    
+    function count_all_graduate($thn)
+	{
+	    //$this->db->where('department',$dpt);
+	    $this->db->where("date_format(date_in,'%Y')",$thn);
+	    return $this->db->count_all_results('yudisium');
+	}
+    
     function error_data()
 	{
 	    $this->db->select('nim,name,graduation,yudisium_date')
@@ -459,6 +473,32 @@ class Yudisium_m extends MY_Model {
             $this->db->where('ipk >=','3.51');
             return $this->db->count_all_results();
 	}
+    
+    function all_cum($thn,$prodi)
+	{
+	    if ($prodi == 'Skripsi') : $sem ="10"; else : $sem ="8"; endif;
+            $this->db->from('default_yudisium');
+            $this->db->where("date_format(date_in,'%Y')",$thn);
+            $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=",$sem);
+	    //this->db->where("yudisium_date <=",date('Y')."-06-30");
+            //$this->db->where("thesis",$prodi);
+            $this->db->where("parrental <> ","PKS");
+            $this->db->where('ipk >=','3.51');
+            return $this->db->count_all_results();
+	}
+    function count_cum_($prodi,$dpt,$thn)
+	{
+	    if ($prodi == 'Skripsi') : $sem ="10"; else : $sem ="8"; endif;
+            $this->db->from('default_yudisium');
+            $this->db->where("date_format(date_in,'%Y')",$thn);
+            $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=",$sem);
+	    //this->db->where("yudisium_date <=",date('Y')."-06-30");
+            $this->db->where("department",$dpt);
+            $this->db->where("parrental <> ","PKS");
+            $this->db->where('ipk >=','3.51');
+            return $this->db->count_all_results();
+	}
+	
     function verrygood_datein($date,$prodi)
 	{
 	    $this->db->from('default_yudisium');
@@ -571,6 +611,10 @@ class Yudisium_m extends MY_Model {
 		if(!empty($params['date_in']))
 		{
 		    $this->db->where("date_format(date_in,'%m-%Y')",$params['date_in']);
+		}
+		if(!empty($params['yudis']))
+		{
+		    $this->db->where("date_format(yudisium_date,'%m-%Y')",$params['yudis']);
 		}
 		if(!empty($params['antidatir']))
 		{
