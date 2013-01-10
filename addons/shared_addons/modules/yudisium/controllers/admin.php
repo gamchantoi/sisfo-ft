@@ -538,6 +538,24 @@ class Admin extends Admin_Controller {
 			margin-left: auto;
 			margin-right: auto;
 			}
+			table.legend{
+                        color:#333333;
+                        border-width: 2px;
+                        border-color: #666666;
+                        border-collapse: collapse;
+                        width: 595px;
+			text-align:center; 
+			margin-left:auto; 
+			margin-right:auto; 
+			
+		    }
+		    table.legend td {
+                        border-width: 2px;
+                        padding: 3px;
+                        border-style: solid;
+                        border-color: #666666;
+                        background-color: #ffffff;
+		    }
 			@media print {
 			.noprint {
 			    font-color : #fff;
@@ -749,7 +767,10 @@ class Admin extends Admin_Controller {
 	    echo $table;
 	    echo "<hr>";
 	    echo "<p align=\"center\"  style=\"font-size : x-small;\">Setelah ditandatangani Wakil Dekan I, agar digandakan sebanyak 5 (lima) lembar, dengan warna BIRU UNTUK EKO/EKA, HIJAU UNTUK MES / OTO, KUNING UNTUK SIP, MERAH MUDA UNTUK PTBB dan distempel</p>";
-	    echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
+	    //echo "<p align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</p>";
+	    echo "<table class=\"legend\">";
+	    echo "<tr><td valign=\"top\" style=\"font-size : x-small;\"><b>Diperiksa oleh</b></td><td align=\"left\"  style=\"font-size : x-small;\"><b>Catatan: </b><br>Lembar Asli untuk Yudisium <br>Lembar Warna untuk Wisuda dan Jurusan</td><td valign=\"top\" style=\"font-size : x-small;\"><b>Dibuat Oleh</b></td><td style=\"font-size : x-small;\" valign=\"top\"><b>Penyerahan CD</b></td></tr>";
+	    echo "</table>";
 	    $this->ym->update($id,array('printed' => '1'));
 	    $this->ym->add_print($id,'4');
 	}
