@@ -158,6 +158,24 @@ class Yudisium_m extends MY_Model {
 	    return $this->db->count_all_results('yudisium');
 	}
     
+    function count_graduate_by($parrams)
+	{
+	    if(!empty($parrams['dpt']))
+	    {
+		$this->db->where('department',$parrams['dpt']);
+	    }
+	    if(!empty($parrams['bulan']))
+	    {
+		$this->db->where("date_format(date_in,'%m')",$parrams['bulan']);
+	    }
+	    if(!empty($parrams['tahun']))
+	    {
+		$this->db->where("date_format(date_in,'%Y')",$parrams['tahun']);
+	    }
+	    //return $this->db->get('yudisium')->result();
+	    return $this->db->count_all_results('yudisium');
+	}
+    
     function count_all_graduate($thn)
 	{
 	    //$this->db->where('department',$dpt);
@@ -171,7 +189,7 @@ class Yudisium_m extends MY_Model {
 		->where('graduation > yudisium_date');
 	    return $this->db->get('yudisium')->result();
 	}
-	
+    //==========================================================================================================================//
     function antidatir($date,$type)
 	{
 	    
@@ -220,7 +238,7 @@ class Yudisium_m extends MY_Model {
 	$result = $this->db->get('yudisium')->row();
 	return $result->rerata;
     }
-    
+    //================================================================================================================//
     function count_cum_s1($where)
 	{
 	    //$query =("SELECT COUNT(*) FROM (`default_yudisium`) WHERE DATEDIFF(  `yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=8 AND  `thesis` =  'Skripsi' AND  `parrental` <>  'PKS' AND  `ipk` >= 3.51 AND  `yudisium_date` =  '".$where."'");
@@ -244,6 +262,7 @@ class Yudisium_m extends MY_Model {
 	    return $this->db->count_all_results();
 	}
 	
+   
     function count_verygood($where,$thesis)
 	{
 	    $this->db->from('default_yudisium');
@@ -253,7 +272,92 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('ipk >=','2.76');
 	    return $this->db->count_all_results();
 	}
-	
+    //=============================================================================================================//
+    
+     function count_cum_by($parrams)
+	{
+	    if(!empty($parrams['bulan']))
+	    {
+		$this->db->where("date_format(date_in,'%m')",$parrams['bulan']);
+	    }
+	    if(!empty($parrams['tahun']))
+	    {
+		$this->db->where("date_format(date_in,'%Y')",$parrams['tahun']);
+	    }
+	    if(!empty($parrams['dpt']))
+	    {
+		$this->db->where("department",$parrams['dpt']);
+	    }
+	    if(!empty($parrams['thesis']))
+	    {
+		$this->db->where("thesis",$parrams['thesis']);
+	    }
+	    if ($parrams['thesis'] == 'Skripsi') : $sem ="10"; else : $sem ="8"; endif;
+	    
+            $this->db->from('default_yudisium');
+            $this->db->where("DATEDIFF(`yudisium_date`, CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /180 <=",$sem);
+	    //this->db->where("yudisium_date <=",date('Y')."-06-30");
+            $this->db->where("parrental <> ","PKS");
+            $this->db->where('ipk >=','3.51');
+            return $this->db->count_all_results();
+	}
+    
+    function count_verygood_by($parrams)
+	{
+	    if(!empty($parrams['dpt']))
+	    {
+		$this->db->where("department",$parrams['dpt']);
+	    }
+	    if(!empty($parrams['bulan']))
+	    {
+		$this->db->where("date_format(date_in,'%m')",$parrams['bulan']);
+	    }
+	    if(!empty($parrams['tahun']))
+	    {
+		$this->db->where("date_format(date_in,'%Y')",$parrams['tahun']);
+	    }
+	    if(!empty($parrams['yudis']))
+	    {
+		$this->db->where('yudisium_date',$parrams['yudis']);
+	    }
+	    if(!empty($parrams['thesis']))
+	    {
+		$this->db->where("thesis",$parrams['thesis']);
+	    }
+	    $this->db->from('default_yudisium');
+	    $this->db->where('ipk >=','2.76');
+	    return $this->db->count_all_results();
+	}
+    
+    function count_good_by($parrams)
+	{
+	    if(!empty($parrams['dpt']))
+	    {
+		$this->db->where("department",$parrams['dpt']);
+	    }
+	    if(!empty($parrams['bulan']))
+	    {
+		$this->db->where("date_format(date_in,'%m')",$parrams['bulan']);
+	    }
+	    if(!empty($parrams['tahun']))
+	    {
+		$this->db->where("date_format(date_in,'%Y')",$parrams['tahun']);
+	    }
+	    if(!empty($parrams['yudis']))
+	    {
+		$this->db->where('yudisium_date',$parrams['yudis']);
+	    }
+	    if(!empty($parrams['thesis']))
+	    {
+		$this->db->where("thesis",$parrams['thesis']);
+	    }
+	    $this->db->from('default_yudisium');
+	    //$this->db->where('ipk <=','3.50');
+	    $this->db->where('ipk <=','2.75');
+	    $this->db->where('ipk >=','2.00');
+	    return $this->db->count_all_results();
+	}
+    //=============================================================================================================//
     function count_good($where,$thesis)
 	{
 	    $this->db->from('default_yudisium');
