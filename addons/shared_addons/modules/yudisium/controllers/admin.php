@@ -1888,10 +1888,26 @@ class Admin extends Admin_Controller {
 		'2019'	=> '2019',
 		'2020'	=> '2020'
 	    );
+	    $bulan = array(
+		'0' => 'Pilih Bulan',
+		'01' => 'Januari',
+		'02' => 'Februari',
+		'03' => 'Maret',
+		'04' => 'April',
+		'05' => 'Mei',
+		'06' => 'Juni',
+		'07' => 'Juli',
+		'08' => 'Agustus',
+		'09' => 'September',
+		'10' => 'Oktober',
+		'11' => 'November',
+		'12' => 'Desember'
+	    );
 	    $data_yudis = $this->data_yudisium();
 	    $this->template
 			->title($this->module_details['name'], 'Statistik Lulusan')
 			->set('tahun', $tahun)
+			->set ('bulan',$bulan)
 			->build('admin/statistik');   
 	}
     
@@ -2417,6 +2433,7 @@ class Admin extends Admin_Controller {
 	    }
 	    
 	}
+	
     public function statistik(){
 	if ($_POST){
 	    $tahun = $this->input->post('tahun');
@@ -2448,6 +2465,116 @@ class Admin extends Admin_Controller {
 	    echo $table;
 	}
     }
+    
+    public function stat_bulanan()
+	{
+	    if($_POST)
+	    {
+		$tahun = $this->input->post('tahun');
+		$bulan = $this->input->post('bulan');
+		$style  = $this->style_present("STATISTIK Lulusan","","");
+		echo "Tabel 1. Statistik Lulusan FT UNY Bulan ".$this->BulanID($bulan)." ".$tahun;
+		//=================== Jumlah lulusan ==============================//
+		$g1 = $this->ym->count_graduate_by(array('dpt' => '9','bulan' => $bulan,'tahun' => $tahun));
+		$g2 = $this->ym->count_graduate_by(array('dpt' => '10','bulan' => $bulan,'tahun' => $tahun));
+		$g3 = $this->ym->count_graduate_by(array('dpt' => '11','bulan' => $bulan,'tahun' => $tahun));
+		$g4 = $this->ym->count_graduate_by(array('dpt' => '12','bulan' => $bulan,'tahun' => $tahun));
+		$g5 = $this->ym->count_graduate_by(array('dpt' => '13','bulan' => $bulan,'tahun' => $tahun));
+		$g6 = $this->ym->count_graduate_by(array('dpt' => '14','bulan' => $bulan,'tahun' => $tahun));
+		$g7 = $this->ym->count_graduate_by(array('dpt' => '15','bulan' => $bulan,'tahun' => $tahun));
+		$g8 = $this->ym->count_graduate_by(array('dpt' => '16','bulan' => $bulan,'tahun' => $tahun));
+		$g9 = $this->ym->count_graduate_by(array('dpt' => '17','bulan' => $bulan,'tahun' => $tahun));
+		$g10= $this->ym->count_graduate_by(array('dpt' => '1','bulan' => $bulan,'tahun' => $tahun));
+		$g11= $this->ym->count_graduate_by(array('dpt' => '2','bulan' => $bulan,'tahun' => $tahun));
+		$g12= $this->ym->count_graduate_by(array('dpt' => '3','bulan' => $bulan,'tahun' => $tahun));
+		$g13= $this->ym->count_graduate_by(array('dpt' => '4','bulan' => $bulan,'tahun' => $tahun));
+		$g14= $this->ym->count_graduate_by(array('dpt' => '5','bulan' => $bulan,'tahun' => $tahun));
+		$g15= $this->ym->count_graduate_by(array('dpt' => '6','bulan' => $bulan,'tahun' => $tahun));
+		$g16= $this->ym->count_graduate_by(array('dpt' => '7','bulan' => $bulan,'tahun' => $tahun));
+		$g17= $this->ym->count_graduate_by(array('dpt' => '8','bulan' => $bulan,'tahun' => $tahun));
+		//===================== Jumlah Cumloude ==============================//
+		$c1 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '9'));
+		$c2 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '10'));
+		$c3 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '11'));
+		$c4 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '12'));
+		$c5 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '13'));
+		$c6 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '14'));
+		$c7 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '15'));
+		$c8 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '16'));
+		$c9 = $this->ym->count_cum_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '17'));
+		$c10= $this->ym->count_cum_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '1'));
+		$c11= $this->ym->count_cum_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '2'));
+		$c12= $this->ym->count_cum_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '3'));
+		$c13= $this->ym->count_cum_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '4'));
+		$c14= $this->ym->count_cum_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '5'));
+		$c15= $this->ym->count_cum_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '6'));
+		$c16= $this->ym->count_cum_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '7'));
+		$c17= $this->ym->count_cum_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '8'));
+		//====================== Jumalah Sangat Memuaskan ==================//
+		$v1 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '9')) - $c1;
+		$v2 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '10')) - $c2;
+		$v3 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '11')) - $c3;
+		$v4 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '12')) - $c4;
+		$v5 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '13')) - $c5;
+		$v6 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '14')) - $c6;
+		$v7 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '15')) - $c7;
+		$v8 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '16')) - $c8;
+		$v9 = $this->ym->count_verygood_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '17')) - $c9;
+		$v10= $this->ym->count_verygood_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '1')) - $c10;
+		$v11= $this->ym->count_verygood_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '2')) - $c11;
+		$v12= $this->ym->count_verygood_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '3')) - $c12;
+		$v13= $this->ym->count_verygood_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '4')) - $c13;
+		$v14= $this->ym->count_verygood_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '5')) - $c14;
+		$v15= $this->ym->count_verygood_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '6')) - $c15;
+		$v16= $this->ym->count_verygood_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '7')) - $c16;
+		$v17= $this->ym->count_verygood_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '8')) - $c17;
+		//====================== Jumlah memuaskan =========================//
+		$m1 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '9'));
+		$m2 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '10'));
+		$m3 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '11'));
+		$m4 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '12'));
+		$m5 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '13'));
+		$m6 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '14'));
+		$m7 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '15'));
+		$m8 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '16'));
+		$m9 = $this->ym->count_good_by(array('thesis' => 'Skripsi','bulan' => $bulan,'tahun' => $tahun,'dpt' => '17'));
+		$m10= $this->ym->count_good_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '1'));
+		$m11= $this->ym->count_good_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '2'));
+		$m12= $this->ym->count_good_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '3'));
+		$m13= $this->ym->count_good_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '4'));
+		$m14= $this->ym->count_good_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '5'));
+		$m15= $this->ym->count_good_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '6'));
+		$m16= $this->ym->count_good_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '7'));
+		$m17= $this->ym->count_good_by(array('thesis' => 'D3','bulan' => $bulan,'tahun' => $tahun,'dpt' => '8'));
+		$table  = "<table class=\"gridtable\" border=\"1px\">";
+		$table .= "<tr><td><b>No.</b></td><td ><b>PROGRAM STUDI</b></td><td align=\"center\"><b>JUMLAH LULUSAN</b></td><td align=\"center\"><b>JUMLAH CUMLAUDE</b></td><td align=\"center\"><b>JUMLAH SANGAT MEMUASKAN</b></td><td align=\"center\"><b>JUMLAH MEMUASKAN</b></td><td align=\"center\"><b>RERATA MASA STUDI<br>(dalam Tahun)</b></td><td align=\"center\"><b>RERATA LAMA TA/TAS<br>(dalam bulan)</b></td><td align=\"center\" valign=\"top\"><b>RERATA IPK</b></td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>1.</b></td><td valign=\"top\"><b>PT ELEKTRO</b></td><td>".$g1."</td><td>".$c1."</td><td>".$v1."</td><td>".$m1."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','9'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','9'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','9'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>2.</b></td><td valign=\"top\"><b>PT MEKATRONIKA</b></td><td>".$g2."</td><td>".$c2."</td><td>".$v2."</td><td>".$m2."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','10'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','10'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','10'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>3.</b></td><td valign=\"top\"><b>PT ELEKTRONIKA</b></td><td>".$g3."</td><td>".$c3."</td><td>".$v3."</td><td>".$m3."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','11'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','11'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','11'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>4.</b></td><td valign=\"top\"><b>PT INFORMATIKA</b></td><td>".$g4."</td><td>".$c4."</td><td>".$v4."</td><td>".$m4."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','12'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','12'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','12'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>5.</b></td><td valign=\"top\"><b>PT MESIN</b></td><td>".$g5."</td><td>".$c5."</td><td>".$v5."</td><td>".$m5."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','13'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','13'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','13'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>6.</b></td><td valign=\"top\"><b>PT OTOMOTIF</b></td><td>".$g6."</td><td>".$c6."</td><td>".$v6."</td><td>".$m6."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','14'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','14'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','14'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>7.</b></td><td valign=\"top\"><b>PT SIPIL DAN PERENCANAAN</b></td><td>".$g7."</td><td>".$v7."</td><td>".$m7."</td><td>".$c7."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','15'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','15'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','15'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>8.</b></td><td valign=\"top\"><b>PT BOGA</b></td><td>".$g8."</td><td>".$c8."</td><td>".$v8."</td><td>".$m8."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','16'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','16'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','16'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>9.</b></td><td valign=\"top\"><b>PT BUSANA</b></td><td>".$g9."</td><td>".$c9."</td><td>".$v9."</td><td>".$m9."</td><td>".round($this->ym->avg_studi($tahun,'Skripsi','17'),2)."</td><td>".round($this->ym->avg_ta($tahun,'Skripsi','17'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'Skripsi','17'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>10.</b></td><td valign=\"top\"><b>TEKNIK ELEKTRO</b></td><td>".$g10."</td><td>".$c10."</td><td>".$v10."</td><td>".$m10."</td><td>".round($this->ym->avg_studi($tahun,'D3','1'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','1'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','1'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>11.</b></td><td valign=\"top\"><b>TEKNIK ELEKTRONIKA</b></td><td>".$g11."</td><td>".$c11."</td><td>".$v11."</td><td>".$m11."</td><td>".round($this->ym->avg_studi($tahun,'D3','2'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','2'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','2'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>12.</b></td><td valign=\"top\"><b>TEKNIK MESIN</b></td><td>".$g12."</td><td>".$c12."</td><td>".$v12."</td><td>".$m12."</td><td>".round($this->ym->avg_studi($tahun,'D3','3'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','3'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','3'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>13.</b></td><td valign=\"top\"><b>TEKNIK OTOMOTIF</b></td><td>".$g13."</td><td>".$c13."</td><td>".$v13."</td><td>".$m13."</td><td>".round($this->ym->avg_studi($tahun,'D3','4'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','4'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','4'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>14.</b></td><td valign=\"top\"><b>TEKNIK SIPIL</b></td><td>".$g14."</td><td>".$c14."</td><td>".$v14."</td><td>".$m14."</td><td>".round($this->ym->avg_studi($tahun,'D3','5'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','5'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','5'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>15.</b></td><td valign=\"top\"><b>TEKNIK BOGA</b></td><td>".$g15."</td><td>".$c15."</td><td>".$v15."</td><td>".$m15."</td><td>".round($this->ym->avg_studi($tahun,'D3','6'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','6'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','6'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>16.</b></td><td valign=\"top\"><b>TEKNIK BUSANA</b></td><td>".$g16."</td><td>".$c16."</td><td>".$v16."</td><td>".$m16."</td><td>".round($this->ym->avg_studi($tahun,'D3','7'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','7'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','7'),2)."</td></tr>";
+		$table .= "<tr><td valign=\"top\"><b>17.</b></td><td valign=\"top\"><b>TATA RIAS DAN KECANTIKAN</b></td><td>".$g17."</td><td>".$c17."</td><td>".$v17."</td><td>".$m17."</td><td>".round($this->ym->avg_studi($tahun,'D3','8'),2)."</td><td>".round($this->ym->avg_ta($tahun,'D3','8'),2)."</td><td>".round($this->ym->avg_ipk($tahun,'D3','8'),2)."</td></tr>";
+		$ct= $c1+$c2+$c3+$c4+$c5+$c6+$c7+$c8+$c9+$c10+$c11+$c12+$c13+$c14+$c15+$c16+$c17;
+		$table .= "<tr><td valign=\"top\" colspan=\"2\"><b>JUMALAH / RERATA</b></td><td>".$this->ym->count_graduate_by(array('bulan' => $bulan,'tahun' => $tahun))."</td><td>".$ct."</td><td>".round($this->ym->avg_studi_ttl($tahun),2)."</td><td>".round($this->ym->avg_ta_ttl($tahun),2)."</td><td>".round($this->ym->avg_ipk_ttl($tahun),2)."</td></tr>";
+		$table .= "</table>";
+		//$okeh= $this->ym->count_graduate_by(array('dpt' => '9','tahun'=>'2012'));
+		//echo $okeh;
+		echo $style;
+		echo $table;
+	    }
+	}
+	
     //fungsi pengecekan dokumen telah tercetak
     public function get_printed($id=0)
 	{
@@ -2808,4 +2935,46 @@ class Admin extends Admin_Controller {
 	  return $result;
 	    
 	}
+    
+    function BulanID($bln)
+    {
+        switch ($bln){
+            case 1: 
+              return "Januari";
+              break;
+            case 2:
+              return "Februari";
+              break;
+            case 3:
+              return "Maret";
+              break;
+            case 4:
+              return "April";
+              break;
+            case 5:
+              return "Mei";
+              break;
+            case 6:
+              return "Juni";
+              break;
+            case 7:
+              return "Juli";
+              break;
+            case 8:
+              return "Agustus";
+              break;
+            case 9:
+              return "September";
+              break;
+            case 10:
+              return "Oktober";
+              break;
+            case 11:
+              return "November";
+              break;
+            case 12:
+              return "Desember";
+              break;
+        }
+    }
 }
