@@ -357,6 +357,29 @@ class Yudisium_m extends MY_Model {
 	    $this->db->where('ipk >=','2.00');
 	    return $this->db->count_all_results();
 	}
+    function count_avg_study_by($bt,$grade,$prodi)
+	{
+	    $query  = $this->db->query("SELECT AVG(( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /360 )) AS semester FROM (`default_yudisium`) WHERE  date_format(date_in,'%m-%Y') =  '".$bt."' AND `thesis` = '".$grade."' AND department='".$prodi."'");
+	    $result = $query->row();
+	    return round($result->semester,2);
+	}
+    
+    function count_avg_ta_($bt,$grade,$prodi)
+	{
+	    $this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
+	    //$this->db->where('yudisium_date',$date);
+	    $this->db->where("date_format(date_in,'%m-%Y')",$bt);
+	    $this->db->where('thesis',$grade);
+	    $this->db->where('department',$prodi);
+	    $result = $this->db->get('yudisium')->row();
+	    return round($result->rerata,2);
+	}
+    function count_avg_ipk_($bt,$grade,$prodi)
+	{
+	    $query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE date_format(`date_in`,'%m-%Y')='".$bt."' AND thesis ='".$grade."' AND department='".$prodi."'");
+	    $result = $query->row();
+	    return round($result->rerata,2);
+	}
     //=============================================================================================================//
     function count_good($where,$thesis)
 	{
@@ -417,6 +440,29 @@ class Yudisium_m extends MY_Model {
 	$query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE date_format(`yudisium_date`,'%Y')='".$tahun."'");
 	$result = $query->row();
 	return $result->rerata;
+    }
+    
+    function avg_ta_bt($bt)
+    {
+	$this->db->select("AVG( DATEDIFF(  `finish` ,  `start` ) /30 ) AS rerata");
+	    //$this->db->where('yudisium_date',$date);
+	    $this->db->where("date_format(date_in,'%m-%Y')",$bt);
+	    $result = $this->db->get('yudisium')->row();
+	    return round($result->rerata,2);
+    }
+    
+    function avg_ipk_bt($bt)
+    {
+	$query  = $this->db->query("SELECT AVG(ipk) AS rerata FROM `default_yudisium` WHERE date_format(`date_in`,'%m-%Y')='".$bt."'");
+	$result = $query->row();
+	return round($result->rerata,2);
+    }
+    
+    function avg_studi_bt($bt)
+    {
+	$query  = $this->db->query("SELECT AVG(( DATEDIFF(`yudisium_date` , CONCAT(  '20', LEFT(  `nim` , 2 ) ,  '-09-01' ) ) /360 )) AS semester FROM (`default_yudisium`) WHERE  date_format(date_in,'%m-%Y') =  '".$bt."'");
+        $result = $query->row();
+        return round($result->semester,2);
     }
     
     function avg_ta($tahun,$grade,$prodi)
