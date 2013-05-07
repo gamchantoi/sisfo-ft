@@ -110,6 +110,16 @@ class Yudisium_m extends MY_Model {
     	return $get_major= $this->db->select('nim,name,x,department')->where('nim',$nim)->get('college')->row();
         //return $get_major->x;
     }
+
+    function prodi_name($nim)
+    {
+    	$this->db->select("college.nim,college.name,college.x,college.department,department.id,department.label");
+    	$this->db->from("college");
+    	$this->db->join("department","department.id=college.department");
+    	$this->db->where('college.nim',$nim);
+    	$result = $this->db->get()->row();
+    	return $result;
+    }
 	
     function get_print($id)
     {
