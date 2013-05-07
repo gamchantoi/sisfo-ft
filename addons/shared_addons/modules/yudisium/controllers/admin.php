@@ -241,9 +241,9 @@ class Admin extends Admin_Controller {
 		    'ipk_avg_s1' => round($this->ym->ipk_avg_datein($month,'Skripsi'),2)
 		);
 		$predicate = array(
-		    'cum_d3'	=> round($this->ym->cum_datein($month,'D3'),2),
-		    'vg_d3'	=> round($this->ym->verrygood_datein($month,'D3'),2),
-		    'good_d3'	=> round($this->ym->good_datein($month,'D3'),2),
+		    'cum_d3'	=> round($this->ym->cum_datein($month,"D3"),2),
+		    'vg_d3'		=> round($this->ym->verrygood_datein($month,"D3"),2),
+		    'good_d3'	=> round($this->ym->good_datein($month,"D3"),2),
 		    'cum_s1'	=> round($this->ym->cum_datein($month,'Skripsi'),2),
 		    'vg_s1'	=> round($this->ym->verrygood_datein($month,'Skripsi'),2),
 		    'good_s1'	=> round($this->ym->good_datein($month,'Skripsi'),2)
@@ -2815,12 +2815,20 @@ class Admin extends Admin_Controller {
 	//fungsi penampil Program Studi Mahasiswa
     public function get_dpt($nim)
 	{
-	    $prodies = $this->ym->get_prodies($nim);
-	    $split = explode ('-',$prodies->x);
-	    $nama  = $split[0];
-	    $stage = $split[1];
+	    //$prodies = $this->ym->get_prodies($nim);
+	    //$split = explode ('-',$prodies->x);
+	    //$nama  = $split[0];
+	    //$stage = $split[1];
+	    $stage = $this->ym->prodi_name($nim);
 	    //$stage = $this->ym->get_stage($nim);
-	    return $stage;
+	    return $stage->label;
+	}
+
+	public function testi($nim)
+	{
+		$stage = $this->ym->prodi_name($nim);
+	    //$stage = $this->ym->get_stage($nim);
+	    return $stage->label;
 	}
 	
 	//fungsi penghitung/penampil predikat mahasiswa
